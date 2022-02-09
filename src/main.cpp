@@ -3,7 +3,7 @@
  * @author Beat Sturzenegger
  * @brief Main File vom WIO Terminal Template
  * Du kannst deinen Code zwischen <tt>"START USER CODE"</tt> und <tt>"END USER CODE"</tt>
- * @version 1.0
+ * @version 1.1
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -88,7 +88,7 @@ char log_text[15][TOPIC_LENGTH];            ///< startup log text, 15 lines with
 const long scanInterval = 10000;            ///< Interval time for WiFi strength und channel scanning 
 const long interfaceIconIntervall = 500;    ///< Interval time for icons refreshing
 const long mqttStateIntervall = 1000;       ///< Interval time for MQTT state
-const long userDefinedIntervall = 0;        ///< Interval time for user defined perdiodic task
+const long userDefinedIntervall = 5000;     ///< Interval time for user defined perdiodic task
 
 // START USER CODE: Global Variables
 
@@ -154,7 +154,7 @@ void setup() {
   wio_disp.loadingScreen(0);            // disable Loading screen
 
   // START USER CODE: Setup
-currentPage = 0;                              // set currentPage
+  currentPage = 0;                              // set currentPage
   wio_disp.drawPage(pages_array[currentPage]);  // draw Page No. 1 (= currentPage)
 
   // END USER CODE: Setup
