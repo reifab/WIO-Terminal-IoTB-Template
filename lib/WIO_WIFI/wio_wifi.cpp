@@ -67,11 +67,13 @@ void wio_wifi::initWifi(void)
   WiFi.begin(ssid, password);               // begin WiFi connection
 
   delay(100);
-  do{
-    //(*cbWiFiLog)("- Connecting...", false);   // write to the log
-    delay(2000);
-    Serial.println(WiFi.status());          // print to SerialPort
-  } while (WiFi.status() != WL_CONNECTED);  // do until connected
+  while (WiFi.status() != WL_CONNECTED)       // do until connected
+  {
+    delay(500);
+    Serial.println("Connecting to WiFi..");   // print to SerialPort
+    WiFi.begin(ssid, password);               // begin WiFi connection
+  }
+ 
   (*cbWiFiLog)("- Connected", false);       // write to the log
 }
 
