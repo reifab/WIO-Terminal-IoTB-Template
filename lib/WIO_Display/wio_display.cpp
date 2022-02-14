@@ -8,8 +8,8 @@
  * Zusätzlich werden gewisse Interface Zustände angezeigt, sofern diese Verwendet werden.
  * zu den Interface gehören den WiFi, MQTT und SD Karte. \n 
  * @todo Auf einer Page die Interface Zustände genauer beschreiben. Coming soon...
- * @version 1.0
- * @date 18.01.2022
+ * @version 1.1
+ * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -419,7 +419,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       switch (l.setting)
       {
         // draw the value in the bar
-        case 1:
+        case BAR_SHOW_VALUE:
           tft.setFreeFont(FSS9);              // set font
           tft.setTextColor(TFT_BLACK);        // set text color black
           sprintf(buf, "%d", (int)l.value);   // convert value to string
@@ -446,8 +446,11 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
           //          break;
           //        case TIME_HH_MM_DD_MM_YYYY:
           //          break;
+        default:
+          sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
       }
       tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draw value
+      break;
   }
 }
 

@@ -2,8 +2,8 @@
  * @file pages.h
  * @author Beat Sturzenegger
  * @brief 
- * @version 1.0
- * @date 18.01.2022
+ * @version 1.1
+ * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -33,17 +33,19 @@ typedef enum{
 
 /// Enum für die verschiednenen Zeilen Einstellungen
 typedef enum{
+// General
+  DEFAULT,            ///< Wird verwendet, wenn keine Einstellung möglich oder um Default zu verwenden
 // Nummeric
   DECIMAL_PLACES_0,   ///< Zeigt 0 Nachkommastellen an --> für @ref line_typ_e @p NUMERIC   
   DECIMAL_PLACES_1,   ///< Zeigt 1 Nachkommastellen an --> für @ref line_typ_e @p NUMERIC   
-  DECIMAL_PLACES_2,   ///< Zeigt 2 Nachkommastellen an --> für @ref line_typ_e @p NUMERIC   
+  DECIMAL_PLACES_2,   ///< Zeigt 2 Nachkommastellen an --> für @ref line_typ_e @p NUMERIC, DEFAULT  
   DECIMAL_PLACES_3,   ///< Zeigt 3 Nachkommastellen an --> für @ref line_typ_e @p NUMERIC   
 // Bar
-  BAR_EMPTY,        ///< Zeigt ein Balken an, ohne einen Wert --> für @ref line_typ_e @p BAR    
+  BAR_EMPTY,        ///< Zeigt ein Balken an, ohne einen Wert --> für @ref line_typ_e @p BAR, DEFAULT
   BAR_SHOW_VALUE,   ///< Zeigt ein Balken an, mit dem Balkenwert auf dem Balken --> für @ref line_typ_e @p BAR 
 
 // Time
-  TIME_HH_MM,             ///< Zeitformat hh:mm --> für @ref line_typ_e @p TIME 
+  TIME_HH_MM,             ///< Zeitformat hh:mm, DEFAULT --> für @ref line_typ_e @p TIME
   TIME_HH_MM_SS,          ///< Zeitformat hh:mm:ss --> für @ref line_typ_e @p TIME 
 //  TIME_DD_MM_YYYY,        ///< Zeitformat DD.MM.YYYY --> für @ref line_typ_e @p TIME 
 //  TIME_HH_MM_DD_MM_YYYY,  ///< Zeitformat hh:mm, DD.MM.YYYY --> für @ref line_typ_e @p TIME 
