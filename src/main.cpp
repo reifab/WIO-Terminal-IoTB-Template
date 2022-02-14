@@ -414,6 +414,7 @@ void periodicTasks()
 
   if((currentMillis - previousMillis[3] >= userDefinedIntervall) || previousMillis[3] == 0)
   {
+    previousMillis[3] = currentMillis;      // refresh previousMillis
     // START USER CODE: user periodic task
       
 
