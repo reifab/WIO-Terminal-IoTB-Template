@@ -35,6 +35,7 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
+    [ "WIO Terminal", "page_wio_terminal.html", null ],
     [ "Ausstehende Aufgaben", "todo.html", null ],
     [ "Datenstrukturen", "annotated.html", [
       [ "Datenstrukturen", "annotated.html", "annotated_dup" ],
