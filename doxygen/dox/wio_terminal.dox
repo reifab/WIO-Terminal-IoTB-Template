@@ -1,0 +1,60 @@
+/**
+ * @page page_wio_terminal WIO Terminal
+ * 
+ * @subsection brief_wio_section Einleitung
+ * @image html WIO_Terminal.png
+ * 
+ * @subsection mcu_wio_section Controller
+ * Microchip ATSAMD51P19 MCU
+ * @todo Chip Beschreibung
+ * 
+ * @subsection display_wio_section Display
+ * coming soon...
+ * @todo Display Beschreibung
+ * 
+ * @subsection buttons_wio_section Taster
+ * Das WIO Terminal besitzt an der Oberseite drei Taster. An der Front befindet sich ein 
+ * 5-Weg-Schalter (Hoch, Runter, Links, Rechts, Drücken).
+ * @image html WIO_Terminal_Buttons.png
+ * 
+ * @subsubsection button_defines Defines für die Taster
+ * Die Defines für die Taster lauten wie folgt:
+ *
+ * Taster    | Define
+ * --------- | -------------
+ * Button A  | WIO_KEY_A
+ * Button B  | WIO_KEY_B
+ * Button C  | WIO_KEY_C
+ * Hoch      | WIO_5S_UP
+ * Runter    | WIO_5S_DOWN
+ * Links     | WIO_5S_LEFT
+ * Rechts    | WIO_5S_RIGHT
+ * Drücken   | WIO_5S_PRESS
+ * 
+ * @subsection buzzer_wio_section Buzzer
+ * coming soon...
+ * @todo Buzzer Beschreibung
+ * 
+ * @subsection wifi_wio_section WiFi und Bluetooth Modul
+ * Realtek RTL8720DN
+ * coming soon...
+ * @todo WiFi Modul Beschreibung
+ * @todo Bluetooth Modul Beschreibung
+ * 
+ * @subsection sensors_wio_section weitere Sensoren
+ * - Licht Sensor
+ * - Accelerometer
+ * - Microfon
+ * - IR Empfänger
+ * - Micro SD Karten Slot
+ * 
+ * 
+ * 
+ * @subsection source_wio_subsection Quellen
+ * <a href="https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/">Get Started with Wio Terminal</a> 
+ * 
+ * @author Beat Sturzenegger
+ * @date 13.02.2022
+ * @copyright Copyright (c) 2022
+ * 
+ */

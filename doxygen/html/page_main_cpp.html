@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>WIO Terminal Template: Aufbau main.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="IoTB-Logo_klein.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">WIO Terminal Template
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Suchen','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Suchen');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('page_main_cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Aufbau <a class="el" href="main_8cpp.html" title="Main File vom WIO Terminal Template Du kannst deinen Code zwischen &quot;START USER CODE&quot; und &quot;END USER CO...">main.cpp</a> </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="setup_section"></a>
+Setup Funktion</h1>
+<p >Diese Funktion wird beim Start einmal aufgerufen. Im Template werden der Display, das WiFi-Module und die Taster initialisiert. Zudem wird bereits eine Verbindung zum WLAN Access Point und zum MQTT Broker gemacht. <br  />
+Der Benutzer kann zwischen </p><div class="fragment"><div class="line"><span class="comment">// START USER CODE: Setup </span></div>
+</div><!-- fragment --><p> und </p><div class="fragment"><div class="line"><span class="comment">// END USER CODE: Setup </span></div>
+</div><!-- fragment --><p> seinen Code hinzufügen. Der User kann hier die angeschlossenen Sensoren und Aktoren initialisieren. <br  />
+Es wird auch empholen, um hier die erste Seite anzuzeigen. Dazu dient der folgende Code als Beispiel: <br  />
+</p><div class="fragment"><div class="line"><a class="code hl_variable" href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a> = 0;                              <span class="comment">// set currentPage</span></div>
+<div class="line">wio_disp.<a class="code hl_function" href="classwio__display.html#afe5b2d7ccd6d2b8ff7c161aa9821adec">drawPage</a>(<a class="code hl_variable" href="main_8cpp.html#a84ad797bb04f41d1c79aa573addc579e">pages_array</a>[<a class="code hl_variable" href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a>]);  <span class="comment">// draw Page No. 0 (= currentPage)</span></div>
+<div class="ttc" id="aclasswio__display_html_afe5b2d7ccd6d2b8ff7c161aa9821adec"><div class="ttname"><a href="classwio__display.html#afe5b2d7ccd6d2b8ff7c161aa9821adec">wio_display::drawPage</a></div><div class="ttdeci">void drawPage(page_t p)</div><div class="ttdoc">Seite zeichnen.</div><div class="ttdef"><b>Definition:</b> wio_display.cpp:202</div></div>
+<div class="ttc" id="amain_8cpp_html_a0297477961006dd1c7ec0e5d9462f5e8"><div class="ttname"><a href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a></div><div class="ttdeci">int currentPage</div><div class="ttdoc">current page, needed for button actions</div><div class="ttdef"><b>Definition:</b> main.cpp:84</div></div>
+<div class="ttc" id="amain_8cpp_html_a84ad797bb04f41d1c79aa573addc579e"><div class="ttname"><a href="main_8cpp.html#a84ad797bb04f41d1c79aa573addc579e">pages_array</a></div><div class="ttdeci">page_t pages_array[]</div><div class="ttdoc">extern Page Array, is coded in pages.c</div><div class="ttdef"><b>Definition:</b> pages.c:21</div></div>
+</div><!-- fragment --><p> Mit diesem Code wird die aktuelle Seite gesetzt und die komplette Seite gezeichnet.</p>
+<h1><a class="anchor" id="loop_section"></a>
+Loop Funktion (Main)</h1>
+<p >Die loop-Funktion wird nach der setup-Funktion aufgerufen. Die loop-Funktion wird, auch ohne Endlosschleife, immer wieder ausgeführt. <br  />
+Die Funktion ist in drei Bereiche unterteilt: <a class="el" href="page_main_cpp.html#button_handler">Button Handler</a>, <a class="el" href="page_main_cpp.html#page_dependet_tasks">Seitenabhängige Aufgaben</a> und <a class="el" href="page_main_cpp.html#periodic_tasks">Periodische Aufgaben</a>.</p>
+<h2><a class="anchor" id="button_handler"></a>
+Button Handler</h2>
+<p >In diesem Bereich werden die Taster ausgewertet. Es werden alle Taster nacheinander abgefragt. Die Taster sind low-active. Das bedeutet, dass <code>FALSE</code> gelesen wird, wenn der Taster gedrückt ist. Ist ein Taster gedrückt, wird mit einem <code>switch</code> und der Variabel <a class="el" href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a> ermittelt, welche Seite momentan angezeit. <br  />
+ <br  />
+  Der Taster wird ausgelesen. Ist der Taster Gedrückt, ist das Signal <code>low</code> </p><div class="fragment"><div class="line">  <span class="keywordflow">if</span> (digitalRead(WIO_5S_DOWN) == LOW)    <span class="comment">// 5-Way-Switch slided Down</span></div>
+<div class="line">  {</div>
+</div><!-- fragment --><p> Um den Taster zu entprellen, wird ganz simple wird kurz gewartet. </p><div class="fragment"><div class="line">    delay(100);</div>
+</div><!-- fragment --><p> Mit einem <code>Switch</code> wird ermittelt, welche Seite aktuell angezeigt wird. </p><div class="fragment"><div class="line">    <span class="keywordflow">switch</span>(<a class="code hl_variable" href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a>)</div>
+<div class="line">    {</div>
+</div><!-- fragment --><p> In diesem Bereich kann der Benutzer den Code programmieren, welcher ausgeführt wird, wenn die "DOWN"-Taste des 5-Weg-Schalter gedrückt wurde und die aktuelle Seite die Seite 1 ist. </p><div class="fragment"><div class="line">      <span class="keywordflow">case</span> 1:</div>
+<div class="line">        <span class="comment">// START USER CODE: PAGE 1 </span></div>
+<div class="line">        </div>
+<div class="line">        <span class="comment">// END USER CODE: PAGE 1</span></div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+</div><!-- fragment --><p> In der Vorlage ist nur der Fall <code> currentPage == 1</code> und der Default Fall programmiert. Weitere Fälle können vom Benutzer programmiert werden. </p><div class="fragment"><div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+</div><!-- fragment --> <dl class="section see"><dt>Siehe auch</dt><dd><a class="el" href="page_wio_terminal.html#buttons_wio_section">WIO Terminal - Taster</a></dd></dl>
+<h2><a class="anchor" id="page_dependet_tasks"></a>
+Seitenabhängige Aufgaben</h2>
+<p >In diesem Abschnitt werden seitenabhängige Aufgaben abgearbeitet. Mit einem <code>switch-case</code> wird <a class="el" href="main_8cpp.html#a0297477961006dd1c7ec0e5d9462f5e8">currentPage</a> ausgewertet und so die akuelle Seite ermittelt. Somit kann z.B. ein Sensorwert nur ausgelesen werden, wenn er auch auf der Seite angezeigt wird. In der Vorlage sind nur die Fälle <code> currentPage == 0</code> und <code> currentPage == 1</code> vorprogrammiert. Zwischen </p><div class="fragment"><div class="line"><span class="comment">// START USER CODE: Specific Page X Code </span></div>
+</div><!-- fragment --><p> und </p><div class="fragment"><div class="line"><span class="comment">// END USER CODE: Specific Page X Code </span></div>
+</div><!-- fragment --><p> kann der Benutzer den Seitenabhängigen Code einfügen. <br  />
+ <br  />
+ Aufgaben die bei jedem loop-Durchlauf ausgeführt werden müssen, können zwischen </p><div class="fragment"><div class="line"><span class="comment">// START USER CODE: loop Code </span></div>
+</div><!-- fragment --><p> und </p><div class="fragment"><div class="line"><span class="comment">// END USER CODE: loop Code </span></div>
+</div><!-- fragment --><p> eingefügt werden.</p>
+<h2><a class="anchor" id="periodic_tasks"></a>
+Periodische Aufgaben</h2>
+<p >Nicht jede Aufgabe muss bei jedem Durchlauf ausgeführt werden. Einge Aufgaben müssen in einem gewissen Intervall ausgeführt werden. Zum Beispiel muss ein gemessener Wert nur alle 10 Sekunden über MQTT gesendet werden. Für diesen Fall gibt es die Funktion <a class="el" href="main_8cpp.html#ace6f96c5f8bfcd98de2277be4b429de0">periodicTasks()</a>. <br  />
+ <br  />
+ In dieser Funktion wird bei jedem Durchlauf die aktuelle Zeit seit Neustart mit <code>millis()</code> ausgelesen und in der Variabel <code>currentMillis</code> gespeichert. Die Funktion <code>millis()</code> gibt die vergangene Zeit seit dem Neustart in Millisekunden zurück. <br  />
+Im Array <code>previousMillis</code> sind die Zeiten gespeichert, wann die entsprechende Aufgabe zuletzt aufgerufen wurde. Mit einer Konstanten kann nun die Intervallzeit gesetzt werden. <br  />
+Ist nun die Differenz von <code>currentMillis</code> und <code> previousMillis[X]</code> grösser als der Intervall, soll die Aufgabe wieder ausgeführt werden. <br  />
+ <br  />
+ In der Vorlage wurde ein Teil einer periodischen Aufgabe vorprogrammiert. <br  />
+</p><ul>
+<li>vordefinierter Intervall: <a class="el" href="main_8cpp.html#a01d975ae2646716d81b3089dec30f62d">userDefinedIntervall</a></li>
+<li>Vorherige Zeit speichern: in <code> previousMillis[3]</code> speichern</li>
+<li>Intervallablauf abfragen: <code> if((currentMillis - previousMillis[X] &gt;= userDefinedIntervall) || previousMillis[3] == 0)</code></li>
+<li>Vorherige Zeit aktualisieren: <code> previousMillis[3] = currentMillis;</code></li>
+</ul>
+<h3><a class="anchor" id="other_tasks_subsubsection"></a>
+weitere periodische Aufgaben</h3>
+<p >Will der Benutzer weitere periodische Aufgaben ausführen auch mit unterschiedlichen Intervallen, muss folgendes hinzugefügt werden:</p>
+<p ><b> 1. Intervallkonstante setzen </b> Zwischen <code> // START USER CODE: Global Variables</code> und <code> // END USER CODE: Global Variables</code> können weitere Intervallkonstanten nach folgender Vorlage definiert werden. Der Wert <code>X</code> für die Konstante ist in Millisekunden. </p><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">long</span> <a class="code hl_variable" href="main_8cpp.html#a01d975ae2646716d81b3089dec30f62d">userDefinedIntervall</a> = X; </div>
+<div class="ttc" id="amain_8cpp_html_a01d975ae2646716d81b3089dec30f62d"><div class="ttname"><a href="main_8cpp.html#a01d975ae2646716d81b3089dec30f62d">userDefinedIntervall</a></div><div class="ttdeci">const long userDefinedIntervall</div><div class="ttdoc">Interval time for user defined perdiodic task.</div><div class="ttdef"><b>Definition:</b> main.cpp:91</div></div>
+</div><!-- fragment --><p ><b> 2. Array previousMillis erweitern </b> in der Funktion <a class="el" href="main_8cpp.html#ace6f96c5f8bfcd98de2277be4b429de0">periodicTasks()</a> muss das Array <code> previousMillis[]</code> erweitert werden. Jede periodische Aufgabe muss die Zeit abspeichern, wann die Aufgabe zuletzt ausgeführt wurde. da previousMillis ein Array ist, hat jede periodische Aufgabe eine Indexnummer:</p><ul>
+<li>Index 0: einen WiFi-Scan durchzuführen</li>
+<li>Index 1: den MQTT Status auswerten</li>
+<li>Index 2: die Interface Icons auf dem Display aktualisieren</li>
+<li>Index 3: vorbereitet für den Benutzer</li>
+<li>Index =&gt; 4: für Benutzer</li>
+</ul>
+<p ><b> 3. Intervall abfrage </b> In der Funktion muss nun noch die Abfrage, ob das Intervall schon überschritten ist, hinzugefügt werden. Dazu kann folgender Code verwendet werden: </p><div class="fragment"><div class="line"><span class="keywordflow">if</span>((currentMillis - previousMillis[X] &gt;= <a class="code hl_variable" href="main_8cpp.html#a01d975ae2646716d81b3089dec30f62d">userDefinedIntervall</a>) || previousMillis[X] == 0)</div>
+<div class="line">{</div>
+<div class="line">     previousMillis[X] = currentMillis;      <span class="comment">// refresh previousMillis</span></div>
+<div class="line">     <span class="comment">// START USER CODE: user periodic task</span></div>
+<div class="line"> </div>
+<div class="line">     <span class="comment">// END USER CODE: user periodic task</span></div>
+<div class="line"> }</div>
+</div><!-- fragment --> <dl class="section attention"><dt>Achtung</dt><dd>Im Code muss noch das <code>X</code> durch die richtige Indexnummer und <code>userDefinedIntervall</code> durch die richtige Konstante ersetzt werden.</dd></dl>
+<dl class="section author"><dt>Autor</dt><dd>Beat Sturzenegger </dd></dl>
+<dl class="section date"><dt>Datum</dt><dd>13.02.2022 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>
