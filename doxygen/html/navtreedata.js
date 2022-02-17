@@ -25,6 +25,16 @@
 var NAVTREE =
 [
   [ "WIO Terminal Template", "index.html", [
+    [ "Aufbau main.cpp", "page_main_cpp.html", [
+      [ "Setup Funktion", "page_main_cpp.html#setup_section", null ],
+      [ "Loop Funktion (Main)", "page_main_cpp.html#loop_section", [
+        [ "Button Handler", "page_main_cpp.html#button_handler", null ],
+        [ "Seitenabhängige Aufgaben", "page_main_cpp.html#page_dependet_tasks", null ],
+        [ "Periodische Aufgaben", "page_main_cpp.html#periodic_tasks", [
+          [ "weitere periodische Aufgaben", "page_main_cpp.html#other_tasks_subsubsection", null ]
+        ] ]
+      ] ]
+    ] ],
     [ "Ausstehende Aufgaben", "todo.html", null ],
     [ "Datenstrukturen", "annotated.html", [
       [ "Datenstrukturen", "annotated.html", "annotated_dup" ],

@@ -12,22 +12,105 @@
  * @endcode
  * Mit diesem Code wird die aktuelle Seite gesetzt und die komplette Seite gezeichnet.
  * 
- * @section loop_section
+ * @section loop_section Loop Funktion (Main)
  * Die loop-Funktion wird nach der setup-Funktion aufgerufen. Die loop-Funktion wird, auch ohne Endlosschleife, 
  * immer wieder ausgeführt. \n
  * Die Funktion ist in drei Bereiche unterteilt: @ref button_handler, @ref page_dependet_tasks und @ref periodic_tasks.
  * 
  * @subsection button_handler Button Handler
+ * In diesem Bereich werden die Taster ausgewertet. Es werden alle Taster nacheinander abgefragt. Die Taster sind 
+ * low-active. Das bedeutet, dass @c FALSE gelesen wird, wenn der Taster gedrückt ist. Ist ein Taster 
+ * gedrückt, wird mit einem @c switch und der Variabel @ref currentPage ermittelt, welche Seite momentan angezeit. \n \n
  * 
+ * @dontinclude main.cpp
+ * Der Taster wird ausgelesen. Ist der Taster Gedrückt, ist das Signal @c low
+ * @skip (digitalRead(WIO_5S_DOWN) 
+ * @until {
+ *
+ * Um den Taster zu entprellen, wird ganz simple wird kurz gewartet.
+ * @skipline delay
+ *
+ * Mit einem @c Switch wird ermittelt, welche Seite aktuell angezeigt wird.
+ * @skip switch
+ * @until {
+ *
+ * In diesem Bereich kann der Benutzer den Code programmieren, welcher ausgeführt 
+ * wird, wenn die "DOWN"-Taste des 5-Weg-Schalter gedrückt wurde und die aktuelle Seite die Seite 1 ist.
+ * @skip case
+ * @until break
+ * 
+ * In der Vorlage ist nur der Fall <tt> currentPage == 1</tt> und der Default Fall programmiert. 
+ * Weitere Fälle können vom Benutzer programmiert werden.
+ * @skip default
+ * @until }
+ *
+ * @see @ref buttons_wio_section "WIO Terminal - Taster"
+ *
  * @subsection page_dependet_tasks Seitenabhängige Aufgaben
+ * In diesem Abschnitt werden seitenabhängige Aufgaben abgearbeitet. Mit einem @c switch-case wird @ref currentPage
+ * ausgewertet und so die akuelle Seite ermittelt. Somit kann z.B. ein Sensorwert nur ausgelesen werden, wenn er 
+ * auch auf der Seite angezeigt wird. In der Vorlage sind nur die Fälle <tt> currentPage == 0</tt> und 
+ * <tt> currentPage == 1</tt> vorprogrammiert. Zwischen @code // START USER CODE: Specific Page X Code @endcode und 
+ * @code // END USER CODE: Specific Page X Code @endcode kann der Benutzer den Seitenabhängigen Code einfügen. \n \n
+ * 
+ * Aufgaben die bei jedem loop-Durchlauf ausgeführt werden müssen, können zwischen @code // START USER CODE: loop Code @endcode 
+ * und @code // END USER CODE: loop Code @endcode eingefügt werden.
  * 
  * @subsection periodic_tasks Periodische Aufgaben
+ * Nicht jede Aufgabe muss bei jedem Durchlauf ausgeführt werden. Einge Aufgaben müssen in einem gewissen Intervall
+ * ausgeführt werden. Zum Beispiel muss ein gemessener Wert nur alle 10 Sekunden über MQTT gesendet werden.
+ * Für diesen Fall gibt es die Funktion @ref periodicTasks(). \n \n
+ *
+ * In dieser Funktion wird bei jedem Durchlauf die aktuelle Zeit seit Neustart mit @c millis() ausgelesen und in der
+ * Variabel @c currentMillis gespeichert. Die Funktion @c millis() gibt die vergangene Zeit seit dem Neustart in 
+ * Millisekunden zurück. \n
+ * Im Array @c previousMillis sind die Zeiten gespeichert, wann die entsprechende Aufgabe zuletzt aufgerufen wurde.
+ * Mit einer Konstanten kann nun die Intervallzeit gesetzt werden. \n
+ * Ist nun die Differenz von @c currentMillis und <tt> previousMillis[X]</tt> grösser als der Intervall, soll die Aufgabe
+ * wieder ausgeführt werden. \n \n
  * 
+ * In der Vorlage wurde ein Teil einer periodischen Aufgabe vorprogrammiert. \n
+ * - vordefinierter Intervall:  @ref userDefinedIntervall
+ * - Vorherige Zeit speichern:  in <tt> previousMillis[3]</tt> speichern
+ * - Intervallablauf abfragen:  <tt> if((currentMillis - previousMillis[X] >= userDefinedIntervall) || previousMillis[3] == 0)</tt>
+ * - Vorherige Zeit aktualisieren:  <tt> previousMillis[3] = currentMillis;</tt>
+ *
+ * @subsubsection other_tasks_subsubsection weitere periodische Aufgaben
+ * Will der Benutzer weitere periodische Aufgaben ausführen auch mit unterschiedlichen Intervallen, muss folgendes 
+ * hinzugefügt werden:
+ *
+ * <b> 1. Intervallkonstante setzen </b>
+ * Zwischen <tt> // START USER CODE: Global Variables</tt> und <tt> // END USER CODE: Global Variables</tt> können 
+ * weitere Intervallkonstanten nach folgender Vorlage definiert werden. Der Wert @c X für die Konstante ist in Millisekunden.
+ * @code const long userDefinedIntervall = X; @endcode
+ *
+ * <b> 2. Array previousMillis erweitern </b>
+ * in der Funktion @ref periodicTasks() muss das Array <tt> previousMillis[]</tt> erweitert werden. Jede periodische Aufgabe
+ * muss die Zeit abspeichern, wann die Aufgabe zuletzt ausgeführt wurde. da previousMillis ein Array ist, hat jede 
+ * periodische Aufgabe eine Indexnummer:
+ * - Index 0:     einen WiFi-Scan durchzuführen
+ * - Index 1:     den MQTT Status auswerten
+ * - Index 2:     die Interface Icons auf dem Display aktualisieren
+ * - Index 3:     vorbereitet für den Benutzer
+ * - Index => 4:  für Benutzer
  * 
+ * <b> 3. Intervall abfrage </b>
+ * In der Funktion muss nun noch die Abfrage, ob das Intervall schon überschritten ist, hinzugefügt werden. Dazu kann 
+ * folgender Code verwendet werden:
+ * @code
+ * if((currentMillis - previousMillis[X] >= userDefinedIntervall) || previousMillis[X] == 0)
+ * {
+ *      previousMillis[X] = currentMillis;      // refresh previousMillis
+ *      // START USER CODE: user periodic task
+ *
+ *      // END USER CODE: user periodic task
+ *  }
+ * @endcode
+ * @attention Im Code muss noch das @c X durch die richtige Indexnummer und @c userDefinedIntervall durch die richtige Konstante ersetzt werden.
  * 
  * 
  * @author Beat Sturzenegger
- * @date 2022-02-13
+ * @date 13.02.2022
  * @copyright Copyright (c) 2022
  * 
  */
