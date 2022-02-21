@@ -370,7 +370,7 @@ void wio_display::drawHeader(char *title, int sd_card_status, int mqtt_status, i
  */
 void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e setting)
 {
-  char buf[20];
+  char buf[40];
   int value;
 
   tft.setFreeFont(FSS9);                    // set Font
@@ -393,7 +393,6 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       switch (l.setting)
       {
         case DECIMAL_PLACES_0:
-          if(strlen <= )
           sprintf(buf, "%.0f %s", l.value, l.text);
           break;
         case DECIMAL_PLACES_1:
