@@ -393,6 +393,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       switch (l.setting)
       {
         case DECIMAL_PLACES_0:
+          if(strlen <= )
           sprintf(buf, "%.0f %s", l.value, l.text);
           break;
         case DECIMAL_PLACES_1:
@@ -429,6 +430,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       break;
 
     case TIME:
+    {
       int sek_ = (int)l.value % 100;            // extract seconds from vlaue
       int min_ = ((int)l.value % 10000) / 100;  // extract minutes from value
       int hou_ = (int)l.value / 10000;          // extract hour from value
@@ -450,6 +452,10 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
           sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
       }
       tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draw value
+      }break;
+
+    case END_LINE_TYP:
+      Serial.println("The comment said not to use this!!!");
       break;
   }
 }
