@@ -65,7 +65,7 @@ char wlan_ip[16] = "-";           ///< IP-Adresse des WIO Terminal
 int wlan_strength = 0;            ///< Aktuelle WLAN Signalstärke
 int wlan_channel = 0;             ///< Benutze WLAN Kanal, wird genutzt für die Frequenzbanderkennung
 
-// MQTT arameters
+// MQTT parameters
 int mqtt_status = DISCONNECTED;   ///< MQTT Status (connected, disconnected, ...)
 bool mqtt_pub_status = false;     ///< MQTT Publish Status
 bool mqtt_sub_status = false;     ///< MQTT Subscribe Status
