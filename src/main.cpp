@@ -458,7 +458,7 @@ void callback(char* topic, byte* payload, unsigned int length)
   {
     case 0:
       // START USER CODE: first element of the topicList
-      
+      Serial.println(payload_str);  // Beispiel
 
       // END USER CODE: first element of the topicList
       break;
