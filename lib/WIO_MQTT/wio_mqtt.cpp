@@ -63,14 +63,15 @@ void wio_mqtt::initMQTT(void (&func)(char *, byte *, unsigned int))
  * 
  * @param topic Topic (Name) der Nachricht
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
+ * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(char *topic, char *payload)
+void wio_mqtt::publishTopic(char *topic, char *payload, bool retain)
 {
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended
   Serial.println("PUBLISH");                            // print infos to SerialPort
   Serial.print("Topic: "); Serial.println(topic);
   Serial.print("Payload: "); Serial.println(payload);
-  client.publish(topic, payload);                       // publish the message
+  client.publish(topic, payload, retain);                       // publish the message
 }
 
 /**
