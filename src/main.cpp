@@ -75,7 +75,8 @@ char topicList[][TOPIC_LENGTH] =  ///< Liste der MQTT Topics, die abboniert werd
                                   ///< @todo Beispiel für MQTT
 {
   // START USER CODE: Subscribed Topics
-
+  "Example\0"   // Beispiel für ein Topic, Bitte löschen, wenn eigene Topics hinzugefügt werden
+  
   // END USER CODE: Subscribed Topics
 };
 
