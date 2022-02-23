@@ -587,7 +587,7 @@ void wio_display::drawIcons(int mqtt_status, bool mqtt_pub, bool mqtt_sub, int w
   // WLAN Status
   if((old_wlan_status != wlan_status) || forced)   // has something changed or is draw forced
   {
-    if(wlan_status = 0)     // if disconnected to wlan
+    if(wlan_status == 0)     // if disconnected to wlan
     {
       wlan_strength = 99;   // set a really low wlan strength
     }
