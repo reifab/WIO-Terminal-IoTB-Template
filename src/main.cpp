@@ -48,7 +48,7 @@
 ********************************************************************************************/
 void periodicTasks();
 void callback(char* topic, byte* payload, unsigned int length);
-void addLogText(char *text, bool append);
+void addLogText(const char *text, bool append);
 
 // START USER CODE: Functionprototypes
 
@@ -76,7 +76,7 @@ char topicList[][TOPIC_LENGTH] =  ///< Liste der MQTT Topics, die abboniert werd
 {
   // START USER CODE: Subscribed Topics
   "Example\0"   // Beispiel für ein Topic, Bitte löschen, wenn eigene Topics hinzugefügt werden
-  
+
   // END USER CODE: Subscribed Topics
 };
 
@@ -484,6 +484,6 @@ void callback(char* topic, byte* payload, unsigned int length)
  * @param log_ Text der hinzugefügt werden soll
  * @param append Soll der Text angehängt ( @p true ) oder auf eine neue Zeile geschrieben ( @p false ) werden
  */
-void addLogText(char *text, bool append){
+void addLogText(const char *text, bool append){
   wio_disp.addLogText(text, append);
 }

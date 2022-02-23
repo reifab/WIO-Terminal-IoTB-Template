@@ -299,7 +299,7 @@ void wio_display::loadingScreen(int modus)
  * @param log_ Text der hinzugefügt werden soll
  * @param append Soll der Text angehängt ( @p true ) oder auf eine neue Zeile geschrieben ( @p false ) werden
  */
-void wio_display::addLogText(char *log_, bool append)
+void wio_display::addLogText(const char *log_, bool append)
 {
   static int line_cnt = 0;
 

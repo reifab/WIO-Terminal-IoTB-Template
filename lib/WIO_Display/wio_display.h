@@ -46,7 +46,7 @@ class wio_display
     void updateLine(page_t p, unsigned int line_nr, draw_setting_e setting);      /**< Zeile zeichnen */
     void updateInterfaceStatus();                                                 ///< Interface Icons updaten
     void loadingScreen(int);                                                      ///< Loading Screen aktivieren/deaktivieren
-    void addLogText(char * log_, bool append);                                    ///< Log Text hinzufügen
+    void addLogText(const char * log_, bool append);                                    ///< Log Text hinzufügen
     
   private:
     void drawHeader(char *title, int sd_card_status, int mqtt_status, int wlan_status, int wlan_strength, int wlan_channel);

@@ -21,7 +21,7 @@
 ********************************************************************************************/
 WiFiClient wioClient;
 PubSubClient client(wioClient);
-typedef void (*cbLog_)  (char *s, bool b);
+typedef void (*cbLog_)  (const char *s, bool b);
 static cbLog_ cbMQTTLog; 
 
 /********************************************************************************************
@@ -33,7 +33,7 @@ static cbLog_ cbMQTTLog;
  * 
  * @param func Funktionsadresse der Funktion für das Hinzufügen des Log Text
  */
-wio_mqtt::wio_mqtt(void (&func)(char *, bool b))
+wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
 {
   cbMQTTLog = func;
 }

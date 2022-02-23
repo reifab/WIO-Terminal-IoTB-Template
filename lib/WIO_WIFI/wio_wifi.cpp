@@ -21,7 +21,7 @@
 static bool interface_ready = false;
 static IPAddress ip;
 static char logText[50];
-typedef void (*cbLog)  (char *s, bool b);
+typedef void (*cbLog)  (const char *s, bool b);
 static cbLog cbWiFiLog;
 
 
@@ -39,7 +39,7 @@ void onWiFiEvent(WiFiEvent_t event);
  * 
  * @param func Funktionsadresse der Funktion für das Hinzufügen des Log Text
  */
-wio_wifi::wio_wifi(void (&func)(char *, bool b))
+wio_wifi::wio_wifi(void (&func)(const char *, bool b))
 {
   cbWiFiLog = func;
 }

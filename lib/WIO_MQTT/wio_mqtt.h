@@ -30,7 +30,7 @@ extern const char *mqtt_id;         ///< defined in secrets.h
 class wio_mqtt
 {
   public:
-    wio_mqtt(void (&)(char *, bool));                             ///< Konstruktor
+    wio_mqtt(void (&)(const char *, bool));                             ///< Konstruktor
     void initMQTT(void (&)(char*, byte*, unsigned int));          ///< MQTT initialisieren
     void publishTopic(char *topic, char *payload, bool retain);   ///< Ein Topic publizieren
     void subscribeTopic(char *topic);                             ///< Ein Topic abonnieren

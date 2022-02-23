@@ -26,7 +26,7 @@ extern const char* password;    ///< defined in secrets.h
 class wio_wifi
 {
   public:
-    wio_wifi(void (&)(char *, bool));   ///< Konstruktor
+    wio_wifi(void (&)(const char *, bool));   ///< Konstruktor
     void initWifi(void);                ///< WiFi initialisieren
     int WiFiStatus();                   ///< WiFi Verbindungsstatus auslesen
     void getIP(char *);                 ///< aktuelle IP Adresse auslesen
