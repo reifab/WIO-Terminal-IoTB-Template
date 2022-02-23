@@ -2,7 +2,7 @@
  * @file wio_wifi.h
  * @author Beat Sturzenegger
  * @brief IoTB WiFi Bibliothek für das WIO Terminal
- * @version 1.0
+ * @version 1.1
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022

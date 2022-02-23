@@ -3,7 +3,7 @@
  * @author Beat Sturzenegger
  * @brief Main File vom WIO Terminal Template
  * Du kannst deinen Code zwischen <tt>"START USER CODE"</tt> und <tt>"END USER CODE"</tt>
- * @version 1.1
+ * @version 1.2
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022

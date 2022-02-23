@@ -2,7 +2,7 @@
  * @file wio_display.h
  * @author Beat Sturzenegger
  * @brief IoTB Bibliothek für den WIO Terminal Display.
- * @version 1.0
+ * @version 1.2
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022

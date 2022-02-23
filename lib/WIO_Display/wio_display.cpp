@@ -8,7 +8,7 @@
  * Zusätzlich werden gewisse Interface Zustände angezeigt, sofern diese Verwendet werden.
  * zu den Interface gehören den WiFi, MQTT und SD Karte. \n 
  * @todo Auf einer Page die Interface Zustände genauer beschreiben. Coming soon...
- * @version 1.1
+ * @version 1.2
  * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
