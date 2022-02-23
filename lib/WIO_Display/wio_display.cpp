@@ -370,7 +370,7 @@ void wio_display::drawHeader(char *title, int sd_card_status, int mqtt_status, i
  */
 void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e setting)
 {
-  char buf[20];
+  char buf[40];
   int value;
 
   tft.setFreeFont(FSS9);                    // set Font
@@ -385,7 +385,16 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
   switch (l.line_typ)
   {
     case TEXT:
-      tft.drawString(l.text, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));  // draw line text
+      if(tft.textWidth(l.text) <= 140)
+      {
+        tft.drawString(l.text, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));  // draw line text
+      }
+      else
+      {
+        tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws Error
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
+      }
       break;
 
     case NUMERIC:
@@ -407,7 +416,16 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
         default:
           sprintf(buf, "%.2f %s", l.value, l.text);
       }
-      tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws value
+      if(tft.textWidth(buf) <= 140)
+      {
+        tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws value
+      }
+      else
+      {
+        tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws Error
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
+      }
       break;
 
     case BAR:
@@ -429,6 +447,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       break;
 
     case TIME:
+    {
       int sek_ = (int)l.value % 100;            // extract seconds from vlaue
       int min_ = ((int)l.value % 10000) / 100;  // extract minutes from value
       int hou_ = (int)l.value / 10000;          // extract hour from value
@@ -450,6 +469,10 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
           sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
       }
       tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draw value
+      }break;
+
+    case END_LINE_TYP:
+      Serial.println("The comment said not to use this!!!");
       break;
   }
 }
