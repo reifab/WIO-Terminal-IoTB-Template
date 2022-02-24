@@ -507,3 +507,8 @@ void callback(char* topic, byte* payload, unsigned int length)
 void addLogText(const char *text, bool append){
   wio_disp.addLogText(text, append);
 }
+
+// START USER CODE: user functions
+      
+
+// END USER CODE: user functions
