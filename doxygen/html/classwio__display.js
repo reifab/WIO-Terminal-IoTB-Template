@@ -1,7 +1,7 @@
 var classwio__display =
 [
     [ "wio_display", "classwio__display.html#a37612b6ed5c6ebf54cb17a6435bb5252", null ],
-    [ "addLogText", "classwio__display.html#a6150fd65662476edbb3ea9c3f8fcea39", null ],
+    [ "addLogText", "classwio__display.html#afc021237f20f6425e4bda70c464f3bab", null ],
     [ "drawPage", "classwio__display.html#afe5b2d7ccd6d2b8ff7c161aa9821adec", null ],
     [ "initDisplay", "classwio__display.html#a1a9171e2595ab20c0d50a6b9ba243997", null ],
     [ "loadingScreen", "classwio__display.html#abda0e49d100fd4c1029fb74edfdda8c3", null ],

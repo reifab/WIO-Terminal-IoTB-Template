@@ -29,6 +29,7 @@ class wio_wifi
     wio_wifi(void (&)(const char *, bool));   ///< Konstruktor
     void initWifi(void);                ///< WiFi initialisieren
     int WiFiStatus();                   ///< WiFi Verbindungsstatus auslesen
+    void reconnect();                   ///< verbindet sich wieder mit dem WLAN
     void getIP(char *);                 ///< aktuelle IP Adresse auslesen
     const char *getSSID();              ///< SSID aus dem secret.h File
     void scanNetwork(void);             ///< nach Netzwerken suchen

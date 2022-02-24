@@ -55,7 +55,10 @@ void wio_mqtt::initMQTT(void (&func)(char *, byte *, unsigned int))
   client.setServer(mqtt_server, 1883);              // set MQTT broker url and port
   client.setCallback(_callback);                    // set callback function
   delay(1000);                                      // 1000ms delay
-  reconnect();                                      // connect to MQTT broker
+  while (!client.connected())     // Loop until we're reconnected
+  {
+    reconnect();                                      // connect to MQTT broker
+  }
 }
 
 /**
@@ -144,7 +147,7 @@ bool wio_mqtt::isConnected()
  */
 void wio_mqtt::reconnect()
 {
-  while (!client.connected())     // Loop until we're reconnected
+  //while (!client.connected())     // Loop until we're reconnected
   {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
@@ -171,7 +174,7 @@ void wio_mqtt::reconnect()
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);
+      //delay(5000);
     }
   }
 }

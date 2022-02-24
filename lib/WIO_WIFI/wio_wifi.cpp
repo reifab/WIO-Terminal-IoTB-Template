@@ -78,6 +78,17 @@ void wio_wifi::initWifi(void)
 }
 
 /**
+ * @brief Diese Methode verbindet sich mit dem Access Point
+ * 
+ */
+void wio_wifi::reconnect(void)
+{
+  Serial.println("Reconnect WiFi");
+  WiFi.disconnect();                        // diconnect any connection
+  WiFi.begin(ssid, password);
+}
+
+/**
  * @brief Diese Methode gibt die Signalstärke (RSSI) zurück.
  * @note Es wird Empfohlen vorher das Netzwerk zu scannen mit @ref scanNetwork() , damit man 
  * herausfinden kann welcher Indexnummer die verbundene Verbindung hat.

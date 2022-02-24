@@ -11,6 +11,7 @@ var pages_8h =
       [ "END_LINE_TYP", "pages_8h.html#a186afb34592e38cfaec9e9cbaa742e96a09bf92ff863773c93a71fa7d91de56a2", null ]
     ] ],
     [ "settings_e", "pages_8h.html#a8e12654423c4af34f9ad7b0b205ad915", [
+      [ "DEFAULT", "pages_8h.html#a8e12654423c4af34f9ad7b0b205ad915a88ec7d5086d2469ba843c7fcceade8a6", null ],
       [ "DECIMAL_PLACES_0", "pages_8h.html#a8e12654423c4af34f9ad7b0b205ad915aeffb93f050e055e646610874320c45aa", null ],
       [ "DECIMAL_PLACES_1", "pages_8h.html#a8e12654423c4af34f9ad7b0b205ad915aa120314665ba110e4a714a8ed2e356e4", null ],
       [ "DECIMAL_PLACES_2", "pages_8h.html#a8e12654423c4af34f9ad7b0b205ad915ac0377893bec6ee3afd799b2a311cb4cc", null ],

@@ -135,9 +135,9 @@ Funktionen</h2></td></tr>
 <tr class="memdesc:ac3a129f66dc859e2b7279565f4e1de78"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT Callback Function. Diese Funktion wird automatisch aufgerufen, wenn sich ein abboniertes MQTT Topic ändert.<br  />
 Im String <code><b>payload_str</code></b> steht der Inhalt des Topics.  <a href="main_8cpp.html#ac3a129f66dc859e2b7279565f4e1de78">Mehr ...</a><br /></td></tr>
 <tr class="separator:ac3a129f66dc859e2b7279565f4e1de78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09a7fb98da5cfc53a8da3aeedb0ddc45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a09a7fb98da5cfc53a8da3aeedb0ddc45">addLogText</a> (char *text, bool append)</td></tr>
-<tr class="memdesc:a09a7fb98da5cfc53a8da3aeedb0ddc45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diese Funktion fügt einen Text zum Log Text hinzu.  <a href="main_8cpp.html#a09a7fb98da5cfc53a8da3aeedb0ddc45">Mehr ...</a><br /></td></tr>
-<tr class="separator:a09a7fb98da5cfc53a8da3aeedb0ddc45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5bc69356319b8729e84c6e7e4278352"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352">addLogText</a> (const char *text, bool append)</td></tr>
+<tr class="memdesc:ad5bc69356319b8729e84c6e7e4278352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diese Funktion fügt einen Text zum Log Text hinzu.  <a href="main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352">Mehr ...</a><br /></td></tr>
+<tr class="separator:ad5bc69356319b8729e84c6e7e4278352"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top"><a id="a4fc01d736fe50cf5b977f755b675f11d" name="a4fc01d736fe50cf5b977f755b675f11d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setup</b> ()</td></tr>
 <tr class="memdesc:a4fc01d736fe50cf5b977f755b675f11d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup Funktion <br  />
@@ -216,16 +216,16 @@ const long&#160;</td><td class="memItemRight" valign="bottom"><b>userDefinedInte
 <a class="el" href="classwio__display.html">wio_display</a>&#160;</td><td class="memItemRight" valign="bottom"><b>wio_disp</b> = <a class="el" href="classwio__display.html">wio_display</a>(&amp;<a class="el" href="main_8cpp.html#a1c3998e1361f3f06579b25a42553b759">mqtt_status</a>, &amp;<a class="el" href="main_8cpp.html#a4786aa2644fcc6bff564fcf50225380f">mqtt_pub_status</a>, &amp;<a class="el" href="main_8cpp.html#ad54fa4c2b8da820dd7cda7e5d512bed0">mqtt_sub_status</a>, &amp;<a class="el" href="main_8cpp.html#a671377ad5e91aeef8d5ea15d641367d3">wlan_status</a>, &amp;<a class="el" href="main_8cpp.html#aa22d4a245ed8169d0b95be7f10f81072">wlan_strength</a>, &amp;<a class="el" href="main_8cpp.html#a5af44fb9605d466aa171520e649fb8e0">wlan_channel</a>)</td></tr>
 <tr class="separator:a4019e6dd6a36ac04a75b80b627c8301f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46c6d429e7374e1c0a324415e8cfcad2"><td class="memItemLeft" align="right" valign="top"><a id="a46c6d429e7374e1c0a324415e8cfcad2" name="a46c6d429e7374e1c0a324415e8cfcad2"></a>
-<a class="el" href="classwio__wifi.html">wio_wifi</a>&#160;</td><td class="memItemRight" valign="bottom"><b>wio_Wifi</b> = <a class="el" href="classwio__wifi.html">wio_wifi</a>(<a class="el" href="main_8cpp.html#a09a7fb98da5cfc53a8da3aeedb0ddc45">addLogText</a>)</td></tr>
+<a class="el" href="classwio__wifi.html">wio_wifi</a>&#160;</td><td class="memItemRight" valign="bottom"><b>wio_Wifi</b> = <a class="el" href="classwio__wifi.html">wio_wifi</a>(<a class="el" href="main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352">addLogText</a>)</td></tr>
 <tr class="separator:a46c6d429e7374e1c0a324415e8cfcad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af22c9f1b5bc42e27ca7ca6d02f335718"><td class="memItemLeft" align="right" valign="top"><a id="af22c9f1b5bc42e27ca7ca6d02f335718" name="af22c9f1b5bc42e27ca7ca6d02f335718"></a>
-<a class="el" href="classwio__mqtt.html">wio_mqtt</a>&#160;</td><td class="memItemRight" valign="bottom"><b>wio_MQTT</b> = <a class="el" href="classwio__mqtt.html">wio_mqtt</a>(<a class="el" href="main_8cpp.html#a09a7fb98da5cfc53a8da3aeedb0ddc45">addLogText</a>)</td></tr>
+<a class="el" href="classwio__mqtt.html">wio_mqtt</a>&#160;</td><td class="memItemRight" valign="bottom"><b>wio_MQTT</b> = <a class="el" href="classwio__mqtt.html">wio_mqtt</a>(<a class="el" href="main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352">addLogText</a>)</td></tr>
 <tr class="separator:af22c9f1b5bc42e27ca7ca6d02f335718"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
 <div class="textblock"><p >Main File vom WIO Terminal Template Du kannst deinen Code zwischen <code>"START USER CODE"</code> und <code>"END USER CODE"</code> </p>
 <dl class="section author"><dt>Autor</dt><dd>Beat Sturzenegger </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.1 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.2 </dd></dl>
 <dl class="section date"><dt>Datum</dt><dd>18.01.2022</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Noch zu erledigen:</a></b></dt><dd><p class="startdd">Handling, wenn WiFi verbindung weg ist. Steckt momentan in Endlosschleife bei <a class="el" href="classwio__mqtt.html#a3b8259e6f263afa75396d3f65d194a92">wio_mqtt::reconnect()</a> </p>
@@ -233,8 +233,8 @@ const long&#160;</td><td class="memItemRight" valign="bottom"><b>userDefinedInte
 <p class="enddd">Automatisches Verbinden mit WiFi</p>
 </dd></dl>
 </div><h2 class="groupheader">Dokumentation der Funktionen</h2>
-<a id="a09a7fb98da5cfc53a8da3aeedb0ddc45" name="a09a7fb98da5cfc53a8da3aeedb0ddc45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09a7fb98da5cfc53a8da3aeedb0ddc45">&#9670;&nbsp;</a></span>addLogText()</h2>
+<a id="ad5bc69356319b8729e84c6e7e4278352" name="ad5bc69356319b8729e84c6e7e4278352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5bc69356319b8729e84c6e7e4278352">&#9670;&nbsp;</a></span>addLogText()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,7 +242,7 @@ const long&#160;</td><td class="memItemRight" valign="bottom"><b>userDefinedInte
         <tr>
           <td class="memname">void addLogText </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>text</em>, </td>
         </tr>
         <tr>
@@ -387,6 +387,7 @@ Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
 <b>Initialisierung:</b><div class="fragment"><div class="line">=</div>
 <div class="line">{</div>
 <div class="line">  </div>
+<div class="line">  <span class="stringliteral">&quot;Example\0&quot;</span>   </div>
 <div class="line"> </div>
 <div class="line">  </div>
 <div class="line">}</div>

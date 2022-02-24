@@ -371,9 +371,9 @@ void periodicTasks()
           {
             wlan_strength = wio_Wifi.measureRSSI(i);  // read RSSI
             wlan_channel = wio_Wifi.readChannel(i);   // read WiFi channel
-            wio_Wifi.deleteScanResults();             // delete scan results and reset scan progress
             break;
           }
+          wio_Wifi.deleteScanResults();             // delete scan results and reset scan progress
         }
       }
     }
@@ -383,24 +383,31 @@ void periodicTasks()
 #ifdef WIO_MQTT_H
   if((currentMillis - previousMillis[1] >= mqttStateIntervall) || previousMillis[1] == 0)
   {
-    if(wio_MQTT.isConnected())    // check MQTT connection
+    if(wlan_status)
     {
-      mqtt_status = CONNECTED;
-      if(mqtt_status)
+      if(wio_MQTT.isConnected())    // check MQTT connection
       {
-        wio_MQTT.clientLoop();    // MQTT client loop
-        previousMillis[1] = currentMillis;                // refresh previousMillis
-        Serial.println("- update MQTT State");            // write Info to SerialPort
-        mqtt_pub_status = wio_MQTT.getPublishState();     // get publish state
-        wio_MQTT.setPublishState(false);                  // reset publish state in the mqtt library
-        mqtt_sub_status = wio_MQTT.getSubscribeState();   // get subscribe state
-        wio_MQTT.setSubscribeState(false);                // reset subscribe state in the mqtt library
+        mqtt_status = CONNECTED;
+        if(mqtt_status)
+        {
+          wio_MQTT.clientLoop();    // MQTT client loop
+          previousMillis[1] = currentMillis;                // refresh previousMillis
+          Serial.println("- update MQTT State");            // write Info to SerialPort
+          mqtt_pub_status = wio_MQTT.getPublishState();     // get publish state
+          wio_MQTT.setPublishState(false);                  // reset publish state in the mqtt library
+          mqtt_sub_status = wio_MQTT.getSubscribeState();   // get subscribe state
+          wio_MQTT.setSubscribeState(false);                // reset subscribe state in the mqtt library
+        }
+      }
+      else
+      {
+        mqtt_status = DISCONNECTED;
+        wio_MQTT.reconnect();         // reconnect to MQTT broker
       }
     }
     else
     {
       mqtt_status = DISCONNECTED;
-      wio_MQTT.reconnect();         // reconnect to MQTT broker
     }
   }
 #endif 
@@ -410,6 +417,19 @@ void periodicTasks()
     previousMillis[2] = currentMillis;      // refresh previousMillis
     Serial.println("- update Icons");       // write Info to SerialPort
     wlan_status = wio_Wifi.WiFiStatus();    // read WiFi status
+    if(wlan_status == DISCONNECTED)
+    {
+      wlan_strength = 99;
+      wlan_channel = 0;
+      wio_Wifi.reconnect();
+    }
+    else
+    {
+      if(wlan_strength == 99)
+      {
+        wlan_strength = -99;
+      }
+    }
     wio_disp.updateInterfaceStatus();       // update Interface status on the display
   }
 

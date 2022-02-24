@@ -2,7 +2,7 @@ var main_8cpp =
 [
     [ "CONNECTED", "main_8cpp.html#af6202935c026af12978d46a765dafb90", null ],
     [ "DISCONNECTED", "main_8cpp.html#a257a6419ffa5ae98d448cd33751f6436", null ],
-    [ "addLogText", "main_8cpp.html#a09a7fb98da5cfc53a8da3aeedb0ddc45", null ],
+    [ "addLogText", "main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352", null ],
     [ "callback", "main_8cpp.html#ac3a129f66dc859e2b7279565f4e1de78", null ],
     [ "loop", "main_8cpp.html#afe461d27b9c48d5921c00d521181f12f", null ],
     [ "periodicTasks", "main_8cpp.html#ace6f96c5f8bfcd98de2277be4b429de0", null ],
