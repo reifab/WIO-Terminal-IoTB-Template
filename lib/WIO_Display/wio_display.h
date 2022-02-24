@@ -2,7 +2,7 @@
  * @file wio_display.h
  * @author Beat Sturzenegger
  * @brief IoTB Bibliothek für den WIO Terminal Display.
- * @version 1.2
+ * @version 1.3
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -43,7 +43,7 @@ class wio_display
     void initDisplay();                                                           ///< Display initialisieren
     void drawPage(page_t p);                                                      ///< Seite zeichnen
     void updateContext(page_t p);                                                 ///< Seiten inhalt zeichnen
-    void updateLine(page_t p, unsigned int line_nr, draw_setting_e setting);      /**< Zeile zeichnen */
+    void updateLine(page_t p, unsigned int line_nr, draw_setting_e setting);      ///< Zeile zeichnen
     void updateInterfaceStatus();                                                 ///< Interface Icons updaten
     void loadingScreen(int);                                                      ///< Loading Screen aktivieren/deaktivieren
     void addLogText(const char * log_, bool append);                                    ///< Log Text hinzufügen

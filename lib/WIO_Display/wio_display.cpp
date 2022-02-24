@@ -8,7 +8,7 @@
  * Zusätzlich werden gewisse Interface Zustände angezeigt, sofern diese Verwendet werden.
  * zu den Interface gehören den WiFi, MQTT und SD Karte. \n 
  * @todo Auf einer Page die Interface Zustände genauer beschreiben. Coming soon...
- * @version 1.2
+ * @version 1.3
  * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
@@ -233,14 +233,14 @@ void wio_display::updateContext(page_t p)
  * @brief Diese Methode Zeichnet eine Zeile neu. Mit dem Übergabeparameter setting, kann eingestellt werden, 
  * ob die ganze Zeile (Name und Wert) oder nur der Inhalt (Wert) neu gezeichnet wird.
  * @param p Seite (Page). Von der übergebenen Seite werden die darin beinhalteten Zeilen gezeichnet.
- * @param line_nr Die Zeilen Nummer,welche neu gezeichnet werden soll. \n Mögliche Parameter: 1 - @ref NUMBERS_OF_LINES
+ * @param line_nr Die Zeilen Nummer, welche neu gezeichnet werden soll. \n Mögliche Parameter: 0 - @ref NUMBERS_OF_LINES -1
  * @param setting Eine Option, was alles neu gezeichnet werden soll. @ref draw_setting_e
  *  - @p FULL_LINE: Zeichnet die komplette Zeile neu
  *  - @p ONLY_VALUE: Zeichnet nur den Zeilenwert neu
  */
 void wio_display::updateLine(page_t p, unsigned int line_nr, draw_setting_e setting)
 {
-  drawPageLine(p.lines[line_nr - 1], line_nr, setting);
+  drawPageLine(p.lines[line_nr], line_nr, setting);
 }
 
 /**

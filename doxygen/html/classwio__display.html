@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('classwio__display.html',''); initResiz
 <tr class="memdesc:a63d570f9f63c5d6d5d3f4487fa8e43d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seiten inhalt zeichnen.  <a href="classwio__display.html#a63d570f9f63c5d6d5d3f4487fa8e43d6">Mehr ...</a><br /></td></tr>
 <tr class="separator:a63d570f9f63c5d6d5d3f4487fa8e43d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a91c15af57e9bffd822b5e80773d1a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__display.html#a7a91c15af57e9bffd822b5e80773d1a2">updateLine</a> (<a class="el" href="structpage__t.html">page_t</a> p, unsigned int line_nr, <a class="el" href="wio__display_8h.html#aabca61e764b3b6e4849ef83b7c9d0163">draw_setting_e</a> setting)</td></tr>
-<tr class="memdesc:a7a91c15af57e9bffd822b5e80773d1a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diese Methode Zeichnet eine Zeile neu. Mit dem Übergabeparameter setting, kann eingestellt werden, ob die ganze Zeile (Name und Wert) oder nur der Inhalt (Wert) neu gezeichnet wird.  <a href="classwio__display.html#a7a91c15af57e9bffd822b5e80773d1a2">Mehr ...</a><br /></td></tr>
+<tr class="memdesc:a7a91c15af57e9bffd822b5e80773d1a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeile zeichnen.  <a href="classwio__display.html#a7a91c15af57e9bffd822b5e80773d1a2">Mehr ...</a><br /></td></tr>
 <tr class="separator:a7a91c15af57e9bffd822b5e80773d1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a352d2e9825a7f7c51a7936ec5c4bcd8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__display.html#a352d2e9825a7f7c51a7936ec5c4bcd8a">updateInterfaceStatus</a> ()</td></tr>
 <tr class="memdesc:a352d2e9825a7f7c51a7936ec5c4bcd8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface Icons updaten.  <a href="classwio__display.html#a352d2e9825a7f7c51a7936ec5c4bcd8a">Mehr ...</a><br /></td></tr>
@@ -383,13 +383,13 @@ $(document).ready(function(){initNavTree('classwio__display.html',''); initResiz
       </table>
 </div><div class="memdoc">
 
-<p>Diese Methode Zeichnet eine Zeile neu. Mit dem Übergabeparameter setting, kann eingestellt werden, ob die ganze Zeile (Name und Wert) oder nur der Inhalt (Wert) neu gezeichnet wird. </p>
-<p >Zeile zeichnen</p>
+<p>Zeile zeichnen. </p>
+<p >Diese Methode Zeichnet eine Zeile neu. Mit dem Übergabeparameter setting, kann eingestellt werden, ob die ganze Zeile (Name und Wert) oder nur der Inhalt (Wert) neu gezeichnet wird.</p>
 <dl class="params"><dt>Parameter</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Seite (Page). Von der übergebenen Seite werden die darin beinhalteten Zeilen gezeichnet. </td></tr>
-    <tr><td class="paramname">line_nr</td><td>Die Zeilen Nummer,welche neu gezeichnet werden soll. <br  />
- Mögliche Parameter: 1 - <a class="el" href="pages_8h.html#a861cd08cd7242d9aaf760fa9f0803d0a">NUMBERS_OF_LINES</a> </td></tr>
+    <tr><td class="paramname">line_nr</td><td>Die Zeilen Nummer, welche neu gezeichnet werden soll. <br  />
+ Mögliche Parameter: 0 - <a class="el" href="pages_8h.html#a861cd08cd7242d9aaf760fa9f0803d0a">NUMBERS_OF_LINES</a> -1 </td></tr>
     <tr><td class="paramname">setting</td><td>Eine Option, was alles neu gezeichnet werden soll. <a class="el" href="wio__display_8h.html#aabca61e764b3b6e4849ef83b7c9d0163">draw_setting_e</a><ul>
 <li><code>FULL_LINE:</code> Zeichnet die komplette Zeile neu</li>
 <li><code>ONLY_VALUE:</code> Zeichnet nur den Zeilenwert neu </li>
