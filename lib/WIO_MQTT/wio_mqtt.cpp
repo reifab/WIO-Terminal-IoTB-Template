@@ -2,7 +2,7 @@
  * @file wio_mqtt.cpp
  * @author Beat Sturzenegger
  * @brief IoTB MQTT Bibliothek für das WIO Terminal
- * @version 1.1
+ * @version 1.2
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -68,7 +68,23 @@ void wio_mqtt::initMQTT(void (&func)(char *, byte *, unsigned int))
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(char *topic, char *payload, bool retain)
+void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
+{
+  pubState = true;                                      // set publish state to TRUE, because somthing will be sended
+  Serial.println("PUBLISH");                            // print infos to SerialPort
+  Serial.print("Topic: "); Serial.println(topic);
+  Serial.print("Payload: "); Serial.println(payload);
+  client.publish(topic, payload, retain);                       // publish the message
+}
+
+/**
+ * @brief Diese Methode publiziert eine MQTT Nachricht
+ * 
+ * @param topic Topic (Name) der Nachricht
+ * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
+ * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
+ */
+void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
 {
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended
   Serial.println("PUBLISH");                            // print infos to SerialPort
