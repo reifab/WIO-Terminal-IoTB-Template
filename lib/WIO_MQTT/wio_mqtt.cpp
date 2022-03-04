@@ -62,7 +62,7 @@ void wio_mqtt::initMQTT(void (&func)(char *, byte *, unsigned int))
 }
 
 /**
- * @brief Diese Methode publiziert eine MQTT Nachricht
+ * @brief Diese Methode publiziert eine MQTT Nachricht. Variabler char-Array als Payload.
  * 
  * @param topic Topic (Name) der Nachricht
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
@@ -78,7 +78,7 @@ void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
 }
 
 /**
- * @brief Diese Methode publiziert eine MQTT Nachricht
+ * @brief Diese Methode publiziert eine MQTT Nachricht. Konstanter char-Array als Payload.
  * 
  * @param topic Topic (Name) der Nachricht
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
