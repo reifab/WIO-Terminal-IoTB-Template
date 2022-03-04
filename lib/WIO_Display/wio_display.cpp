@@ -210,7 +210,7 @@ void wio_display::drawPage(page_t p)
   drawHeader(p.title, sd_card_status, mqtt_s, wlan_s, wlan_st, wlan_ch);    // draw header
   for (int i = 0; i < NUMBERS_OF_LINES; i++)                                // for NUMBERS_OF_LINES times
   {
-    drawPageLine(p.lines[i], i + 1, FULL_LINE);                             // draw all the lines
+    drawPageLine(p.lines[i], i, FULL_LINE);                             // draw all the lines
   }
 }
 
@@ -225,7 +225,7 @@ void wio_display::updateContext(page_t p)
   // draw Lines
   for (int i = 0; i < NUMBERS_OF_LINES; i++)
   {
-    drawPageLine(p.lines[i], i + 1, ONLY_VALUE);
+    drawPageLine(p.lines[i], i, ONLY_VALUE);
   }
 }
 
