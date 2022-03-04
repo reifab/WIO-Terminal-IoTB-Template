@@ -24,7 +24,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
-  <td id="projectlogo"><img alt="Logo" src="IoTB-Logo_klein.png"/></td>
   <td id="projectalign">
    <div id="projectname">WIO Terminal Template
    </div>
@@ -97,9 +96,12 @@ $(document).ready(function(){initNavTree('classwio__mqtt.html',''); initResizabl
 <tr class="memitem:a304acddb835fb7ffa562c1edaa02c2af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__mqtt.html#a304acddb835fb7ffa562c1edaa02c2af">initMQTT</a> (void(&amp;)(char *, byte *, unsigned int))</td></tr>
 <tr class="memdesc:a304acddb835fb7ffa562c1edaa02c2af"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT initialisieren.  <a href="classwio__mqtt.html#a304acddb835fb7ffa562c1edaa02c2af">Mehr ...</a><br /></td></tr>
 <tr class="separator:a304acddb835fb7ffa562c1edaa02c2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeee8c47685fa66cf48de30ee1b7f45e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__mqtt.html#aeee8c47685fa66cf48de30ee1b7f45e4">publishTopic</a> (char *topic, char *payload, bool retain)</td></tr>
-<tr class="memdesc:aeee8c47685fa66cf48de30ee1b7f45e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ein Topic publizieren.  <a href="classwio__mqtt.html#aeee8c47685fa66cf48de30ee1b7f45e4">Mehr ...</a><br /></td></tr>
-<tr class="separator:aeee8c47685fa66cf48de30ee1b7f45e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4515c2118e8e2a8d7298a9e9c2154710"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__mqtt.html#a4515c2118e8e2a8d7298a9e9c2154710">publishTopic</a> (const char *topic, char *payload, bool retain)</td></tr>
+<tr class="memdesc:a4515c2118e8e2a8d7298a9e9c2154710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ein Topic publizieren.  <a href="classwio__mqtt.html#a4515c2118e8e2a8d7298a9e9c2154710">Mehr ...</a><br /></td></tr>
+<tr class="separator:a4515c2118e8e2a8d7298a9e9c2154710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c60310e7f849314eb9c785fb1d664b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__mqtt.html#a37c60310e7f849314eb9c785fb1d664b">publishTopic</a> (const char *topic, const char *payload, bool retain)</td></tr>
+<tr class="memdesc:a37c60310e7f849314eb9c785fb1d664b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ein Topic publizieren.  <a href="classwio__mqtt.html#a37c60310e7f849314eb9c785fb1d664b">Mehr ...</a><br /></td></tr>
+<tr class="separator:a37c60310e7f849314eb9c785fb1d664b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b153e3a1da31bce44496209cb487777"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwio__mqtt.html#a7b153e3a1da31bce44496209cb487777">subscribeTopic</a> (char *topic)</td></tr>
 <tr class="memdesc:a7b153e3a1da31bce44496209cb487777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ein Topic abonnieren.  <a href="classwio__mqtt.html#a7b153e3a1da31bce44496209cb487777">Mehr ...</a><br /></td></tr>
 <tr class="separator:a7b153e3a1da31bce44496209cb487777"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -313,8 +315,8 @@ false Es besteht <b>keine</b> Verbindung zum MQTT Broker </dd></dl>
 
 </div>
 </div>
-<a id="aeee8c47685fa66cf48de30ee1b7f45e4" name="aeee8c47685fa66cf48de30ee1b7f45e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeee8c47685fa66cf48de30ee1b7f45e4">&#9670;&nbsp;</a></span>publishTopic()</h2>
+<a id="a4515c2118e8e2a8d7298a9e9c2154710" name="a4515c2118e8e2a8d7298a9e9c2154710"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4515c2118e8e2a8d7298a9e9c2154710">&#9670;&nbsp;</a></span>publishTopic() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +324,7 @@ false Es besteht <b>keine</b> Verbindung zum MQTT Broker </dd></dl>
         <tr>
           <td class="memname">void publishTopic </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>topic</em>, </td>
         </tr>
         <tr>
@@ -346,7 +348,52 @@ false Es besteht <b>keine</b> Verbindung zum MQTT Broker </dd></dl>
 </div><div class="memdoc">
 
 <p>Ein Topic publizieren. </p>
-<p >Diese Methode publiziert eine MQTT Nachricht.</p>
+<p >Diese Methode publiziert eine MQTT Nachricht. Variabler char-Array als Payload.</p>
+<dl class="params"><dt>Parameter</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">topic</td><td>Topic (Name) der Nachricht </td></tr>
+    <tr><td class="paramname">payload</td><td>Payload (Nutzdaten/Inhalt) der Nachricht </td></tr>
+    <tr><td class="paramname">retain</td><td>Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a37c60310e7f849314eb9c785fb1d664b" name="a37c60310e7f849314eb9c785fb1d664b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c60310e7f849314eb9c785fb1d664b">&#9670;&nbsp;</a></span>publishTopic() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void publishTopic </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>topic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>payload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>retain</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ein Topic publizieren. </p>
+<p >Diese Methode publiziert eine MQTT Nachricht. Konstanter char-Array als Payload.</p>
 <dl class="params"><dt>Parameter</dt><dd>
   <table class="params">
     <tr><td class="paramname">topic</td><td>Topic (Name) der Nachricht </td></tr>
