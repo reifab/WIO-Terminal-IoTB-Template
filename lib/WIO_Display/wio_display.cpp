@@ -8,7 +8,7 @@
  * Zusätzlich werden gewisse Interface Zustände angezeigt, sofern diese Verwendet werden.
  * zu den Interface gehören den WiFi, MQTT und SD Karte. \n 
  * @todo Auf einer Page die Interface Zustände genauer beschreiben. Coming soon...
- * @version 1.4
+ * @version 1.5
  * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
@@ -372,13 +372,21 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
 {
   char buf[40];
   int value;
+  int len;
+  static int line_length[2][NUMBERS_OF_LINES] = { {0,0,0,0,0,0}, {0,0,0,0,0,0} };   // init value for 6 lines
 
   tft.setFreeFont(FSS9);                    // set Font
   tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
 
   if (setting == FULL_LINE)
   {
+    len = tft.textWidth(l.line_name);   // measure length of the new string
+    if(len < line_length[0][line_nr])   // compare new length with old length
+    {
+      tft.fillRect(LINE_START_X, LINE_START_Y + (line_nr * 30), line_length[0][line_nr], 18, TFT_BLACK);    // draw black rectangle to clear old stuff
+    }
     tft.drawString(l.line_name, LINE_START_X, LINE_START_Y + (line_nr * 30)); // write line name
+    line_length[0][line_nr] = len;                                            // refresh line length
   }
 
   // write line context, dependent of the line typ
@@ -387,13 +395,21 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
     case TEXT:
       if(tft.textWidth(l.text) <= 140)
       {
+        len = tft.textWidth(l.text);        // measure length of the new string
+        if(len < line_length[1][line_nr])   // compare new length with old length
+        {
+          tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30), line_length[1][line_nr], 18, TFT_BLACK);  // draw black rectangle to clear old stuff
+        }
         tft.drawString(l.text, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));  // draw line text
+        line_length[1][line_nr] = len;                                        // refresh line length
       }
       else
       {
-        tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
-        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws Error
-        tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
+        tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30), 180, 18, TFT_BLACK);      // draw black rectangle to clear old stuff
+        tft.setTextColor(TFT_RED, TFT_BLACK);                                               // set Color White and Background Black
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));    // draws Error
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);                                             // set Color White and Background Black
+        line_length[1][line_nr] = 0;                                                        // set line length to 0
       }
       break;
 
@@ -418,13 +434,21 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       }
       if(tft.textWidth(buf) <= 140)
       {
+        len = tft.textWidth(buf);           // measure length of the new string
+        if(len < line_length[1][line_nr])   // compare new length with old length
+        {
+          tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30), line_length[1][line_nr], 18, TFT_BLACK);    // draw black rectangle to clear old stuff
+        }
         tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws value
+        line_length[1][line_nr] = len;                                      // refresh line length
       }
       else
       {
-        tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
-        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws Error
-        tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
+        tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30), 180, 18, TFT_BLACK);      // draw black rectangle to clear old stuff
+        tft.setTextColor(TFT_BLACK, TFT_BLACK);                                             // set Color White and Background Black
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));    // draws Error
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);                                             // set Color White and Background Black
+        line_length[1][line_nr] = 0;                                                        // set line length to 0
       }
       break;
 
@@ -468,7 +492,15 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
         default:
           sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
       }
+
+      len = tft.textWidth(buf);           // measure length of the new string
+      if(len < line_length[1][line_nr])   // compare new length with old length
+      {
+        tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30), line_length[1][line_nr], 18, TFT_BLACK);    // draw black rectangle to clear old stuff
+      }
       tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draw value
+      line_length[1][line_nr] = len;                                      // refresh line length
+
       }break;
 
     case END_LINE_TYP:
