@@ -8,7 +8,7 @@
  * Zusätzlich werden gewisse Interface Zustände angezeigt, sofern diese Verwendet werden.
  * zu den Interface gehören den WiFi, MQTT und SD Karte. \n 
  * @todo Auf einer Page die Interface Zustände genauer beschreiben. Coming soon...
- * @version 1.3
+ * @version 1.4
  * @date 14.02.2022
  * 
  * @copyright Copyright (c) 2022
@@ -378,7 +378,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
 
   if (setting == FULL_LINE)
   {
-    tft.drawString(l.line_name, LINE_START_X, LINE_START_Y + ((line_nr - 1) * 30)); // write line name
+    tft.drawString(l.line_name, LINE_START_X, LINE_START_Y + (line_nr * 30)); // write line name
   }
 
   // write line context, dependent of the line typ
@@ -387,12 +387,12 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
     case TEXT:
       if(tft.textWidth(l.text) <= 140)
       {
-        tft.drawString(l.text, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));  // draw line text
+        tft.drawString(l.text, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));  // draw line text
       }
       else
       {
         tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
-        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws Error
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws Error
         tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
       }
       break;
@@ -418,12 +418,12 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       }
       if(tft.textWidth(buf) <= 140)
       {
-        tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws value
+        tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws value
       }
       else
       {
         tft.setTextColor(TFT_RED, TFT_BLACK);   // set Color White and Background Black
-        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draws Error
+        tft.drawString("Text too long!!!", LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draws Error
         tft.setTextColor(TFT_WHITE, TFT_BLACK);   // set Color White and Background Black
       }
       break;
@@ -432,8 +432,8 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       value = l.value;
       if (value > 100) value = 100;   // set upper limit
       if (value < 0)   value = 0;     // set under limit
-      tft.fillRect(LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30) - 2, 104, 20, TFT_WHITE);    // draw outer rectangle, color white
-      tft.fillRect(LINE_VALUE_X + 2, LINE_START_Y + ((line_nr - 1) * 30), value, 16, TFT_GREEN);  // draw inner rectangle, color: green
+      tft.fillRect(LINE_VALUE_X, LINE_START_Y + (line_nr * 30) - 2, 104, 20, TFT_WHITE);    // draw outer rectangle, color white
+      tft.fillRect(LINE_VALUE_X + 2, LINE_START_Y + (line_nr * 30), value, 16, TFT_GREEN);  // draw inner rectangle, color: green
       switch (l.setting)
       {
         // draw the value in the bar
@@ -441,7 +441,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
           tft.setFreeFont(FSS9);              // set font
           tft.setTextColor(TFT_BLACK);        // set text color black
           sprintf(buf, "%d", (int)l.value);   // convert value to string
-          tft.drawString(buf, LINE_VALUE_X + 42, LINE_START_Y + ((line_nr - 1) * 30));  // draw value
+          tft.drawString(buf, LINE_VALUE_X + 42, LINE_START_Y + (line_nr * 30));  // draw value
           break;
       }
       break;
@@ -468,7 +468,7 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
         default:
           sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
       }
-      tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + ((line_nr - 1) * 30));   // draw value
+      tft.drawString(buf, LINE_VALUE_X, LINE_START_Y + (line_nr * 30));   // draw value
       }break;
 
     case END_LINE_TYP:
