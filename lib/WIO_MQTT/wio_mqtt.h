@@ -2,7 +2,7 @@
  * @file wio_mqtt.h
  * @author Beat Sturzenegger
  * @brief IoTB MQTT Bibliothek für das WIO Terminal
- * @version 1.2
+ * @version 1.3
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -32,8 +32,10 @@ class wio_mqtt
   public:
     wio_mqtt(void (&)(const char *, bool));                                   ///< Konstruktor
     void initMQTT(void (&)(char*, byte*, unsigned int));                      ///< MQTT initialisieren
-    void publishTopic(const char *topic, char *payload, bool retain);         ///< Ein Topic publizieren
-    void publishTopic(const char *topic, const char *payload, bool retain);   ///< Ein Topic publizieren
+    void publishTopic(const char *topic, char *payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein String
+    void publishTopic(const char *topic, const char *payload, bool retain);   ///< Ein Topic publizieren, Payload ist ein konstanter String
+    void publishTopic(const char *topic, int payload, bool retain);           ///< Ein Topic publizieren, Payload ist ein Integer
+    void publishTopic(const char *topic, float payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein Fliesskommazahl
     void subscribeTopic(char *topic);                                         ///< Ein Topic abonnieren
     void addSubscribeList(char *list, unsigned int len);                      ///< Topic-Liste zur Klasse hinzufügen
     bool isConnected(void);                                                   ///< MQTT Verbindung auslesen
