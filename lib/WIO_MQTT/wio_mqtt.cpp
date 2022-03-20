@@ -2,7 +2,7 @@
  * @file wio_mqtt.cpp
  * @author Beat Sturzenegger
  * @brief IoTB MQTT Bibliothek für das WIO Terminal
- * @version 1.3
+ * @version 1.4
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -68,7 +68,7 @@ void wio_mqtt::initMQTT(void (&func)(char *, byte *, unsigned int))
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
+void wio_mqtt::publishTopic_String(const char *topic, char *payload, bool retain)
 {
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended
   Serial.println("PUBLISH");                            // print infos to SerialPort
@@ -84,7 +84,7 @@ void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
+void wio_mqtt::publishTopic_ConstString(const char *topic, const char *payload, bool retain)
 {
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended
   Serial.println("PUBLISH");                            // print infos to SerialPort
@@ -100,7 +100,7 @@ void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
+void wio_mqtt::publishTopic_Integer(const char *topic, int payload, bool retain)
 {
   char mqttPayload[20];
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended
@@ -118,7 +118,7 @@ void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Soll die Nachricht gespeichert werden, auch wenn das Topic niemand abonniert hat.
  */
-void wio_mqtt::publishTopic(const char *topic, float payload, bool retain)
+void wio_mqtt::publishTopic_Float(const char *topic, float payload, bool retain)
 {
   char mqttPayload[20];
   pubState = true;                                      // set publish state to TRUE, because somthing will be sended

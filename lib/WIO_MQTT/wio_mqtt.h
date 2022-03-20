@@ -30,21 +30,21 @@ extern const char *mqtt_id;         ///< defined in secrets.h
 class wio_mqtt
 {
   public:
-    wio_mqtt(void (&)(const char *, bool));                                   ///< Konstruktor
-    void initMQTT(void (&)(char*, byte*, unsigned int));                      ///< MQTT initialisieren
-    void publishTopic(const char *topic, char *payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein String
-    void publishTopic(const char *topic, const char *payload, bool retain);   ///< Ein Topic publizieren, Payload ist ein konstanter String
-    void publishTopic(const char *topic, int payload, bool retain);           ///< Ein Topic publizieren, Payload ist ein Integer
-    void publishTopic(const char *topic, float payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein Fliesskommazahl
-    void subscribeTopic(char *topic);                                         ///< Ein Topic abonnieren
-    void addSubscribeList(char *list, unsigned int len);                      ///< Topic-Liste zur Klasse hinzufügen
-    bool isConnected(void);                                                   ///< MQTT Verbindung auslesen
-    void reconnect(void);                                                     ///< Wiederverbindung zum MQTT Broker
-    void clientLoop(void);                                                    ///< MQTT loop für einen ordnungsgemässer Betrieb 
-    bool getPublishState();                                                   ///< Den Publish Status auslesen
-    bool getSubscribeState();                                                 ///< Den Subscribe Status auslesen
-    void setPublishState(bool state);                                         ///< Den Publish Status setzen
-    void setSubscribeState(bool state);                                       ///< Den Subscribe Status setzen
+    wio_mqtt(void (&)(const char *, bool));                                               ///< Konstruktor
+    void initMQTT(void (&)(char*, byte*, unsigned int));                                  ///< MQTT initialisieren
+    void publishTopic_String(const char *topic, char *payload, bool retain);              ///< Ein Topic publizieren, Payload ist ein String
+    void publishTopic_ConstString(const char *topic, const char *payload, bool retain);   ///< Ein Topic publizieren, Payload ist ein konstanter String
+    void publishTopic_Integer(const char *topic, int payload, bool retain);               ///< Ein Topic publizieren, Payload ist ein Integer
+    void publishTopic_Float(const char *topic, float payload, bool retain);               ///< Ein Topic publizieren, Payload ist ein Fliesskommazahl
+    void subscribeTopic(char *topic);                                                     ///< Ein Topic abonnieren
+    void addSubscribeList(char *list, unsigned int len);                                  ///< Topic-Liste zur Klasse hinzufügen
+    bool isConnected(void);                                                               ///< MQTT Verbindung auslesen
+    void reconnect(void);                                                                 ///< Wiederverbindung zum MQTT Broker
+    void clientLoop(void);                                                                ///< MQTT loop für einen ordnungsgemässer Betrieb 
+    bool getPublishState();                                                               ///< Den Publish Status auslesen
+    bool getSubscribeState();                                                             ///< Den Subscribe Status auslesen
+    void setPublishState(bool state);                                                     ///< Den Publish Status setzen
+    void setSubscribeState(bool state);                                                   ///< Den Subscribe Status setzen
   private:
     char *ptr_topicList;                                                            ///< Pointer zu der Topic Liste
     unsigned int topicListLen = 0;                                                  ///< Länge der Topic Liste
