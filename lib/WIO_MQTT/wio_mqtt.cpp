@@ -36,6 +36,7 @@ static cbLog_ cbMQTTLog;
 wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
 {
   cbMQTTLog = func;
+  randomSeed(analogRead(0));
 }
 
 /********************************************************************************************
