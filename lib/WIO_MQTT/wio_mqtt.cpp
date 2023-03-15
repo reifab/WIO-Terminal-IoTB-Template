@@ -2,8 +2,8 @@
  * @file wio_mqtt.cpp
  * @author Beat Sturzenegger
  * @brief IoTB MQTT Bibliothek für das WIO Terminal
- * @version 1.4
- * @date 18.01.2022
+ * @version 1.5
+ * @date 08.03.2023
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -200,8 +200,6 @@ bool wio_mqtt::isConnected()
  */
 void wio_mqtt::reconnect()
 {
-  //while (!client.connected())     // Loop until we're reconnected
-  {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
     String clientId = "WioTerminal";              // generate id
@@ -214,7 +212,7 @@ void wio_mqtt::reconnect()
     
     
     // Attempt to connect
-    if (client.connect(clientId.c_str()))
+    if (client.connect(clientId.c_str(),mqtt_user,mqtt_password))
     {
       (*cbMQTTLog)("- Connected", false);               // write to the log
       Serial.println("connected");
@@ -229,7 +227,6 @@ void wio_mqtt::reconnect()
       // Wait 5 seconds before retrying
       //delay(5000);
     }
-  }
 }
 
 /**

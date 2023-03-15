@@ -2,7 +2,7 @@
  * @file wio_wifi.cpp
  * @author Beat Sturzenegger
  * @brief IoTB WiFi Bibliothek für das WIO Terminal
- * @version 1.1
+ * @version 1.2
  * @date 18.01.2022
  * 
  * @copyright Copyright (c) 2022
@@ -200,7 +200,6 @@ void onWiFiEvent(WiFiEvent_t event) {
     case SYSTEM_EVENT_STA_DISCONNECTED:
       (*cbWiFiLog)("- Disconnected from WiFi access point", false);
       Serial.println("Disconnected from WiFi access point");
-      //WiFi.begin(ssid, password);
       break;
     case SYSTEM_EVENT_STA_AUTHMODE_CHANGE:
       (*cbWiFiLog)("- Authentication mode of access point has changed", false);
