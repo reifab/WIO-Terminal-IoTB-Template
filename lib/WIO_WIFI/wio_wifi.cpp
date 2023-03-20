@@ -58,20 +58,16 @@ void wio_wifi::initWifi(void)
 
   (*cbWiFiLog)("Start WiFi Init", false);   // write to the log
   WiFi.disconnect();                        // diconnect any connection
-  delay(100);
 
   sprintf(logText, "- Connecting to %s", ssid);   // write to the log 
   (*cbWiFiLog)(logText, false);
 
-  Serial.println(ssid);                     // print to SerialPort
-  WiFi.begin(ssid, password);               // begin WiFi connection
+  Serial.println(ssid);                     // print ssid to SerialPort
 
-  delay(100);
-  while (WiFi.status() != WL_CONNECTED)       // do until connected
+  while (WiFi.begin(ssid, password) != WL_CONNECTED)  // do begin WiFi connection until connected
   {
-    delay(500);
     Serial.println("Connecting to WiFi..");   // print to SerialPort
-    WiFi.begin(ssid, password);               // begin WiFi connection
+    delay(1000);
   }
  
   (*cbWiFiLog)("- Connected", false);       // write to the log
