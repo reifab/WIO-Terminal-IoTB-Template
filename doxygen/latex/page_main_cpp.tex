@@ -1,0 +1,140 @@
+\hypertarget{page_main_cpp_setup_section}{}\doxysection{Setup Funktion}\label{page_main_cpp_setup_section}
+Diese Funktion wird beim Start einmal aufgerufen. Im Template werden der Display, das Wi\+Fi-\/\+Module und die Taster initialisiert. Zudem wird bereits eine Verbindung zum WLAN Access Point und zum MQTT Broker gemacht. ~\newline
+Der Benutzer kann zwischen 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ START\ USER\ CODE:\ Setup\ }}
+
+\end{DoxyCode}
+ und 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ END\ USER\ CODE:\ Setup\ }}
+
+\end{DoxyCode}
+ seinen Code hinzufügen. Der User kann hier die angeschlossenen Sensoren und Aktoren initialisieren. ~\newline
+Es wird auch empholen, um hier die erste Seite anzuzeigen. Dazu dient der folgende Code als Beispiel\+: ~\newline
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}{currentPage}}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ set\ currentPage}}
+\DoxyCodeLine{wio\_disp.\mbox{\hyperlink{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec}{drawPage}}(\mbox{\hyperlink{main_8cpp_a84ad797bb04f41d1c79aa573addc579e}{pages\_array}}[\mbox{\hyperlink{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}{currentPage}}]);\ \ \textcolor{comment}{//\ draw\ Page\ No.\ 0\ (=\ currentPage)}}
+
+\end{DoxyCode}
+ Mit diesem Code wird die aktuelle Seite gesetzt und die komplette Seite gezeichnet.\hypertarget{page_main_cpp_loop_section}{}\doxysection{Loop Funktion (\+Main)}\label{page_main_cpp_loop_section}
+Die loop-\/\+Funktion wird nach der setup-\/\+Funktion aufgerufen. Die loop-\/\+Funktion wird, auch ohne Endlosschleife, immer wieder ausgeführt. ~\newline
+Die Funktion ist in drei Bereiche unterteilt\+: \mbox{\hyperlink{page_main_cpp_button_handler}{Button Handler}}, \mbox{\hyperlink{page_main_cpp_page_dependet_tasks}{Seitenabhängige Aufgaben}} und \mbox{\hyperlink{page_main_cpp_periodic_tasks}{Periodische Aufgaben}}.\hypertarget{page_main_cpp_button_handler}{}\doxysubsection{Button Handler}\label{page_main_cpp_button_handler}
+In diesem Bereich werden die Taster ausgewertet. Es werden alle Taster nacheinander abgefragt. Die Taster sind low-\/active. Das bedeutet, dass {\ttfamily FALSE} gelesen wird, wenn der Taster gedrückt ist. Ist ein Taster gedrückt, wird mit einem {\ttfamily switch} und der Variabel \mbox{\hyperlink{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}{current\+Page}} ermittelt, welche Seite momentan angezeit. ~\newline
+ ~\newline
+  Der Taster wird ausgelesen. Ist der Taster Gedrückt, ist das Signal {\ttfamily low} 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}\ (digitalRead(WIO\_5S\_DOWN)\ ==\ LOW)\ \textcolor{comment}{//\ 5-\/Way-\/Switch\ slided\ Down}}
+\DoxyCodeLine{\ \ \{}
+
+\end{DoxyCodeInclude}
+ Um den Taster zu entprellen, wird ganz simple wird kurz gewartet. 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\ \ \ \ delay(100);}
+
+\end{DoxyCodeInclude}
+ Mit einem {\ttfamily Switch} wird ermittelt, welche Seite aktuell angezeigt wird. 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}{currentPage}})}
+\DoxyCodeLine{\ \ \ \ \{}
+
+\end{DoxyCodeInclude}
+ In diesem Bereich kann der Benutzer den Code programmieren, welcher ausgeführt wird, wenn die \char`\"{}\+DOWN\char`\"{}-\/Taste des 5-\/Weg-\/\+Schalter gedrückt wurde und die aktuelle Seite die Seite 1 ist. 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//\ START\ USER\ CODE:\ PAGE\ 1}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//\ END\ USER\ CODE:\ PAGE\ 1}}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+
+\end{DoxyCodeInclude}
+ In der Vorlage ist nur der Fall {\ttfamily  current\+Page == 1} und der Default Fall programmiert. Weitere Fälle können vom Benutzer programmiert werden. 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCodeInclude}
+ \begin{DoxySeeAlso}{Siehe auch}
+\mbox{\hyperlink{page_wio_terminal_buttons_wio_section}{WIO Terminal -\/ Taster}}
+\end{DoxySeeAlso}
+\hypertarget{page_main_cpp_page_dependet_tasks}{}\doxysubsection{Seitenabhängige Aufgaben}\label{page_main_cpp_page_dependet_tasks}
+In diesem Abschnitt werden seitenabhängige Aufgaben abgearbeitet. Mit einem {\ttfamily switch-\/case} wird \mbox{\hyperlink{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}{current\+Page}} ausgewertet und so die akuelle Seite ermittelt. Somit kann z.\+B. ein Sensorwert nur ausgelesen werden, wenn er auch auf der Seite angezeigt wird. In der Vorlage sind nur die Fälle {\ttfamily  current\+Page == 0} und {\ttfamily  current\+Page == 1} vorprogrammiert. Zwischen 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ START\ USER\ CODE:\ Specific\ Page\ X\ Code\ }}
+
+\end{DoxyCode}
+ und 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ END\ USER\ CODE:\ Specific\ Page\ X\ Code\ }}
+
+\end{DoxyCode}
+ kann der Benutzer den Seitenabhängigen Code einfügen. ~\newline
+ ~\newline
+ Aufgaben die bei jedem loop-\/\+Durchlauf ausgeführt werden müssen, können zwischen 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ START\ USER\ CODE:\ loop\ Code\ }}
+
+\end{DoxyCode}
+ und 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ END\ USER\ CODE:\ loop\ Code\ }}
+
+\end{DoxyCode}
+ eingefügt werden.\hypertarget{page_main_cpp_periodic_tasks}{}\doxysubsection{Periodische Aufgaben}\label{page_main_cpp_periodic_tasks}
+Nicht jede Aufgabe muss bei jedem Durchlauf ausgeführt werden. Einge Aufgaben müssen in einem gewissen Intervall ausgeführt werden. Zum Beispiel muss ein gemessener Wert nur alle 10 Sekunden über MQTT gesendet werden. Für diesen Fall gibt es die Funktion \mbox{\hyperlink{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0}{periodic\+Tasks()}}. ~\newline
+ ~\newline
+ In dieser Funktion wird bei jedem Durchlauf die aktuelle Zeit seit Neustart mit {\ttfamily millis()} ausgelesen und in der Variabel {\ttfamily current\+Millis} gespeichert. Die Funktion {\ttfamily millis()} gibt die vergangene Zeit seit dem Neustart in Millisekunden zurück. ~\newline
+Im Array {\ttfamily previous\+Millis} sind die Zeiten gespeichert, wann die entsprechende Aufgabe zuletzt aufgerufen wurde. Mit einer Konstanten kann nun die Intervallzeit gesetzt werden. ~\newline
+Ist nun die Differenz von {\ttfamily current\+Millis} und {\ttfamily  previous\+Millis\mbox{[}X\mbox{]}} grösser als der Intervall, soll die Aufgabe wieder ausgeführt werden. ~\newline
+ ~\newline
+ In der Vorlage wurde ein Teil einer periodischen Aufgabe vorprogrammiert. ~\newline
+
+\begin{DoxyItemize}
+\item vordefinierter Intervall\+: \mbox{\hyperlink{main_8cpp_a01d975ae2646716d81b3089dec30f62d}{user\+Defined\+Intervall}}
+\item Vorherige Zeit speichern\+: in {\ttfamily  previous\+Millis\mbox{[}3\mbox{]}} speichern
+\item Intervallablauf abfragen\+: {\ttfamily  if((current\+Millis -\/ previous\+Millis\mbox{[}X\mbox{]} \texorpdfstring{$>$}{>}= user\+Defined\+Intervall) $\vert$$\vert$ previous\+Millis\mbox{[}3\mbox{]} == 0)}
+\item Vorherige Zeit aktualisieren\+: {\ttfamily  previous\+Millis\mbox{[}3\mbox{]} = current\+Millis;}
+\end{DoxyItemize}\hypertarget{page_main_cpp_other_tasks_subsubsection}{}\doxysubsubsection{weitere periodische Aufgaben}\label{page_main_cpp_other_tasks_subsubsection}
+Will der Benutzer weitere periodische Aufgaben ausführen auch mit unterschiedlichen Intervallen, muss folgendes hinzugefügt werden\+:
+
+{\bfseries{ 1. Intervallkonstante setzen }} Zwischen {\ttfamily  // START USER CODE\+: Global Variables} und {\ttfamily  // END USER CODE\+: Global Variables} können weitere Intervallkonstanten nach folgender Vorlage definiert werden. Der Wert {\ttfamily X} für die Konstante ist in Millisekunden. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{main_8cpp_a01d975ae2646716d81b3089dec30f62d}{userDefinedIntervall}}\ =\ X;\ }
+
+\end{DoxyCode}
+
+
+{\bfseries{ 2. Array previous\+Millis erweitern }} in der Funktion \mbox{\hyperlink{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0}{periodic\+Tasks()}} muss das Array {\ttfamily  previous\+Millis\mbox{[}\mbox{]}} erweitert werden. Jede periodische Aufgabe muss die Zeit abspeichern, wann die Aufgabe zuletzt ausgeführt wurde. da previous\+Millis ein Array ist, hat jede periodische Aufgabe eine Indexnummer\+:
+\begin{DoxyItemize}
+\item Index 0\+: einen Wi\+Fi-\/\+Scan durchzuführen
+\item Index 1\+: den MQTT Status auswerten
+\item Index 2\+: die Interface Icons auf dem Display aktualisieren
+\item Index 3\+: vorbereitet für den Benutzer
+\item Index =\texorpdfstring{$>$}{>} 4\+: für Benutzer
+\end{DoxyItemize}
+
+{\bfseries{ 3. Intervall abfrage }} In der Funktion muss nun noch die Abfrage, ob das Intervall schon überschritten ist, hinzugefügt werden. Dazu kann folgender Code verwendet werden\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}((currentMillis\ -\/\ previousMillis[X]\ >=\ \mbox{\hyperlink{main_8cpp_a01d975ae2646716d81b3089dec30f62d}{userDefinedIntervall}})\ ||\ previousMillis[X]\ ==\ 0)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ previousMillis[X]\ =\ currentMillis;\ \ \ \ \ \ \textcolor{comment}{//\ refresh\ previousMillis}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ START\ USER\ CODE:\ user\ periodic\ task}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ END\ USER\ CODE:\ user\ periodic\ task}}
+\DoxyCodeLine{\ \}}
+
+\end{DoxyCode}
+ \begin{DoxyAttention}{Achtung}
+Im Code muss noch das {\ttfamily X} durch die richtige Indexnummer und {\ttfamily user\+Defined\+Intervall} durch die richtige Konstante ersetzt werden.
+\end{DoxyAttention}
+\begin{DoxyAuthor}{Autor}
+Beat Sturzenegger 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Datum}
+13.\+02.\+2022 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}

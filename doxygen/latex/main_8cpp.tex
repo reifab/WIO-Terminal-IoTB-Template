@@ -1,0 +1,286 @@
+\hypertarget{main_8cpp}{}\doxysection{main.\+cpp-\/Dateireferenz}
+\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Main File vom WIO Terminal Template Du kannst deinen Code zwischen {\ttfamily \char`\"{}\+START USER CODE\char`\"{}} und {\ttfamily \char`\"{}\+END USER CODE\char`\"{}}  
+
+
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}wio\+\_\+wifi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wio\+\_\+mqtt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wio\+\_\+display.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}secrets.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pages.\+h\char`\"{}}\newline
+Include-\/\+Abhängigkeitsdiagramm für main.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Makrodefinitionen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_af6202935c026af12978d46a765dafb90}\label{main_8cpp_af6202935c026af12978d46a765dafb90}} 
+\#define {\bfseries CONNECTED}~1
+\begin{DoxyCompactList}\small\item\em Verbindungsstatus für MQTT and Wi\+Fi. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a257a6419ffa5ae98d448cd33751f6436}\label{main_8cpp_a257a6419ffa5ae98d448cd33751f6436}} 
+\#define {\bfseries DISCONNECTED}~0
+\begin{DoxyCompactList}\small\item\em Verbindungsstatus für MQTT and Wi\+Fi. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0}{periodic\+Tasks}} ()
+\begin{DoxyCompactList}\small\item\em In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines bestimmten Intervalls, ausgeführt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a05a70b00a2bd5c2cd94911aeadddbfca}{on\+Mqtt\+Message}} (int message\+Size)
+\begin{DoxyCompactList}\small\item\em MQTT Callback Function for subscibed topics. Diese Funktion wird automatisch aufgerufen, wenn ein abboniertes MQTT Topic eintrifft.~\newline
+Im String {\ttfamily {\bfseries{payload\+\_\+str}}} steht der Inhalt des Topics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ad5bc69356319b8729e84c6e7e4278352}{add\+Log\+Text}} (const char $\ast$text, bool append)
+\begin{DoxyCompactList}\small\item\em Diese Funktion fügt einen Text zum Log Text hinzu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Setup Funktion ~\newline
+Wird einmal vor der Main Funktion loop ausgeführt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Main Funktion ~\newline
+Wird immer wieder ausgeführt. Auch ohne einer Endlosschleife wie {\ttfamily while(1)} \doxygenemoji{\+:wink\+:}{wink} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variablen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_a671377ad5e91aeef8d5ea15d641367d3}\label{main_8cpp_a671377ad5e91aeef8d5ea15d641367d3}} 
+int {\bfseries wlan\+\_\+status} = \mbox{\hyperlink{main_8cpp_a257a6419ffa5ae98d448cd33751f6436}{DISCONNECTED}}
+\begin{DoxyCompactList}\small\item\em WLAN Status (connected, disconnected, ...) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_af9b83b4ddcd194b3f0e6d35b5e821883}\label{main_8cpp_af9b83b4ddcd194b3f0e6d35b5e821883}} 
+char {\bfseries wlan\+\_\+ssid} \mbox{[}20\mbox{]} = \char`\"{}-\/\char`\"{}
+\begin{DoxyCompactList}\small\item\em WLAN SSID. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a183e2a3386e93c06b6a4ff3b75581af3}\label{main_8cpp_a183e2a3386e93c06b6a4ff3b75581af3}} 
+char {\bfseries wlan\+\_\+ip} \mbox{[}16\mbox{]} = \char`\"{}-\/\char`\"{}
+\begin{DoxyCompactList}\small\item\em IP-\/\+Adresse des WIO Terminal. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_aa22d4a245ed8169d0b95be7f10f81072}\label{main_8cpp_aa22d4a245ed8169d0b95be7f10f81072}} 
+int {\bfseries wlan\+\_\+strength} = 0
+\begin{DoxyCompactList}\small\item\em Aktuelle WLAN Signalstärke. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a5af44fb9605d466aa171520e649fb8e0}\label{main_8cpp_a5af44fb9605d466aa171520e649fb8e0}} 
+int {\bfseries wlan\+\_\+channel} = 0
+\begin{DoxyCompactList}\small\item\em Benutze WLAN Kanal, wird genutzt für die Frequenzbanderkennung. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a1c3998e1361f3f06579b25a42553b759}\label{main_8cpp_a1c3998e1361f3f06579b25a42553b759}} 
+int {\bfseries mqtt\+\_\+status} = \mbox{\hyperlink{main_8cpp_a257a6419ffa5ae98d448cd33751f6436}{DISCONNECTED}}
+\begin{DoxyCompactList}\small\item\em MQTT Status (connected, disconnected, ...) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a4786aa2644fcc6bff564fcf50225380f}\label{main_8cpp_a4786aa2644fcc6bff564fcf50225380f}} 
+bool {\bfseries mqtt\+\_\+pub\+\_\+status} = false
+\begin{DoxyCompactList}\small\item\em MQTT Publish Status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_ad54fa4c2b8da820dd7cda7e5d512bed0}\label{main_8cpp_ad54fa4c2b8da820dd7cda7e5d512bed0}} 
+bool {\bfseries mqtt\+\_\+sub\+\_\+status} = false
+\begin{DoxyCompactList}\small\item\em MQTT Subscribe Status. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{main_8cpp_aebc98552ff14156db500ed70c8c3410e}{topic\+List}} \mbox{[}$\,$\mbox{]}\mbox{[}\mbox{\hyperlink{wio__mqtt_8h_a0847a0fdb0a7d0242328939deb953183}{TOPIC\+\_\+\+LENGTH}}\mbox{]}
+\item 
+\mbox{\hyperlink{structpage__t}{page\+\_\+t}} \mbox{\hyperlink{main_8cpp_a84ad797bb04f41d1c79aa573addc579e}{pages\+\_\+array}} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em extern Page Array, is coded in \mbox{\hyperlink{pages_8c}{pages.\+c}} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}\label{main_8cpp_a0297477961006dd1c7ec0e5d9462f5e8}} 
+int {\bfseries current\+Page} = 1
+\begin{DoxyCompactList}\small\item\em current page, needed for button actions \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_aa9f91763c72b9e0c08fb2e446ee4470e}\label{main_8cpp_aa9f91763c72b9e0c08fb2e446ee4470e}} 
+char {\bfseries log\+\_\+text} \mbox{[}15\mbox{]}\mbox{[}\mbox{\hyperlink{wio__mqtt_8h_a0847a0fdb0a7d0242328939deb953183}{TOPIC\+\_\+\+LENGTH}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em startup log text, 15 lines with 50 symbols \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_aea5602964bf58f547a688cbc1a220ddc}\label{main_8cpp_aea5602964bf58f547a688cbc1a220ddc}} 
+const long {\bfseries scan\+Interval} = 10000
+\begin{DoxyCompactList}\small\item\em Interval time for Wi\+Fi strength und channel scanning. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a8939e212866b1eb1b7c375dcbf054e39}\label{main_8cpp_a8939e212866b1eb1b7c375dcbf054e39}} 
+const long {\bfseries interface\+Icon\+Intervall} = 500
+\begin{DoxyCompactList}\small\item\em Interval time for icons refreshing. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a66cf286762580fe59c7404e41422f144}\label{main_8cpp_a66cf286762580fe59c7404e41422f144}} 
+const long {\bfseries mqtt\+State\+Intervall} = 1000
+\begin{DoxyCompactList}\small\item\em Interval time for MQTT state. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a01d975ae2646716d81b3089dec30f62d}\label{main_8cpp_a01d975ae2646716d81b3089dec30f62d}} 
+const long {\bfseries user\+Defined\+Intervall} = 5000
+\begin{DoxyCompactList}\small\item\em Interval time for user defined perdiodic task. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8cpp_a4019e6dd6a36ac04a75b80b627c8301f}\label{main_8cpp_a4019e6dd6a36ac04a75b80b627c8301f}} 
+\mbox{\hyperlink{classwio__display}{wio\+\_\+display}} {\bfseries wio\+\_\+disp} = \mbox{\hyperlink{classwio__display}{wio\+\_\+display}}(\&\mbox{\hyperlink{main_8cpp_a1c3998e1361f3f06579b25a42553b759}{mqtt\+\_\+status}}, \&\mbox{\hyperlink{main_8cpp_a4786aa2644fcc6bff564fcf50225380f}{mqtt\+\_\+pub\+\_\+status}}, \&\mbox{\hyperlink{main_8cpp_ad54fa4c2b8da820dd7cda7e5d512bed0}{mqtt\+\_\+sub\+\_\+status}}, \&\mbox{\hyperlink{main_8cpp_a671377ad5e91aeef8d5ea15d641367d3}{wlan\+\_\+status}}, \&\mbox{\hyperlink{main_8cpp_aa22d4a245ed8169d0b95be7f10f81072}{wlan\+\_\+strength}}, \&\mbox{\hyperlink{main_8cpp_a5af44fb9605d466aa171520e649fb8e0}{wlan\+\_\+channel}})
+\item 
+\mbox{\Hypertarget{main_8cpp_a46c6d429e7374e1c0a324415e8cfcad2}\label{main_8cpp_a46c6d429e7374e1c0a324415e8cfcad2}} 
+\mbox{\hyperlink{classwio__wifi}{wio\+\_\+wifi}} {\bfseries wio\+\_\+\+Wifi} = \mbox{\hyperlink{classwio__wifi}{wio\+\_\+wifi}}(\mbox{\hyperlink{main_8cpp_ad5bc69356319b8729e84c6e7e4278352}{add\+Log\+Text}})
+\item 
+\mbox{\Hypertarget{main_8cpp_af22c9f1b5bc42e27ca7ca6d02f335718}\label{main_8cpp_af22c9f1b5bc42e27ca7ca6d02f335718}} 
+\mbox{\hyperlink{classwio__mqtt}{wio\+\_\+mqtt}} {\bfseries wio\+\_\+\+MQTT} = \mbox{\hyperlink{classwio__mqtt}{wio\+\_\+mqtt}}(\mbox{\hyperlink{main_8cpp_ad5bc69356319b8729e84c6e7e4278352}{add\+Log\+Text}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+Main File vom WIO Terminal Template Du kannst deinen Code zwischen {\ttfamily \char`\"{}\+START USER CODE\char`\"{}} und {\ttfamily \char`\"{}\+END USER CODE\char`\"{}} 
+
+\begin{DoxyAuthor}{Autor}
+Beat Sturzenegger / Fabian Reifler 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+2 
+\end{DoxyVersion}
+\begin{DoxyDate}{Datum}
+18.\+01.\+2022
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Dokumentation der Funktionen}
+\mbox{\Hypertarget{main_8cpp_ad5bc69356319b8729e84c6e7e4278352}\label{main_8cpp_ad5bc69356319b8729e84c6e7e4278352}} 
+\index{main.cpp@{main.cpp}!addLogText@{addLogText}}
+\index{addLogText@{addLogText}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{addLogText()}{addLogText()}}
+{\footnotesize\ttfamily void add\+Log\+Text (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text,  }\item[{bool}]{append }\end{DoxyParamCaption})}
+
+
+
+Diese Funktion fügt einen Text zum Log Text hinzu. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em log\+\_\+} & Text der hinzugefügt werden soll \\
+\hline
+{\em append} & Soll der Text angehängt ( {\ttfamily true} ) oder auf eine neue Zeile geschrieben ( {\ttfamily false} ) werden \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{main_8cpp_ad5bc69356319b8729e84c6e7e4278352_cgraph}
+\end{center}
+\end{figure}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{main_8cpp_ad5bc69356319b8729e84c6e7e4278352_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f}} 
+\index{main.cpp@{main.cpp}!loop@{loop}}
+\index{loop@{loop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Main Funktion ~\newline
+Wird immer wieder ausgeführt. Auch ohne einer Endlosschleife wie {\ttfamily while(1)} \doxygenemoji{\+:wink\+:}{wink} 
+
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{main_8cpp_afe461d27b9c48d5921c00d521181f12f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_a05a70b00a2bd5c2cd94911aeadddbfca}\label{main_8cpp_a05a70b00a2bd5c2cd94911aeadddbfca}} 
+\index{main.cpp@{main.cpp}!onMqttMessage@{onMqttMessage}}
+\index{onMqttMessage@{onMqttMessage}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{onMqttMessage()}{onMqttMessage()}}
+{\footnotesize\ttfamily void on\+Mqtt\+Message (\begin{DoxyParamCaption}\item[{int}]{message\+Size }\end{DoxyParamCaption})}
+
+
+
+MQTT Callback Function for subscibed topics. Diese Funktion wird automatisch aufgerufen, wenn ein abboniertes MQTT Topic eintrifft.~\newline
+Im String {\ttfamily {\bfseries{payload\+\_\+str}}} steht der Inhalt des Topics. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em message\+Size} & Länge der Nachricht \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a05a70b00a2bd5c2cd94911aeadddbfca_cgraph}
+\end{center}
+\end{figure}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{main_8cpp_a05a70b00a2bd5c2cd94911aeadddbfca_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0}\label{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0}} 
+\index{main.cpp@{main.cpp}!periodicTasks@{periodicTasks}}
+\index{periodicTasks@{periodicTasks}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{periodicTasks()}{periodicTasks()}}
+{\footnotesize\ttfamily void periodic\+Tasks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines bestimmten Intervalls, ausgeführt. 
+
+\begin{DoxyNote}{Zu beachten}
+Für eigene periodische Funktionen muss das Array {\ttfamily  {\bfseries{previous\+Millis}} } erweitert werden.~\newline
+
+
+{\ttfamily  {\bfseries{previous\+Millis}}\mbox{[}3\mbox{]} } und {\ttfamily  {\bfseries{user\+Defined\+Intervall}} } können für eine eigene periodische Aufgabe benutzt werden. 
+\end{DoxyNote}
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0_cgraph}
+\end{center}
+\end{figure}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{main_8cpp_ace6f96c5f8bfcd98de2277be4b429de0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{main.cpp@{main.cpp}!setup@{setup}}
+\index{setup@{setup}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Setup Funktion ~\newline
+Wird einmal vor der Main Funktion loop ausgeführt. 
+
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variablen-\/\+Dokumentation}
+\mbox{\Hypertarget{main_8cpp_a84ad797bb04f41d1c79aa573addc579e}\label{main_8cpp_a84ad797bb04f41d1c79aa573addc579e}} 
+\index{main.cpp@{main.cpp}!pages\_array@{pages\_array}}
+\index{pages\_array@{pages\_array}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{pages\_array}{pages\_array}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpage__t}{page\+\_\+t}} pages\+\_\+array\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+extern Page Array, is coded in \mbox{\hyperlink{pages_8c}{pages.\+c}} 
+
+extern Page Array, is coded in \mbox{\hyperlink{pages_8c}{pages.\+c}} \mbox{\Hypertarget{main_8cpp_aebc98552ff14156db500ed70c8c3410e}\label{main_8cpp_aebc98552ff14156db500ed70c8c3410e}} 
+\index{main.cpp@{main.cpp}!topicList@{topicList}}
+\index{topicList@{topicList}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{topicList}{topicList}}
+{\footnotesize\ttfamily char topic\+List\mbox{[}$\,$\mbox{]}\mbox{[}\mbox{\hyperlink{wio__mqtt_8h_a0847a0fdb0a7d0242328939deb953183}{TOPIC\+\_\+\+LENGTH}}\mbox{]}}
+
+{\bfseries Initialisierung\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}KU291/WioTopic1\(\backslash\)0"{}},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}KU291/WioTopic2\(\backslash\)0"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}KU291/WioTopic3\(\backslash\)0"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+Liste der MQTT Topics, die abboniert werden sollen. Die Topics werden als String eingegeben. Das Letzte Zeichen sollte ein \textquotesingle{}\textbackslash{}0\textquotesingle{} sein. Die einzelnen Strings werden mit einem Komma getrennt (Siehe Beispiel. Coming soon...) \begin{DoxyAttention}{Achtung}
+Maximale 50 Zeichen pro Topic! 
+\end{DoxyAttention}
+\begin{DoxyRefDesc}{Noch zu erledigen}
+\item[\mbox{\hyperlink{todo__todo000001}{Noch zu erledigen}}]Beispiel für MQTT \end{DoxyRefDesc}

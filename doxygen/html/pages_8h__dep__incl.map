@@ -1,7 +1,7 @@
 <map id="pages.h" name="pages.h">
-<area shape="rect" id="node1" title=" " alt="" coords="76,5,144,32"/>
-<area shape="rect" id="node2" href="$main_8cpp.html" title="Main File vom WIO Terminal Template Du kannst deinen Code zwischen &quot;START USER CODE&quot; und &quot;END USER CO..." alt="" coords="22,155,97,181"/>
-<area shape="rect" id="node3" href="$pages_8c.html" title=" " alt="" coords="23,80,91,107"/>
-<area shape="rect" id="node4" href="$wio__display_8cpp.html" title="IoTB Bibliothek für den WIO Terminal Display. &#160;Diese Bibliothek bildet ein Grundgerüst für eine einfa..." alt="" coords="151,155,266,181"/>
-<area shape="rect" id="node5" href="$wio__display_8h.html" title="IoTB Bibliothek für den WIO Terminal Display." alt="" coords="115,80,215,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="76,5,144,31"/>
+<area shape="rect" id="node2" href="$main_8cpp.html" title="Main File vom WIO Terminal Template Du kannst deinen Code zwischen &quot;START USER CODE&quot; und &quot;END USER CO..." alt="" coords="22,152,97,177"/>
+<area shape="rect" id="node3" href="$pages_8c.html" title=" " alt="" coords="23,79,91,104"/>
+<area shape="rect" id="node4" href="$wio__display_8cpp.html" title="IoTB Bibliothek für den WIO Terminal Display. &#160;Diese Bibliothek bildet ein Grundgerüst für eine einfa..." alt="" coords="151,152,266,177"/>
+<area shape="rect" id="node5" href="$wio__display_8h.html" title="IoTB Bibliothek für den WIO Terminal Display." alt="" coords="115,79,215,104"/>
 </map>

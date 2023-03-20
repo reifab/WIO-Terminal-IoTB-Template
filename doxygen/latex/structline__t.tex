@@ -1,0 +1,38 @@
+\hypertarget{structline__t}{}\doxysection{line\+\_\+t Strukturreferenz}
+\label{structline__t}\index{line\_t@{line\_t}}
+
+
+Struktur einer Linie.  
+
+
+
+
+{\ttfamily \#include $<$pages.\+h$>$}
+
+\doxysubsection*{Datenfelder}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structline__t_a19fff9cbee43b858ded12c1afe268ed4}\label{structline__t_a19fff9cbee43b858ded12c1afe268ed4}} 
+char {\bfseries line\+\_\+name} \mbox{[}16\mbox{]}
+\begin{DoxyCompactList}\small\item\em Name der Zeile, welcher auf der linken Displayseite angezeigt wird. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structline__t_a4052d5e4f2a265ef5902ff2dce3f9321}\label{structline__t_a4052d5e4f2a265ef5902ff2dce3f9321}} 
+\mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96}{line\+\_\+typ\+\_\+e}} {\bfseries line\+\_\+typ}
+\begin{DoxyCompactList}\small\item\em Zeiletyp, siehe enum\+: \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96}{line\+\_\+typ\+\_\+e}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structline__t_a17956fe0129d3d4c94ebc06cfef2ad82}\label{structline__t_a17956fe0129d3d4c94ebc06cfef2ad82}} 
+float {\bfseries value}
+\begin{DoxyCompactList}\small\item\em Zahlenwert der Zeile, ist relevant für die Zeilentypen {\ttfamily NUMERIC}, {\ttfamily BAR} und {\ttfamily TIME}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structline__t_a7be4a726e1c2ccded880b4fd168357a9}\label{structline__t_a7be4a726e1c2ccded880b4fd168357a9}} 
+char {\bfseries text} \mbox{[}20\mbox{]}
+\begin{DoxyCompactList}\small\item\em Textwert der Zeile, wenn der Zeilentyp {\ttfamily TEXT} ist. Beim Zeilentyp {\ttfamily NUMERIC} wird der Textinhalt als Masseinheit hinzugefügt. ~\newline
+{\bfseries{ Maximal 20 Zeichen!}} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structline__t_a75ed80f61418d86962fe9566853690ca}\label{structline__t_a75ed80f61418d86962fe9566853690ca}} 
+int {\bfseries setting}
+\begin{DoxyCompactList}\small\item\em Spezifische Einstellung für die Zeile. Siehe \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915}{settings\+\_\+e}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+Struktur einer Linie. 
+
+Die Dokumentation für diese Struktur wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{pages_8h}{pages.\+h}}\end{DoxyCompactItemize}

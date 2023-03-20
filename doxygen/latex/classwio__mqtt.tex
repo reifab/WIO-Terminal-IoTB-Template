@@ -1,0 +1,438 @@
+\hypertarget{classwio__mqtt}{}\doxysection{wio\+\_\+mqtt Klassenreferenz}
+\label{classwio__mqtt}\index{wio\_mqtt@{wio\_mqtt}}
+\doxysubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classwio__mqtt_a53881e9552a842eb425d74ebea7eeae3}{wio\+\_\+mqtt}} (void(\&)(const char $\ast$, bool))
+\begin{DoxyCompactList}\small\item\em Konstruktor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a657be6deb2760914886189f23746ca16}{init\+MQTT}} (void(\&)(int))
+\begin{DoxyCompactList}\small\item\em MQTT initialisieren. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a4515c2118e8e2a8d7298a9e9c2154710}{publish\+Topic}} (const char $\ast$topic, char $\ast$payload, bool retain)
+\begin{DoxyCompactList}\small\item\em Ein Topic publizieren, Payload ist ein String. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a37c60310e7f849314eb9c785fb1d664b}{publish\+Topic}} (const char $\ast$topic, const char $\ast$payload, bool retain)
+\begin{DoxyCompactList}\small\item\em Ein Topic publizieren, Payload ist ein konstanter String. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a6634835164a864cfe6623c76e5cedae1}{publish\+Topic}} (const char $\ast$topic, int payload, bool retain)
+\begin{DoxyCompactList}\small\item\em Ein Topic publizieren, Payload ist ein Integer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a48c3682844ea2541f9fe5885896644ed}{publish\+Topic}} (const char $\ast$topic, float payload, bool retain)
+\begin{DoxyCompactList}\small\item\em Ein Topic publizieren, Payload ist ein Fliesskommazahl. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a7b153e3a1da31bce44496209cb487777}{subscribe\+Topic}} (char $\ast$topic)
+\begin{DoxyCompactList}\small\item\em Ein Topic abonnieren. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a4b87dd61d801fd226ab165c5c972612d}{add\+Subscribe\+List}} (char $\ast$list, unsigned int len)
+\begin{DoxyCompactList}\small\item\em Topic-\/\+Liste zur Klasse hinzufügen. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classwio__mqtt_a490de796838813d1148e3d684f9c88a0}{is\+Connected}} (void)
+\begin{DoxyCompactList}\small\item\em MQTT Verbindung auslesen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a3b8259e6f263afa75396d3f65d194a92}{reconnect}} (void)
+\begin{DoxyCompactList}\small\item\em Wiederverbindung zum MQTT Broker. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a82500693441c062496b0d861924200f8}{client\+Loop}} (void)
+\begin{DoxyCompactList}\small\item\em MQTT loop für einen ordnungsgemässer Betrieb. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classwio__mqtt_aaa6cf565813b67522f4d46bcd8b632de}{get\+Publish\+State}} ()
+\begin{DoxyCompactList}\small\item\em Den Publish Status auslesen. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classwio__mqtt_a89f4e42eb089c9519ec55b39a3b34ef0}{get\+Subscribe\+State}} ()
+\begin{DoxyCompactList}\small\item\em Den Subscribe Status auslesen. \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{classwio__mqtt_a92d5e9f87f99c80f12a79d53d6061944}{get\+Message\+Topic}} (void)
+\begin{DoxyCompactList}\small\item\em Ein abbonierter Topic auslesen. \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{classwio__mqtt_a8caa2ea292fa6d2956fdacd7199a5df0}{get\+Message\+Payload}} (void)
+\begin{DoxyCompactList}\small\item\em Ein Payload eines abbonierten Topics auslesen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a96dd7f7c86980520fa8e5d5766d8c584}{set\+Publish\+State}} (bool state)
+\begin{DoxyCompactList}\small\item\em Den Publish Status setzen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__mqtt_a9590e713ce80e2553c6876eeea4935d7}{set\+Subscribe\+State}} (bool state)
+\begin{DoxyCompactList}\small\item\em Den Subscribe Status setzen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\mbox{\Hypertarget{classwio__mqtt_a53881e9552a842eb425d74ebea7eeae3}\label{classwio__mqtt_a53881e9552a842eb425d74ebea7eeae3}} 
+\index{wio\_mqtt@{wio\_mqtt}!wio\_mqtt@{wio\_mqtt}}
+\index{wio\_mqtt@{wio\_mqtt}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{wio\_mqtt()}{wio\_mqtt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classwio__mqtt}{wio\+\_\+mqtt}} (\begin{DoxyParamCaption}\item[{void(\&)(const char $\ast$, bool)}]{ }\end{DoxyParamCaption})}
+
+
+
+Konstruktor. 
+
+Construct a new wio mqtt\+::wio mqtt object.
+
+
+\begin{DoxyParams}{Parameter}
+{\em func} & Funktionsadresse der Funktion für das Hinzufügen des Log Text \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Dokumentation der Elementfunktionen}
+\mbox{\Hypertarget{classwio__mqtt_a4b87dd61d801fd226ab165c5c972612d}\label{classwio__mqtt_a4b87dd61d801fd226ab165c5c972612d}} 
+\index{wio\_mqtt@{wio\_mqtt}!addSubscribeList@{addSubscribeList}}
+\index{addSubscribeList@{addSubscribeList}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{addSubscribeList()}{addSubscribeList()}}
+{\footnotesize\ttfamily void add\+Subscribe\+List (\begin{DoxyParamCaption}\item[{char $\ast$}]{list,  }\item[{unsigned int}]{len }\end{DoxyParamCaption})}
+
+
+
+Topic-\/\+Liste zur Klasse hinzufügen. 
+
+Diese Methode speichert Informationen zu der Subscribe-\/\+Liste.
+
+
+\begin{DoxyParams}{Parameter}
+{\em list} & Adresse der Subscribe-\/\+Liste \\
+\hline
+{\em len} & Länge der Liste (Anzahl Zeichen -\/-\/\texorpdfstring{$>$}{>} Anzahl Topics x TOPIC\+\_\+\+LENGTH) \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{classwio__mqtt_a4b87dd61d801fd226ab165c5c972612d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a82500693441c062496b0d861924200f8}\label{classwio__mqtt_a82500693441c062496b0d861924200f8}} 
+\index{wio\_mqtt@{wio\_mqtt}!clientLoop@{clientLoop}}
+\index{clientLoop@{clientLoop}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{clientLoop()}{clientLoop()}}
+{\footnotesize\ttfamily void client\+Loop (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+MQTT loop für einen ordnungsgemässer Betrieb. 
+
+Diese Methode verarbeitet eingehende und ausgehende Nachrichten und frischt die Verbindung auf. Damit die MQTT Funktionen ordentlich funktionieren, muss diese Methode periodisch aufgerufen werden.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=325pt]{classwio__mqtt_a82500693441c062496b0d861924200f8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a8caa2ea292fa6d2956fdacd7199a5df0}\label{classwio__mqtt_a8caa2ea292fa6d2956fdacd7199a5df0}} 
+\index{wio\_mqtt@{wio\_mqtt}!getMessagePayload@{getMessagePayload}}
+\index{getMessagePayload@{getMessagePayload}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{getMessagePayload()}{getMessagePayload()}}
+{\footnotesize\ttfamily const char $\ast$ get\+Message\+Payload (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Ein Payload eines abbonierten Topics auslesen. 
+
+Diese Methode liesst die empfangenen Nutzdaten zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+Zeiger auf ein char-\/ Array, welches den Payload enthält 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_a8caa2ea292fa6d2956fdacd7199a5df0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a92d5e9f87f99c80f12a79d53d6061944}\label{classwio__mqtt_a92d5e9f87f99c80f12a79d53d6061944}} 
+\index{wio\_mqtt@{wio\_mqtt}!getMessageTopic@{getMessageTopic}}
+\index{getMessageTopic@{getMessageTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{getMessageTopic()}{getMessageTopic()}}
+{\footnotesize\ttfamily const char $\ast$ get\+Message\+Topic (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Ein abbonierter Topic auslesen. 
+
+Diese Methode liesst einen empfangenen Topic zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+Zeiger auf ein char-\/ Array, welches das Topic enthält 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_a92d5e9f87f99c80f12a79d53d6061944_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_aaa6cf565813b67522f4d46bcd8b632de}\label{classwio__mqtt_aaa6cf565813b67522f4d46bcd8b632de}} 
+\index{wio\_mqtt@{wio\_mqtt}!getPublishState@{getPublishState}}
+\index{getPublishState@{getPublishState}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{getPublishState()}{getPublishState()}}
+{\footnotesize\ttfamily bool get\+Publish\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Den Publish Status auslesen. 
+
+Diese Methode gibt den Publish Status zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+true Es wurde kürzlich ein Topic publiziert 
+
+false Es wurde nichts publiziert 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_aaa6cf565813b67522f4d46bcd8b632de_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a89f4e42eb089c9519ec55b39a3b34ef0}\label{classwio__mqtt_a89f4e42eb089c9519ec55b39a3b34ef0}} 
+\index{wio\_mqtt@{wio\_mqtt}!getSubscribeState@{getSubscribeState}}
+\index{getSubscribeState@{getSubscribeState}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{getSubscribeState()}{getSubscribeState()}}
+{\footnotesize\ttfamily bool get\+Subscribe\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Den Subscribe Status auslesen. 
+
+Diese Methode gibt den Subscribe Status zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+true Es wurde kürzlich ein Topic empfangen 
+
+false Es wurde kein abboniertes Topicaktualisiert 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_a89f4e42eb089c9519ec55b39a3b34ef0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a657be6deb2760914886189f23746ca16}\label{classwio__mqtt_a657be6deb2760914886189f23746ca16}} 
+\index{wio\_mqtt@{wio\_mqtt}!initMQTT@{initMQTT}}
+\index{initMQTT@{initMQTT}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{initMQTT()}{initMQTT()}}
+{\footnotesize\ttfamily void init\+MQTT (\begin{DoxyParamCaption}\item[{void(\&)(int)}]{func }\end{DoxyParamCaption})}
+
+
+
+MQTT initialisieren. 
+
+Diese Methode setzt die MQTT-\/\+Parameter und stellt eine Verbindung zum MQTT Broker her.
+
+
+\begin{DoxyParams}{Parameter}
+{\em func} & Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=231pt]{classwio__mqtt_a657be6deb2760914886189f23746ca16_cgraph}
+\end{center}
+\end{figure}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{classwio__mqtt_a657be6deb2760914886189f23746ca16_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a490de796838813d1148e3d684f9c88a0}\label{classwio__mqtt_a490de796838813d1148e3d684f9c88a0}} 
+\index{wio\_mqtt@{wio\_mqtt}!isConnected@{isConnected}}
+\index{isConnected@{isConnected}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{isConnected()}{isConnected()}}
+{\footnotesize\ttfamily bool is\+Connected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+MQTT Verbindung auslesen. 
+
+Diese Methode überpüft, ob die Verbindung zum MQTT noch besteht.
+
+\begin{DoxyReturn}{Rückgabe}
+true Es besteht {\bfseries{eine}} Verbindung zum MQTT Broker 
+
+false Es besteht {\bfseries{keine}} Verbindung zum MQTT Broker 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{classwio__mqtt_a490de796838813d1148e3d684f9c88a0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a4515c2118e8e2a8d7298a9e9c2154710}\label{classwio__mqtt_a4515c2118e8e2a8d7298a9e9c2154710}} 
+\index{wio\_mqtt@{wio\_mqtt}!publishTopic@{publishTopic}}
+\index{publishTopic@{publishTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{publishTopic()}{publishTopic()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void publish\+Topic (\begin{DoxyParamCaption}\item[{const char $\ast$}]{topic,  }\item[{char $\ast$}]{payload,  }\item[{bool}]{retain }\end{DoxyParamCaption})}
+
+
+
+Ein Topic publizieren, Payload ist ein String. 
+
+Diese Methode publiziert eine MQTT Nachricht. Char-\/\+Array als Payload.
+
+
+\begin{DoxyParams}{Parameter}
+{\em topic} & Topic (Name) der Nachricht \\
+\hline
+{\em payload} & Payload (Nutzdaten/\+Inhalt) der Nachricht \\
+\hline
+{\em retain} & Wenn true\+: Speichert die Nachricht auf dem Broker \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classwio__mqtt_a4515c2118e8e2a8d7298a9e9c2154710_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a37c60310e7f849314eb9c785fb1d664b}\label{classwio__mqtt_a37c60310e7f849314eb9c785fb1d664b}} 
+\index{wio\_mqtt@{wio\_mqtt}!publishTopic@{publishTopic}}
+\index{publishTopic@{publishTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{publishTopic()}{publishTopic()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void publish\+Topic (\begin{DoxyParamCaption}\item[{const char $\ast$}]{topic,  }\item[{const char $\ast$}]{payload,  }\item[{bool}]{retain }\end{DoxyParamCaption})}
+
+
+
+Ein Topic publizieren, Payload ist ein konstanter String. 
+
+Diese Methode publiziert eine MQTT Nachricht. Konstanter char-\/\+Array als Payload.
+
+
+\begin{DoxyParams}{Parameter}
+{\em topic} & Topic (Name) der Nachricht \\
+\hline
+{\em payload} & Payload (Nutzdaten/\+Inhalt) der Nachricht \\
+\hline
+{\em retain} & Wenn true\+: Speichert die Nachricht auf dem Broker \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph, der zeigt, was diese Funktion aufruft\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classwio__mqtt_a37c60310e7f849314eb9c785fb1d664b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a48c3682844ea2541f9fe5885896644ed}\label{classwio__mqtt_a48c3682844ea2541f9fe5885896644ed}} 
+\index{wio\_mqtt@{wio\_mqtt}!publishTopic@{publishTopic}}
+\index{publishTopic@{publishTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{publishTopic()}{publishTopic()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void publish\+Topic (\begin{DoxyParamCaption}\item[{const char $\ast$}]{topic,  }\item[{float}]{payload,  }\item[{bool}]{retain }\end{DoxyParamCaption})}
+
+
+
+Ein Topic publizieren, Payload ist ein Fliesskommazahl. 
+
+Diese Methode publiziert eine MQTT Nachricht. Fliesskommazahl (Float) als Payload. Der Payload wird auf 3 Nachkommastellen gekürzt.
+
+
+\begin{DoxyParams}{Parameter}
+{\em topic} & Topic (Name) der Nachricht \\
+\hline
+{\em payload} & Payload (Nutzdaten/\+Inhalt) der Nachricht \\
+\hline
+{\em retain} & Wenn true\+: Speichert die Nachricht auf dem Broker \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classwio__mqtt_a6634835164a864cfe6623c76e5cedae1}\label{classwio__mqtt_a6634835164a864cfe6623c76e5cedae1}} 
+\index{wio\_mqtt@{wio\_mqtt}!publishTopic@{publishTopic}}
+\index{publishTopic@{publishTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{publishTopic()}{publishTopic()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void publish\+Topic (\begin{DoxyParamCaption}\item[{const char $\ast$}]{topic,  }\item[{int}]{payload,  }\item[{bool}]{retain }\end{DoxyParamCaption})}
+
+
+
+Ein Topic publizieren, Payload ist ein Integer. 
+
+Diese Methode publiziert eine MQTT Nachricht. Integer als Payload.
+
+
+\begin{DoxyParams}{Parameter}
+{\em topic} & Topic (Name) der Nachricht \\
+\hline
+{\em payload} & Payload (Nutzdaten/\+Inhalt) der Nachricht \\
+\hline
+{\em retain} & Wenn true\+: Speichert die Nachricht auf dem Broker \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classwio__mqtt_a3b8259e6f263afa75396d3f65d194a92}\label{classwio__mqtt_a3b8259e6f263afa75396d3f65d194a92}} 
+\index{wio\_mqtt@{wio\_mqtt}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{reconnect()}{reconnect()}}
+{\footnotesize\ttfamily void reconnect (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Wiederverbindung zum MQTT Broker. 
+
+Diese Methode stellt die Verbindung zum Broker wieder her.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{classwio__mqtt_a3b8259e6f263afa75396d3f65d194a92_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a96dd7f7c86980520fa8e5d5766d8c584}\label{classwio__mqtt_a96dd7f7c86980520fa8e5d5766d8c584}} 
+\index{wio\_mqtt@{wio\_mqtt}!setPublishState@{setPublishState}}
+\index{setPublishState@{setPublishState}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{setPublishState()}{setPublishState()}}
+{\footnotesize\ttfamily void set\+Publish\+State (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})}
+
+
+
+Den Publish Status setzen. 
+
+Diese Methode setzt den Publish Status.
+
+
+\begin{DoxyParams}{Parameter}
+{\em state} & Wert für den Publish Status \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_a96dd7f7c86980520fa8e5d5766d8c584_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a9590e713ce80e2553c6876eeea4935d7}\label{classwio__mqtt_a9590e713ce80e2553c6876eeea4935d7}} 
+\index{wio\_mqtt@{wio\_mqtt}!setSubscribeState@{setSubscribeState}}
+\index{setSubscribeState@{setSubscribeState}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{setSubscribeState()}{setSubscribeState()}}
+{\footnotesize\ttfamily void set\+Subscribe\+State (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})}
+
+
+
+Den Subscribe Status setzen. 
+
+Diese Methode setzt den Subscribe Status.
+
+
+\begin{DoxyParams}{Parameter}
+{\em state} & Wert für den Subscribe Status \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__mqtt_a9590e713ce80e2553c6876eeea4935d7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__mqtt_a7b153e3a1da31bce44496209cb487777}\label{classwio__mqtt_a7b153e3a1da31bce44496209cb487777}} 
+\index{wio\_mqtt@{wio\_mqtt}!subscribeTopic@{subscribeTopic}}
+\index{subscribeTopic@{subscribeTopic}!wio\_mqtt@{wio\_mqtt}}
+\doxysubsubsection{\texorpdfstring{subscribeTopic()}{subscribeTopic()}}
+{\footnotesize\ttfamily void subscribe\+Topic (\begin{DoxyParamCaption}\item[{char $\ast$}]{topic }\end{DoxyParamCaption})}
+
+
+
+Ein Topic abonnieren. 
+
+Diese Methode abboniert ein Topic.
+
+
+\begin{DoxyParams}{Parameter}
+{\em topic} & Topicname (Name der zu abbonierenden Nachicht) \\
+\hline
+\end{DoxyParams}
+
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Dateien\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{wio__mqtt_8h}{wio\+\_\+mqtt.\+h}}\item 
+\mbox{\hyperlink{wio__mqtt_8cpp}{wio\+\_\+mqtt.\+cpp}}\end{DoxyCompactItemize}

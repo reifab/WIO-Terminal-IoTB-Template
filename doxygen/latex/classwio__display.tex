@@ -1,0 +1,228 @@
+\hypertarget{classwio__display}{}\doxysection{wio\+\_\+display Klassenreferenz}
+\label{classwio__display}\index{wio\_display@{wio\_display}}
+\doxysubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classwio__display_a37612b6ed5c6ebf54cb17a6435bb5252}{wio\+\_\+display}} (int $\ast$mqtt, bool $\ast$pub, bool $\ast$sub, int $\ast$wlan, int $\ast$st, int $\ast$ch)
+\begin{DoxyCompactList}\small\item\em Konstructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_a1a9171e2595ab20c0d50a6b9ba243997}{init\+Display}} ()
+\begin{DoxyCompactList}\small\item\em Display initialisieren. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec}{draw\+Page}} (\mbox{\hyperlink{structpage__t}{page\+\_\+t}} p)
+\begin{DoxyCompactList}\small\item\em Seite zeichnen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_a63d570f9f63c5d6d5d3f4487fa8e43d6}{update\+Context}} (\mbox{\hyperlink{structpage__t}{page\+\_\+t}} p)
+\begin{DoxyCompactList}\small\item\em Seiten inhalt zeichnen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_a7a91c15af57e9bffd822b5e80773d1a2}{update\+Line}} (\mbox{\hyperlink{structpage__t}{page\+\_\+t}} p, unsigned int line\+\_\+nr, \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\+\_\+setting\+\_\+e}} setting)
+\begin{DoxyCompactList}\small\item\em Zeile zeichnen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_a352d2e9825a7f7c51a7936ec5c4bcd8a}{update\+Interface\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Interface Icons updaten. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_abda0e49d100fd4c1029fb74edfdda8c3}{loading\+Screen}} (int)
+\begin{DoxyCompactList}\small\item\em Loading Screen aktivieren/deaktivieren. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__display_afc021237f20f6425e4bda70c464f3bab}{add\+Log\+Text}} (const char $\ast$log\+\_\+, bool append)
+\begin{DoxyCompactList}\small\item\em Log Text hinzufügen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\mbox{\Hypertarget{classwio__display_a37612b6ed5c6ebf54cb17a6435bb5252}\label{classwio__display_a37612b6ed5c6ebf54cb17a6435bb5252}} 
+\index{wio\_display@{wio\_display}!wio\_display@{wio\_display}}
+\index{wio\_display@{wio\_display}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{wio\_display()}{wio\_display()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classwio__display}{wio\+\_\+display}} (\begin{DoxyParamCaption}\item[{int $\ast$}]{mqtt,  }\item[{bool $\ast$}]{pub,  }\item[{bool $\ast$}]{sub,  }\item[{int $\ast$}]{wlan,  }\item[{int $\ast$}]{st,  }\item[{int $\ast$}]{ch }\end{DoxyParamCaption})}
+
+
+
+Konstructor. 
+
+Konstruktor.
+
+
+\begin{DoxyParams}{Parameter}
+{\em mqtt} & Adresse der MQTT Status Variable \\
+\hline
+{\em pub} & Adresse des MQTT Publish Zustandes Variable \\
+\hline
+{\em sub} & Adresse des MQTT Subscribe Zustandes Variable \\
+\hline
+{\em wlan} & Adresse der WLAN Status Variable \\
+\hline
+{\em st} & Adresse der WLAN Stärke Variable \\
+\hline
+{\em ch} & Adresse der WLAN Kannal Variable \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Dokumentation der Elementfunktionen}
+\mbox{\Hypertarget{classwio__display_afc021237f20f6425e4bda70c464f3bab}\label{classwio__display_afc021237f20f6425e4bda70c464f3bab}} 
+\index{wio\_display@{wio\_display}!addLogText@{addLogText}}
+\index{addLogText@{addLogText}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{addLogText()}{addLogText()}}
+{\footnotesize\ttfamily void add\+Log\+Text (\begin{DoxyParamCaption}\item[{const char $\ast$}]{log\+\_\+,  }\item[{bool}]{append }\end{DoxyParamCaption})}
+
+
+
+Log Text hinzufügen. 
+
+Diese Methode fügt einen Text zum Log Text hinzu und zeichnet den Loading Screen neu.
+
+
+\begin{DoxyParams}{Parameter}
+{\em log\+\_\+} & Text der hinzugefügt werden soll \\
+\hline
+{\em append} & Soll der Text angehängt ( {\ttfamily true} ) oder auf eine neue Zeile geschrieben ( {\ttfamily false} ) werden \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{classwio__display_afc021237f20f6425e4bda70c464f3bab_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec}\label{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec}} 
+\index{wio\_display@{wio\_display}!drawPage@{drawPage}}
+\index{drawPage@{drawPage}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{drawPage()}{drawPage()}}
+{\footnotesize\ttfamily void draw\+Page (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpage__t}{page\+\_\+t}}}]{p }\end{DoxyParamCaption})}
+
+
+
+Seite zeichnen. 
+
+Diese Methode zeichnet die komplette Seite.
+
+\begin{DoxyAttention}{Achtung}
+Wird diese Methode zu oft aufgerufen, flackert der Display.
+\end{DoxyAttention}
+
+\begin{DoxyParams}{Parameter}
+{\em p} & Page to draw \\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__display_a1a9171e2595ab20c0d50a6b9ba243997}\label{classwio__display_a1a9171e2595ab20c0d50a6b9ba243997}} 
+\index{wio\_display@{wio\_display}!initDisplay@{initDisplay}}
+\index{initDisplay@{initDisplay}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{initDisplay()}{initDisplay()}}
+{\footnotesize\ttfamily void init\+Display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Display initialisieren. 
+
+Methode um den Display zu initialisieren. Die Methode \char`\"{}startet\char`\"{} den TFT-\/\+Display, dreht den Display, dass sich die 3 Buttons Oben befinden und schaltet die Hintergrundbeleuchtung ein. Zusätzlich wird überprüft, ob eine SD Karte vorhanden ist.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{classwio__display_a1a9171e2595ab20c0d50a6b9ba243997_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__display_abda0e49d100fd4c1029fb74edfdda8c3}\label{classwio__display_abda0e49d100fd4c1029fb74edfdda8c3}} 
+\index{wio\_display@{wio\_display}!loadingScreen@{loadingScreen}}
+\index{loadingScreen@{loadingScreen}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{loadingScreen()}{loadingScreen()}}
+{\footnotesize\ttfamily void loading\+Screen (\begin{DoxyParamCaption}\item[{int}]{modus }\end{DoxyParamCaption})}
+
+
+
+Loading Screen aktivieren/deaktivieren. 
+
+Diese Funktion aktiviert den Loading Screen.
+
+
+\begin{DoxyParams}{Parameter}
+{\em modus} & Loading Screen Zustand
+\begin{DoxyItemize}
+\item 0\+: Schaltet den Loading Screen aus
+\item 1\+: Schaltet den Loading Screen ein 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{classwio__display_abda0e49d100fd4c1029fb74edfdda8c3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__display_a63d570f9f63c5d6d5d3f4487fa8e43d6}\label{classwio__display_a63d570f9f63c5d6d5d3f4487fa8e43d6}} 
+\index{wio\_display@{wio\_display}!updateContext@{updateContext}}
+\index{updateContext@{updateContext}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{updateContext()}{updateContext()}}
+{\footnotesize\ttfamily void update\+Context (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpage__t}{page\+\_\+t}}}]{p }\end{DoxyParamCaption})}
+
+
+
+Seiten inhalt zeichnen. 
+
+Diese Methode zeichnet den ganzen Seiten Inhalt (ohne Header, nur die Zeilen) neu.
+
+
+\begin{DoxyParams}{Parameter}
+{\em p} & Seite (Page). Von der übergebenen Seite werden die darin beinhalteten Zeilen gezeichnet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Achtung}
+Der Kopf der Seite wird nicht neu gezeichnet, dass bedeutet, das der Titel veraltet sein kann. 
+\end{DoxyAttention}
+\mbox{\Hypertarget{classwio__display_a352d2e9825a7f7c51a7936ec5c4bcd8a}\label{classwio__display_a352d2e9825a7f7c51a7936ec5c4bcd8a}} 
+\index{wio\_display@{wio\_display}!updateInterfaceStatus@{updateInterfaceStatus}}
+\index{updateInterfaceStatus@{updateInterfaceStatus}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{updateInterfaceStatus()}{updateInterfaceStatus()}}
+{\footnotesize\ttfamily void update\+Interface\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Interface Icons updaten. 
+
+Diese Methode updatet die Icons oben rechts in der Ecke. Ist eine SD Karte vorhanden, werden Bilder von der SD Karte verwendet. Ist keine SD Karte vorhanden, zeichnet diese Methode farbige Kreise.
+
+\begin{DoxyNote}{Zu beachten}
+Die Icons oder Kreise werden nur neu gezeichnet, wenn sich der Wert verändert hat. Dadurch kann diese Methode oft aufgerufen werden, ohne dass die Icons flackern. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Noch zu erledigen}
+\item[\mbox{\hyperlink{todo__todo000004}{Noch zu erledigen}}]Auf einer Page die Interface Zustände genauer beschreiben. Mit Bildern. Coming soon...\end{DoxyRefDesc}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__display_a352d2e9825a7f7c51a7936ec5c4bcd8a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__display_a7a91c15af57e9bffd822b5e80773d1a2}\label{classwio__display_a7a91c15af57e9bffd822b5e80773d1a2}} 
+\index{wio\_display@{wio\_display}!updateLine@{updateLine}}
+\index{updateLine@{updateLine}!wio\_display@{wio\_display}}
+\doxysubsubsection{\texorpdfstring{updateLine()}{updateLine()}}
+{\footnotesize\ttfamily void update\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpage__t}{page\+\_\+t}}}]{p,  }\item[{unsigned int}]{line\+\_\+nr,  }\item[{\mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\+\_\+setting\+\_\+e}}}]{setting }\end{DoxyParamCaption})}
+
+
+
+Zeile zeichnen. 
+
+Diese Methode Zeichnet eine Zeile neu. Mit dem Übergabeparameter setting, kann eingestellt werden, ob die ganze Zeile (Name und Wert) oder nur der Inhalt (Wert) neu gezeichnet wird.
+
+
+\begin{DoxyParams}{Parameter}
+{\em p} & Seite (Page). Von der übergebenen Seite werden die darin beinhalteten Zeilen gezeichnet. \\
+\hline
+{\em line\+\_\+nr} & Die Zeilen Nummer, welche neu gezeichnet werden soll. ~\newline
+ Mögliche Parameter\+: 0 -\/ \mbox{\hyperlink{pages_8h_a861cd08cd7242d9aaf760fa9f0803d0a}{NUMBERS\+\_\+\+OF\+\_\+\+LINES}} -\/1 \\
+\hline
+{\em setting} & Eine Option, was alles neu gezeichnet werden soll. \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\+\_\+setting\+\_\+e}}
+\begin{DoxyItemize}
+\item {\ttfamily FULL\+\_\+\+LINE\+:} Zeichnet die komplette Zeile neu
+\item {\ttfamily ONLY\+\_\+\+VALUE\+:} Zeichnet nur den Zeilenwert neu 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Dateien\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{wio__display_8h}{wio\+\_\+display.\+h}}\item 
+\mbox{\hyperlink{wio__display_8cpp}{wio\+\_\+display.\+cpp}}\end{DoxyCompactItemize}

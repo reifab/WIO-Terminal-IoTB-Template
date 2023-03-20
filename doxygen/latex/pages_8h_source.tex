@@ -1,0 +1,62 @@
+\hypertarget{pages_8h_source}{}\doxysection{pages.\+h}
+\label{pages_8h_source}\index{pages.h@{pages.h}}
+\mbox{\hyperlink{pages_8h}{gehe zur Dokumentation dieser Datei}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ PAGES\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ PAGES\_H}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00015\ \textcolor{comment}{***\ Defines}}
+\DoxyCodeLine{00016\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ NUMBERS\_OF\_LINES\ \ 6\ \ \ }}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00020\ \textcolor{comment}{***\ Enumerations}}
+\DoxyCodeLine{00021\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96a9a4a47c1606e295076055a9cc4373197}{TEXT}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96a8036f3be5700d4eb67d27fab554d5e0c}{NUMERIC}},\ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96a9faad079af5016dadbb1741c852e5295}{BAR}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96ae9e4c627760f36823cdd153c24229157}{TIME}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96a09bf92ff863773c93a71fa7d91de56a2}{END\_LINE\_TYP}}\ \ }
+\DoxyCodeLine{00032\ \}\mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96}{line\_typ\_e}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ General}}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915a88ec7d5086d2469ba843c7fcceade8a6}{DEFAULT}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ Nummeric}}
+\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915aeffb93f050e055e646610874320c45aa}{DECIMAL\_PLACES\_0}},\ \ \ }
+\DoxyCodeLine{00040\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915aa120314665ba110e4a714a8ed2e356e4}{DECIMAL\_PLACES\_1}},\ \ \ }
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915ac0377893bec6ee3afd799b2a311cb4cc}{DECIMAL\_PLACES\_2}},\ \ \ }
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915aab179653a9a84d2a25b2edec48e31708}{DECIMAL\_PLACES\_3}},\ \ \ }
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ Bar}}
+\DoxyCodeLine{00044\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915a4e76d0a147c1be877918b31a07a1ac9f}{BAR\_EMPTY}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915afd9ce2fc2e8943d64300180e9ae2dbb0}{BAR\_SHOW\_VALUE}},\ \ \ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ Time}}
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915ad65a4b1c898dc037c907e0d0a361c261}{TIME\_HH\_MM}},\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915a7de2782518285ab2a9411f902638754c}{TIME\_HH\_MM\_SS}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ \ TIME\_DD\_MM\_YYYY,\ \ \ \ \ \ \ \ ///<\ Zeitformat\ DD.MM.YYYY\ -\/-\/>\ für\ @ref\ line\_typ\_e\ @p\ TIME\ }}
+\DoxyCodeLine{00051\ \textcolor{comment}{//\ \ TIME\_HH\_MM\_DD\_MM\_YYYY,\ \ ///<\ Zeitformat\ hh:mm,\ DD.MM.YYYY\ -\/-\/>\ für\ @ref\ line\_typ\_e\ @p\ TIME\ }}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915acef336bd26975b61f00d43e27b245c7f}{END\_SETTING}}\ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \}\mbox{\hyperlink{pages_8h_a8e12654423c4af34f9ad7b0b205ad915}{settings\_e}};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{char}\ line\_name[16];\ \ \ }
+\DoxyCodeLine{00059\ \ \ \mbox{\hyperlink{pages_8h_a186afb34592e38cfaec9e9cbaa742e96}{line\_typ\_e}}\ \mbox{\hyperlink{structline__t_a4052d5e4f2a265ef5902ff2dce3f9321}{line\_typ}};\ \ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structline__t_a17956fe0129d3d4c94ebc06cfef2ad82}{value}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{char}\ text[20];\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structline__t_a75ed80f61418d86962fe9566853690ca}{setting}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \}\mbox{\hyperlink{structline__t}{line\_t}};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{char}\ title[16];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \mbox{\hyperlink{structline__t}{line\_t}}\ lines[\mbox{\hyperlink{pages_8h_a861cd08cd7242d9aaf760fa9f0803d0a}{NUMBERS\_OF\_LINES}}];\ }
+\DoxyCodeLine{00069\ \}\mbox{\hyperlink{structpage__t}{page\_t}};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

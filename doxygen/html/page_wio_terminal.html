@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>WIO Terminal Template: WIO Terminal</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -33,10 +33,10 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Erzeugt von Doxygen 1.9.3 -->
+<!-- Erzeugt von Doxygen 1.9.6 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search",'Suchen','.html');
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
@@ -76,9 +76,16 @@ $(document).ready(function(){initNavTree('page_wio_terminal.html',''); initResiz
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
 </div>
 
 <div><div class="header">
@@ -92,18 +99,18 @@ Einleitung</h2>
 </div>
 <h2><a class="anchor" id="mcu_wio_section"></a>
 Controller</h2>
-<p >Microchip ATSAMD51P19 MCU </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Noch zu erledigen:</a></b></dt><dd>Chip Beschreibung</dd></dl>
+<p>Microchip ATSAMD51P19 MCU </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Noch zu erledigen:</a></b></dt><dd>Chip Beschreibung</dd></dl>
 <h2><a class="anchor" id="display_wio_section"></a>
 Display</h2>
-<p >coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Noch zu erledigen:</a></b></dt><dd>Display Beschreibung</dd></dl>
+<p>coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Noch zu erledigen:</a></b></dt><dd>Display Beschreibung</dd></dl>
 <h2><a class="anchor" id="buttons_wio_section"></a>
 Taster</h2>
-<p >Das WIO Terminal besitzt an der Oberseite drei Taster. An der Front befindet sich ein 5-Weg-Schalter (Hoch, Runter, Links, Rechts, Drücken). </p><div class="image">
+<p>Das WIO Terminal besitzt an der Oberseite drei Taster. An der Front befindet sich ein 5-Weg-Schalter (Hoch, Runter, Links, Rechts, Drücken). </p><div class="image">
 <img src="WIO_Terminal_Buttons.png" alt=""/>
 </div>
 <h3><a class="anchor" id="button_defines"></a>
 Defines für die Taster</h3>
-<p >Die Defines für die Taster lauten wie folgt:</p>
+<p>Die Defines für die Taster lauten wie folgt:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Taster   </th><th class="markdownTableHeadNone">Define    </th></tr>
@@ -126,10 +133,10 @@ Defines für die Taster</h3>
 </table>
 <h2><a class="anchor" id="buzzer_wio_section"></a>
 Buzzer</h2>
-<p >coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Noch zu erledigen:</a></b></dt><dd>Buzzer Beschreibung</dd></dl>
+<p>coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Noch zu erledigen:</a></b></dt><dd>Buzzer Beschreibung</dd></dl>
 <h2><a class="anchor" id="wifi_wio_section"></a>
 WiFi und Bluetooth Modul</h2>
-<p >Realtek RTL8720DN coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Noch zu erledigen:</a></b></dt><dd><p class="startdd">WiFi Modul Beschreibung </p>
+<p>Realtek RTL8720DN coming soon... </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Noch zu erledigen:</a></b></dt><dd><p class="startdd">WiFi Modul Beschreibung </p>
 <p class="enddd">Bluetooth Modul Beschreibung</p>
 </dd></dl>
 <h2><a class="anchor" id="sensors_wio_section"></a>
@@ -143,7 +150,7 @@ weitere Sensoren</h2>
 </ul>
 <h2><a class="anchor" id="source_wio_subsection"></a>
 Quellen</h2>
-<p ><a href="https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/">Get Started with Wio Terminal</a></p>
+<p><a href="https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/">Get Started with Wio Terminal</a></p>
 <dl class="section author"><dt>Autor</dt><dd>Beat Sturzenegger </dd></dl>
 <dl class="section date"><dt>Datum</dt><dd>13.02.2022 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
@@ -153,7 +160,7 @@ Quellen</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

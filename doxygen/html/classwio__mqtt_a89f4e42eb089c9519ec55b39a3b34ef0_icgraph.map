@@ -1,0 +1,5 @@
+<map id="getSubscribeState" name="getSubscribeState">
+<area shape="rect" id="node1" title="Den Subscribe Status auslesen." alt="" coords="251,5,380,31"/>
+<area shape="rect" id="node2" href="$main_8cpp.html#ace6f96c5f8bfcd98de2277be4b429de0" title="In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines bestimmten Intervalls,..." alt="" coords="100,5,203,31"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#afe461d27b9c48d5921c00d521181f12f" title="Main Funktion &#160;Wird immer wieder ausgeführt. Auch ohne einer Endlosschleife wie while(1) :wink:" alt="" coords="5,5,52,31"/>
+</map>

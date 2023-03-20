@@ -1,0 +1,18 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node1" title="Setup Funktion &#160;Wird einmal vor der Main Funktion loop ausgeführt." alt="" coords="5,228,60,253"/>
+<area shape="rect" id="node2" href="$main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352" title="Diese Funktion fügt einen Text zum Log Text hinzu." alt="" coords="155,5,244,31"/>
+<area shape="rect" id="node4" href="$classwio__mqtt.html#a4b87dd61d801fd226ab165c5c972612d" title="Topic&#45;Liste zur Klasse hinzufügen." alt="" coords="108,55,291,80"/>
+<area shape="rect" id="node5" href="$classwio__display.html#afe5b2d7ccd6d2b8ff7c161aa9821adec" title="Seite zeichnen." alt="" coords="122,104,277,129"/>
+<area shape="rect" id="node6" href="$classwio__display.html#a1a9171e2595ab20c0d50a6b9ba243997" title="Display initialisieren." alt="" coords="121,153,278,179"/>
+<area shape="rect" id="node7" href="$classwio__mqtt.html#a657be6deb2760914886189f23746ca16" title="MQTT initialisieren." alt="" coords="132,203,267,228"/>
+<area shape="rect" id="node9" href="$classwio__wifi.html#a1ddd026d8d50637c36e3a89ca1e2c6fc" title="WiFi initialisieren." alt="" coords="143,252,256,277"/>
+<area shape="rect" id="node10" href="$classwio__display.html#abda0e49d100fd4c1029fb74edfdda8c3" title="Loading Screen aktivieren/deaktivieren." alt="" coords="110,301,289,327"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#a05a70b00a2bd5c2cd94911aeadddbfca" title="MQTT Callback Function for subscibed topics. Diese Funktion wird automatisch aufgerufen,..." alt="" coords="142,351,257,376"/>
+<area shape="rect" id="node15" href="$classwio__wifi.html#a01d06b77862d56efbe1e69f85c831c01" title="nach Netzwerken suchen" alt="" coords="125,400,274,425"/>
+<area shape="rect" id="node16" href="$classwio__wifi.html#ab62ddb0664258f78d9421195247c00e0" title="WiFi Verbindungsstatus auslesen." alt="" coords="130,449,269,475"/>
+<area shape="rect" id="node3" href="$classwio__display.html#afc021237f20f6425e4bda70c464f3bab" title="Log Text hinzufügen." alt="" coords="357,5,521,31"/>
+<area shape="rect" id="node8" href="$classwio__mqtt.html#a3b8259e6f263afa75396d3f65d194a92" title="Wiederverbindung zum MQTT Broker." alt="" coords="369,203,508,228"/>
+<area shape="rect" id="node12" href="$classwio__mqtt.html#a8caa2ea292fa6d2956fdacd7199a5df0" title="Ein Payload eines abbonierten Topics auslesen." alt="" coords="339,301,539,327"/>
+<area shape="rect" id="node13" href="$classwio__mqtt.html#a92d5e9f87f99c80f12a79d53d6061944" title="Ein abbonierter Topic auslesen." alt="" coords="347,351,531,376"/>
+<area shape="rect" id="node14" href="$classwio__mqtt.html#a9590e713ce80e2553c6876eeea4935d7" title="Den Subscribe Status setzen." alt="" coords="344,400,533,425"/>
+</map>

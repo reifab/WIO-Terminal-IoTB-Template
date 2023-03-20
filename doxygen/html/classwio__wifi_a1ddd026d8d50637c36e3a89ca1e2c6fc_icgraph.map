@@ -1,0 +1,4 @@
+<map id="initWifi" name="initWifi">
+<area shape="rect" id="node1" title="WiFi initialisieren." alt="" coords="108,5,169,31"/>
+<area shape="rect" id="node2" href="$main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup Funktion &#160;Wird einmal vor der Main Funktion loop ausgeführt." alt="" coords="5,5,60,31"/>
+</map>

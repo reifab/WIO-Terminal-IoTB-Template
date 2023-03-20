@@ -1,0 +1,7 @@
+<map id="reconnect" name="reconnect">
+<area shape="rect" id="node1" title="Wiederverbindung zum MQTT Broker." alt="" coords="259,31,337,56"/>
+<area shape="rect" id="node2" href="$classwio__mqtt.html#a657be6deb2760914886189f23746ca16" title="MQTT initialisieren." alt="" coords="122,5,197,31"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#ace6f96c5f8bfcd98de2277be4b429de0" title="In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines bestimmten Intervalls,..." alt="" coords="108,55,211,80"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup Funktion &#160;Wird einmal vor der Main Funktion loop ausgeführt." alt="" coords="5,5,60,31"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#afe461d27b9c48d5921c00d521181f12f" title="Main Funktion &#160;Wird immer wieder ausgeführt. Auch ohne einer Endlosschleife wie while(1) :wink:" alt="" coords="9,55,56,80"/>
+</map>

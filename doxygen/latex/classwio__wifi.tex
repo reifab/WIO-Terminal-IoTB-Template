@@ -1,0 +1,308 @@
+\hypertarget{classwio__wifi}{}\doxysection{wio\+\_\+wifi Klassenreferenz}
+\label{classwio__wifi}\index{wio\_wifi@{wio\_wifi}}
+\doxysubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classwio__wifi_a2b7f4184669d44b00c6a2ea3b7dba433}{wio\+\_\+wifi}} (void(\&)(const char $\ast$, bool))
+\begin{DoxyCompactList}\small\item\em Konstruktor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__wifi_a1ddd026d8d50637c36e3a89ca1e2c6fc}{init\+Wifi}} (void)
+\begin{DoxyCompactList}\small\item\em Wi\+Fi initialisieren. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classwio__wifi_ab62ddb0664258f78d9421195247c00e0}{Wi\+Fi\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Wi\+Fi Verbindungsstatus auslesen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__wifi_a4bcd6ce7d04c38f8c4ff908d1fc50f86}{reconnect}} ()
+\begin{DoxyCompactList}\small\item\em verbindet sich wieder mit dem WLAN \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__wifi_afa314374dc1be05643cc2b902c072d95}{get\+IP}} (char $\ast$)
+\begin{DoxyCompactList}\small\item\em aktuelle IP Adresse auslesen \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{classwio__wifi_ab68e0df7dd28994f9420722469fc37a3}{get\+SSID}} ()
+\begin{DoxyCompactList}\small\item\em SSID aus dem secret.\+h File. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}{scan\+Network}} (void)
+\begin{DoxyCompactList}\small\item\em nach Netzwerken suchen \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classwio__wifi_a2b0a22dae45249d89ad45d77469c7837}{delete\+Scan\+Results}} ()
+\begin{DoxyCompactList}\small\item\em Scan Resultate löschen. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classwio__wifi_aceb60facca1bf242f5c5090331ee550d}{get\+Networks\+Found}} (void)
+\begin{DoxyCompactList}\small\item\em Anzahl der gefundenen Netzwerke auslesen. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classwio__wifi_a845f0d046f2ff1b3556e3b02cc801405}{measure\+RSSI}} (int)
+\begin{DoxyCompactList}\small\item\em Signalstärke auslesen. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classwio__wifi_a4033927b93baabcbf217d50148373b20}{read\+Channel}} (int)
+\begin{DoxyCompactList}\small\item\em WLAN Kanal auslesen. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{classwio__wifi_a2657edfaaaa26dc44fd985ba188179bb}{get\+Scanned\+SSID}} (int index)
+\begin{DoxyCompactList}\small\item\em SSID des gefunden Netzwerkes auslesen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\mbox{\Hypertarget{classwio__wifi_a2b7f4184669d44b00c6a2ea3b7dba433}\label{classwio__wifi_a2b7f4184669d44b00c6a2ea3b7dba433}} 
+\index{wio\_wifi@{wio\_wifi}!wio\_wifi@{wio\_wifi}}
+\index{wio\_wifi@{wio\_wifi}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{wio\_wifi()}{wio\_wifi()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classwio__wifi}{wio\+\_\+wifi}} (\begin{DoxyParamCaption}\item[{void(\&)(const char $\ast$, bool)}]{ }\end{DoxyParamCaption})}
+
+
+
+Konstruktor. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em func} & Funktionsadresse der Funktion für das Hinzufügen des Log Text \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Dokumentation der Elementfunktionen}
+\mbox{\Hypertarget{classwio__wifi_a2b0a22dae45249d89ad45d77469c7837}\label{classwio__wifi_a2b0a22dae45249d89ad45d77469c7837}} 
+\index{wio\_wifi@{wio\_wifi}!deleteScanResults@{deleteScanResults}}
+\index{deleteScanResults@{deleteScanResults}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{deleteScanResults()}{deleteScanResults()}}
+{\footnotesize\ttfamily void delete\+Scan\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Scan Resultate löschen. 
+
+Diese Methode löscht die Scan Resultate.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__wifi_a2b0a22dae45249d89ad45d77469c7837_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_afa314374dc1be05643cc2b902c072d95}\label{classwio__wifi_afa314374dc1be05643cc2b902c072d95}} 
+\index{wio\_wifi@{wio\_wifi}!getIP@{getIP}}
+\index{getIP@{getIP}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{getIP()}{getIP()}}
+{\footnotesize\ttfamily void get\+IP (\begin{DoxyParamCaption}\item[{char $\ast$}]{addr }\end{DoxyParamCaption})}
+
+
+
+aktuelle IP Adresse auslesen 
+
+Diese Methode gibt die IP-\/\+Adresse des Gerätes zurück.
+
+
+\begin{DoxyParams}{Parameter}
+{\em addr} & Stringadresse, für die Speicherung, also wohin wird die IP-\/\+Adresse \char`\"{}geschrieben\char`\"{} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classwio__wifi_aceb60facca1bf242f5c5090331ee550d}\label{classwio__wifi_aceb60facca1bf242f5c5090331ee550d}} 
+\index{wio\_wifi@{wio\_wifi}!getNetworksFound@{getNetworksFound}}
+\index{getNetworksFound@{getNetworksFound}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{getNetworksFound()}{getNetworksFound()}}
+{\footnotesize\ttfamily int get\+Networks\+Found (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Anzahl der gefundenen Netzwerke auslesen. 
+
+Diese Methode gibt den aktuellen Scan Status zurück oder, bei abgeschlossenem Scan, die Anzahl der gefundenen Netzwerke zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+int Anzahl gefundene Netzwerke oder Scan Status
+\begin{DoxyItemize}
+\item -\/2\+: Scan wurde noch nicht getriggert/ausgelöst
+\item -\/1\+: Scan ist noch nicht abgeschlossen
+\item \texorpdfstring{$>$}{>}0\+: Anzahl der gefundenen Netzwerke 
+\end{DoxyItemize}
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__wifi_aceb60facca1bf242f5c5090331ee550d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a2657edfaaaa26dc44fd985ba188179bb}\label{classwio__wifi_a2657edfaaaa26dc44fd985ba188179bb}} 
+\index{wio\_wifi@{wio\_wifi}!getScannedSSID@{getScannedSSID}}
+\index{getScannedSSID@{getScannedSSID}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{getScannedSSID()}{getScannedSSID()}}
+{\footnotesize\ttfamily char $\ast$ get\+Scanned\+SSID (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+SSID des gefunden Netzwerkes auslesen. 
+
+Diese Methode gibt, anhand der Indexnummer der gescannten Netzwerke, den SSID Namen zurück.
+
+
+\begin{DoxyParams}{Parameter}
+{\em index} & Indexnummer des Netzwerkes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+char$\ast$ SSID-\/\+Namen als String 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwio__wifi_a2657edfaaaa26dc44fd985ba188179bb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_ab68e0df7dd28994f9420722469fc37a3}\label{classwio__wifi_ab68e0df7dd28994f9420722469fc37a3}} 
+\index{wio\_wifi@{wio\_wifi}!getSSID@{getSSID}}
+\index{getSSID@{getSSID}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{getSSID()}{getSSID()}}
+{\footnotesize\ttfamily const char $\ast$ get\+SSID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+SSID aus dem secret.\+h File. 
+
+Diese Methode gibt den SSID Namen zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+const char$\ast$ SSID Name als String 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=317pt]{classwio__wifi_ab68e0df7dd28994f9420722469fc37a3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a1ddd026d8d50637c36e3a89ca1e2c6fc}\label{classwio__wifi_a1ddd026d8d50637c36e3a89ca1e2c6fc}} 
+\index{wio\_wifi@{wio\_wifi}!initWifi@{initWifi}}
+\index{initWifi@{initWifi}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{initWifi()}{initWifi()}}
+{\footnotesize\ttfamily void init\+Wifi (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Wi\+Fi initialisieren. 
+
+Diese Methode setzt die Wifi-\/\+Parameter und stellt eine Verbindung zum Access Point her.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classwio__wifi_a1ddd026d8d50637c36e3a89ca1e2c6fc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a845f0d046f2ff1b3556e3b02cc801405}\label{classwio__wifi_a845f0d046f2ff1b3556e3b02cc801405}} 
+\index{wio\_wifi@{wio\_wifi}!measureRSSI@{measureRSSI}}
+\index{measureRSSI@{measureRSSI}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{measureRSSI()}{measureRSSI()}}
+{\footnotesize\ttfamily int measure\+RSSI (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Signalstärke auslesen. 
+
+Diese Methode gibt die Signalstärke (RSSI) zurück.
+
+\begin{DoxyNote}{Zu beachten}
+Es wird Empfohlen vorher das Netzwerk zu scannen mit \mbox{\hyperlink{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}{scan\+Network()}} , damit man herausfinden kann welcher Indexnummer die verbundene Verbindung hat.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameter}
+{\em index} & Indexnummer des Netzwerkes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+int RSSI als integer Wert 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{classwio__wifi_a845f0d046f2ff1b3556e3b02cc801405_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a4033927b93baabcbf217d50148373b20}\label{classwio__wifi_a4033927b93baabcbf217d50148373b20}} 
+\index{wio\_wifi@{wio\_wifi}!readChannel@{readChannel}}
+\index{readChannel@{readChannel}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{readChannel()}{readChannel()}}
+{\footnotesize\ttfamily int read\+Channel (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+WLAN Kanal auslesen. 
+
+Diese Methode liest den WLAn Kanal aus.
+
+\begin{DoxyNote}{Zu beachten}
+Es wird Empfohlen vorher das Netzwerk zu scannen mit \mbox{\hyperlink{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}{scan\+Network()}} , damit man herausfinden kann welcher Indexnummer die verbundene Verbindung hat.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameter}
+{\em index} & Indexnummer des Netzwerkes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+int WLAN Kanal als integer Wert 
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{classwio__wifi_a4033927b93baabcbf217d50148373b20_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a4bcd6ce7d04c38f8c4ff908d1fc50f86}\label{classwio__wifi_a4bcd6ce7d04c38f8c4ff908d1fc50f86}} 
+\index{wio\_wifi@{wio\_wifi}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{reconnect()}{reconnect()}}
+{\footnotesize\ttfamily void reconnect (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+verbindet sich wieder mit dem WLAN 
+
+Diese Methode verbindet sich mit dem Access Point.Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{classwio__wifi_a4bcd6ce7d04c38f8c4ff908d1fc50f86_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}\label{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}} 
+\index{wio\_wifi@{wio\_wifi}!scanNetwork@{scanNetwork}}
+\index{scanNetwork@{scanNetwork}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{scanNetwork()}{scanNetwork()}}
+{\footnotesize\ttfamily void scan\+Network (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+nach Netzwerken suchen 
+
+Diese Methode scannt nach {\bfseries{sichtbaren}} WLAN Verbindungen.
+
+\begin{DoxyNote}{Zu beachten}
+Der Scan wird im asynchronen Modus durchgeführt. Mit der Methode \mbox{\hyperlink{classwio__wifi_aceb60facca1bf242f5c5090331ee550d}{get\+Networks\+Found()}} kann der aktuelle Scan Status oder die gefundenen Netzwerke ausgelesen werden. 
+\end{DoxyNote}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classwio__wifi_ab62ddb0664258f78d9421195247c00e0}\label{classwio__wifi_ab62ddb0664258f78d9421195247c00e0}} 
+\index{wio\_wifi@{wio\_wifi}!WiFiStatus@{WiFiStatus}}
+\index{WiFiStatus@{WiFiStatus}!wio\_wifi@{wio\_wifi}}
+\doxysubsubsection{\texorpdfstring{WiFiStatus()}{WiFiStatus()}}
+{\footnotesize\ttfamily int Wi\+Fi\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Wi\+Fi Verbindungsstatus auslesen. 
+
+Diese Methode gibt den Wi\+Fi Status zurück.
+
+\begin{DoxyReturn}{Rückgabe}
+int Wi\+Fi Status
+\begin{DoxyItemize}
+\item {\ttfamily 0}\+: Unterbrochen
+\item {\ttfamily 1}\+: Verbunden 
+\end{DoxyItemize}
+\end{DoxyReturn}
+Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{classwio__wifi_ab62ddb0664258f78d9421195247c00e0_icgraph}
+\end{center}
+\end{figure}
+
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Dateien\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{wio__wifi_8h}{wio\+\_\+wifi.\+h}}\item 
+\mbox{\hyperlink{wio__wifi_8cpp}{wio\+\_\+wifi.\+cpp}}\end{DoxyCompactItemize}

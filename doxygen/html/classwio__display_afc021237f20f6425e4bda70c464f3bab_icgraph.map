@@ -1,0 +1,5 @@
+<map id="addLogText" name="addLogText">
+<area shape="rect" id="node1" title="Log Text hinzufügen." alt="" coords="245,5,335,31"/>
+<area shape="rect" id="node2" href="$main_8cpp.html#ad5bc69356319b8729e84c6e7e4278352" title="Diese Funktion fügt einen Text zum Log Text hinzu." alt="" coords="108,5,197,31"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup Funktion &#160;Wird einmal vor der Main Funktion loop ausgeführt." alt="" coords="5,5,60,31"/>
+</map>
