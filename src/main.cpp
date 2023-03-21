@@ -112,11 +112,8 @@ wio_mqtt wio_MQTT = wio_mqtt(addLogText);
 void setup()
 {
   Serial.begin(115200); // init Serial Port with 115200 baud
-  while (!Serial)
-  {
-    // wait for serial port to connect. Needed for native USB port only
-  }
-
+  // wait for serial port to connect. Needed for native USB port only
+  delay(1000); // 1000ms delay for Serial begin
   // Display Initialization
   Serial.println("init Display");
   wio_disp.initDisplay();    // init built-in display
@@ -379,8 +376,8 @@ void periodicTasks()
         mqtt_status = CONNECTED;
         if (mqtt_status)
         {
-          wio_MQTT.clientLoop();             // MQTT client loop
-          previousMillis[1] = currentMillis; // refresh previousMillis
+          wio_MQTT.clientLoop();                          // MQTT client loop
+          previousMillis[1] = currentMillis;              // refresh previousMillis
           mqtt_pub_status = wio_MQTT.getPublishState();   // get publish state
           wio_MQTT.setPublishState(false);                // reset publish state in the mqtt library
           mqtt_sub_status = wio_MQTT.getSubscribeState(); // get subscribe state
@@ -401,7 +398,7 @@ void periodicTasks()
 #endif
   if ((currentMillis - previousMillis[2] >= interfaceIconIntervall) || previousMillis[2] == 0)
   {
-    previousMillis[2] = currentMillis; // refresh previousMillis
+    previousMillis[2] = currentMillis;   // refresh previousMillis
     wlan_status = wio_Wifi.WiFiStatus(); // read WiFi status
     if (wlan_status == DISCONNECTED)
     {
