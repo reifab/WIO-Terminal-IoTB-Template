@@ -66,13 +66,9 @@ void wio_mqtt::initMQTT(void (&func)(int))
 
   wioMqttClient.setId(clientId);
   wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
-  wioMqttClient.connect(mqtt_server, 1883); // set MQTT broker url and port
-  wioMqttClient.onMessage(_callback);       // set callback function
-  delay(1000);                              // 1000ms delay
-  while (!wioMqttClient.connected())         // Loop until we're reconnected
-  {
-    reconnect(); // connect to MQTT broker
-  }
+  wioMqttClient.connect(mqtt_server, 1883);   // set MQTT broker url and port
+  wioMqttClient.onMessage(_callback);         // set callback function
+  subscribeList(ptr_topicList, topicListLen); // subscribe the topic list
 }
 
 /**
@@ -295,7 +291,7 @@ const char *wio_mqtt::getMessageTopic(void)
  */
 const char *wio_mqtt::getMessagePayload(void)
 {
-  String msgPayloadStr = wioMqttClient.messageTopic();
+  String msgPayloadStr = wioMqttClient.readString();
   char *msgPayloadCharArray = new char[msgPayloadStr.length() + 1];
   msgPayloadStr.toCharArray(msgPayloadCharArray, msgPayloadStr.length() + 1);
   return msgPayloadCharArray;
