@@ -1,0 +1,43 @@
+\hypertarget{wio__wifi_8h_source}{}\doxysection{wio\+\_\+wifi.\+h}
+\label{wio__wifi_8h_source}\index{wio\_wifi.h@{wio\_wifi.h}}
+\mbox{\hyperlink{wio__wifi_8h}{gehe zur Dokumentation dieser Datei}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ WIO\_WIFI\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ WIO\_WIFI\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <rpcWiFi.h>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00018\ \textcolor{comment}{***\ Extern\ Variables}}
+\DoxyCodeLine{00019\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{wio__wifi_8h_a587ba0cb07f02913598610049a3bbb79}{ssid}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{wio__wifi_8h_aa4a2ebcb494493f648ae1e6975672575}{password}};\ \ \ \ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00024\ \textcolor{comment}{***\ Interface\ description}}
+\DoxyCodeLine{00025\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classwio__wifi}{wio\_wifi}}}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{classwio__wifi}{wio\_wifi}}(\textcolor{keywordtype}{void}\ (\&)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *,\ \textcolor{keywordtype}{bool}));\ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__wifi_a1ddd026d8d50637c36e3a89ca1e2c6fc}{initWifi}}(\textcolor{keywordtype}{void});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classwio__wifi_ab62ddb0664258f78d9421195247c00e0}{WiFiStatus}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__wifi_a4bcd6ce7d04c38f8c4ff908d1fc50f86}{reconnect}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__wifi_afa314374dc1be05643cc2b902c072d95}{getIP}}(\textcolor{keywordtype}{char}\ *);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classwio__wifi_ab68e0df7dd28994f9420722469fc37a3}{getSSID}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__wifi_a01d06b77862d56efbe1e69f85c831c01}{scanNetwork}}(\textcolor{keywordtype}{void});\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__wifi_a2b0a22dae45249d89ad45d77469c7837}{deleteScanResults}}();\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classwio__wifi_aceb60facca1bf242f5c5090331ee550d}{getNetworksFound}}(\textcolor{keywordtype}{void});\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classwio__wifi_a845f0d046f2ff1b3556e3b02cc801405}{measureRSSI}}(\textcolor{keywordtype}{int});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classwio__wifi_a4033927b93baabcbf217d50148373b20}{readChannel}}(\textcolor{keywordtype}{int});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classwio__wifi_a2657edfaaaa26dc44fd985ba188179bb}{getScannedSSID}}(\textcolor{keywordtype}{int}\ index);\ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ wifiSetup();}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

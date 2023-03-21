@@ -1,0 +1,78 @@
+\hypertarget{_raw_image_8h_source}{}\doxysection{Raw\+Image.\+h}
+\label{_raw_image_8h_source}\index{RawImage.h@{RawImage.h}}
+\mbox{\hyperlink{_raw_image_8h}{gehe zur Dokumentation dieser Datei}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \#pragma\ once}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include<stdint.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include<SD/Seeed\_SD.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00018\ \textcolor{comment}{USAGE:}}
+\DoxyCodeLine{00019\ \textcolor{comment}{}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ //\ when\ use\ 8bit\ color.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ Raw8\ *\ img8\ =\ newImage<uint8\_t>("{}path\ to\ sd\ card\ image."{});}}
+\DoxyCodeLine{00022\ \textcolor{comment}{}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ //\ when\ use\ 16bit\ color.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ Raw16\ *\ img16\ =\ newImage<uint16\_t>("{}path\ to\ sd\ card\ image."{});}}
+\DoxyCodeLine{00025\ \textcolor{comment}{}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ \ \ //\ do\ some\ drawing.}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ //\ img8-\/>draw();}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ //\ remember\ release\ it}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ img8-\/>release();}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ img16-\/>release();}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{extern}\ TFT\_eSPI\ \mbox{\hyperlink{_raw_image_8h_ac5d2dc3534f30f704fd7529ad0f89ff1}{tft}};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ type>}
+\DoxyCodeLine{00037\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_raw_image}{RawImage}}\{}
+\DoxyCodeLine{00038\ \ \ \ \ type\ *\ ptr()\{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (type\ *)(\textcolor{keyword}{this}\ +\ 1);}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ type\ get(int16\_t\ x,\ int16\_t\ y)\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>ptr()[y\ *\ width()\ +\ x];}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ draw(\textcolor{keywordtype}{size\_t}\ x\ =\ 0,\ \textcolor{keywordtype}{size\_t}\ y\ =\ 0)\{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_raw_image_8h_ac5d2dc3534f30f704fd7529ad0f89ff1}{tft}}.pushImage(x,\ y,\ width(),\ height(),\ ptr());}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ release()\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ int16\_t\ width()\{\ \textcolor{keywordflow}{return}\ \_width;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ int16\_t\ height()\{\ \textcolor{keywordflow}{return}\ \_height;\ \}}
+\DoxyCodeLine{00052\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00053\ \ \ \ \ int16\_t\ \ \_width;}
+\DoxyCodeLine{00054\ \ \ \ \ int16\_t\ \ \_height;}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_raw_image}{RawImage<uint8\_t>}}\ \ \mbox{\hyperlink{struct_raw_image}{Raw8}};}
+\DoxyCodeLine{00058\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_raw_image}{RawImage<uint16\_t>}}\ \mbox{\hyperlink{struct_raw_image}{Raw16}};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ type>}
+\DoxyCodeLine{00061\ \mbox{\hyperlink{struct_raw_image}{RawImage<type>}}\ *\ newImage(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ path)\{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_raw_image}{RawImage<type>}}\ raw;}
+\DoxyCodeLine{00063\ \ \ \ \ File\ f\ =\ SD.open(path,\ FILE\_READ);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (!f)\{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ int32\_t\ size\ =\ f.size();}
+\DoxyCodeLine{00068\ \ \ \ \ raw\ \ \ *\ mem\ =\ (raw\ *)\textcolor{keyword}{new}\ uint8\_t[size];}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (mem\ ==\ \textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ f.read(mem,\ size);}
+\DoxyCodeLine{00073\ \ \ \ \ f.close();}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{return}\ mem;}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ type>}
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ drawImage(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ path,\ \textcolor{keywordtype}{size\_t}\ x\ =\ 0,\ \textcolor{keywordtype}{size\_t}\ y\ =\ 0)\{}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{auto}\ img\ =\ newImage<type>(path);}
+\DoxyCodeLine{00080\ \ \ \ \ img-\/>draw(x,\ y);}
+\DoxyCodeLine{00081\ \ \ \ \ img-\/>release();}
+\DoxyCodeLine{00082\ \}}
+
+\end{DoxyCode}

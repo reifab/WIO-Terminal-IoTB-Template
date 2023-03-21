@@ -1,0 +1,62 @@
+\hypertarget{_raw_image_8h}{}\doxysection{Raw\+Image.\+h-\/Dateireferenz}
+\label{_raw_image_8h}\index{RawImage.h@{RawImage.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$SD/\+Seeed\+\_\+\+SD.\+h$>$}\newline
+Include-\/\+Abhängigkeitsdiagramm für Raw\+Image.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{_raw_image_8h__incl}
+\end{center}
+\end{figure}
+Dieser Graph zeigt, welche Datei direkt oder indirekt diese Datei enthält\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{_raw_image_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Datenstrukturen}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_raw_image}{Raw\+Image$<$ type $>$}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typdefinitionen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_raw_image_8h_aee8b825bbc8bfbbacabbb55da70f9246}\label{_raw_image_8h_aee8b825bbc8bfbbacabbb55da70f9246}} 
+typedef \mbox{\hyperlink{struct_raw_image}{Raw\+Image}}$<$ uint8\+\_\+t $>$ {\bfseries Raw8}
+\item 
+\mbox{\Hypertarget{_raw_image_8h_aaa3213174931135226b13fb7aa2e1dd2}\label{_raw_image_8h_aaa3213174931135226b13fb7aa2e1dd2}} 
+typedef \mbox{\hyperlink{struct_raw_image}{Raw\+Image}}$<$ uint16\+\_\+t $>$ {\bfseries Raw16}
+\end{DoxyCompactItemize}
+\doxysubsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_raw_image_8h_aa4ebaad9d8b8ba129083b1c4ddc3a559}\label{_raw_image_8h_aa4ebaad9d8b8ba129083b1c4ddc3a559}} 
+{\footnotesize template$<$class type $>$ }\\\mbox{\hyperlink{struct_raw_image}{Raw\+Image}}$<$ type $>$ $\ast$ {\bfseries new\+Image} (const char $\ast$path)
+\item 
+\mbox{\Hypertarget{_raw_image_8h_aef09bb6ac4aa886fdd29a999da1b8b17}\label{_raw_image_8h_aef09bb6ac4aa886fdd29a999da1b8b17}} 
+{\footnotesize template$<$class type $>$ }\\void {\bfseries draw\+Image} (const char $\ast$path, size\+\_\+t x=0, size\+\_\+t y=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variablen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_raw_image_8h_ac5d2dc3534f30f704fd7529ad0f89ff1}\label{_raw_image_8h_ac5d2dc3534f30f704fd7529ad0f89ff1}} 
+TFT\+\_\+e\+SPI {\bfseries tft}
+\begin{DoxyCompactList}\small\item\em Display Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyAuthor}{Autor}
+Beat Sturzenegger 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Datum}
+18.\+01.\+2022
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}

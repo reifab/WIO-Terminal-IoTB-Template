@@ -1,0 +1,60 @@
+\hypertarget{wio__display_8h_source}{}\doxysection{wio\+\_\+display.\+h}
+\label{wio__display_8h_source}\index{wio\_display.h@{wio\_display.h}}
+\mbox{\hyperlink{wio__display_8h}{gehe zur Dokumentation dieser Datei}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ WIO\_DISPLAY\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ WIO\_DISPLAY\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{pages_8h}{pages.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00016\ \textcolor{comment}{***\ Defines}}
+\DoxyCodeLine{00017\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ LINE\_START\_X\ \ 10\ \ \ \ }}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ LINE\_START\_Y\ \ 55\ \ \ \ }}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ LINE\_VALUE\_X\ \ 180\ \ \ }}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00023\ \textcolor{comment}{***\ Datatypes}}
+\DoxyCodeLine{00024\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163a510bb3354ed81b11f86dbb0c9ad8847e}{FULL\_LINE}},\ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163a57c8e11a58d8df6f75a25cf6e9648487}{ONLY\_VALUE}},\ \ \ }
+\DoxyCodeLine{00029\ \}\mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\_setting\_e}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00032\ \textcolor{comment}{***\ Extern\ Variables}}
+\DoxyCodeLine{00033\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{wio__display_8h_ac997cde6f0f58d8560ef6af854596a09}{log\_text}}[15][50];}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{/********************************************************************************************}}
+\DoxyCodeLine{00037\ \textcolor{comment}{***\ Interface\ description}}
+\DoxyCodeLine{00038\ \textcolor{comment}{********************************************************************************************/}}
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classwio__display}{wio\_display}}}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classwio__display}{wio\_display}}(\textcolor{keywordtype}{int}\ *mqtt,\ \textcolor{keywordtype}{bool}\ *pub,\ \textcolor{keywordtype}{bool}\ *sub,\ \textcolor{keywordtype}{int}\ *wlan,\ \textcolor{keywordtype}{int}\ *st,\ \textcolor{keywordtype}{int}\ *ch);\ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_a1a9171e2595ab20c0d50a6b9ba243997}{initDisplay}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_afe5b2d7ccd6d2b8ff7c161aa9821adec}{drawPage}}(\mbox{\hyperlink{structpage__t}{page\_t}}\ p);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_a63d570f9f63c5d6d5d3f4487fa8e43d6}{updateContext}}(\mbox{\hyperlink{structpage__t}{page\_t}}\ p);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_a7a91c15af57e9bffd822b5e80773d1a2}{updateLine}}(\mbox{\hyperlink{structpage__t}{page\_t}}\ p,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ line\_nr,\ \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\_setting\_e}}\ setting);\ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_a352d2e9825a7f7c51a7936ec5c4bcd8a}{updateInterfaceStatus}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_abda0e49d100fd4c1029fb74edfdda8c3}{loadingScreen}}(\textcolor{keywordtype}{int});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classwio__display_afc021237f20f6425e4bda70c464f3bab}{addLogText}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ log\_,\ \textcolor{keywordtype}{bool}\ append);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ drawHeader(\textcolor{keywordtype}{char}\ *title,\ \textcolor{keywordtype}{int}\ sd\_card\_status,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a1c3998e1361f3f06579b25a42553b759}{mqtt\_status}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a671377ad5e91aeef8d5ea15d641367d3}{wlan\_status}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_aa22d4a245ed8169d0b95be7f10f81072}{wlan\_strength}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a5af44fb9605d466aa171520e649fb8e0}{wlan\_channel}});}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ drawPageLine(\mbox{\hyperlink{structline__t}{line\_t}}\ l,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ line\_nr,\ \mbox{\hyperlink{wio__display_8h_aabca61e764b3b6e4849ef83b7c9d0163}{draw\_setting\_e}}\ setting);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ drawIcons(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a1c3998e1361f3f06579b25a42553b759}{mqtt\_status}},\ \textcolor{keywordtype}{bool}\ mqtt\_pub,\ \textcolor{keywordtype}{bool}\ mqtt\_sub,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a671377ad5e91aeef8d5ea15d641367d3}{wlan\_status}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_aa22d4a245ed8169d0b95be7f10f81072}{wlan\_strength}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_a5af44fb9605d466aa171520e649fb8e0}{wlan\_channel}},\ \textcolor{keywordtype}{bool}\ forced);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_5(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_2(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_4(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_9(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_G(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_H(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_z(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ symbol\_dot(\textcolor{keywordtype}{int}\ offset);}
+\DoxyCodeLine{00063\ \};}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
