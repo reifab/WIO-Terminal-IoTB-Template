@@ -69,7 +69,7 @@ void wio_mqtt::initMQTT(void (&func)(int))
   wioMqttClient.connect(mqtt_server, 1883); // set MQTT broker url and port
   wioMqttClient.onMessage(_callback);       // set callback function
   delay(1000);                              // 1000ms delay
-  while (wioMqttClient.connected())         // Loop until we're reconnected
+  while (!wioMqttClient.connected())         // Loop until we're reconnected
   {
     reconnect(); // connect to MQTT broker
   }
