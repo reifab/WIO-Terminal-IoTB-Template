@@ -158,15 +158,15 @@ static const uint16_t NO_SD_CARD_IMG[] = {  // No sd card image
  * @param st Adresse der WLAN Stärke Variable
  * @param ch Adresse der WLAN Kannal Variable
  */
-wio_display::wio_display(int *mqtt, bool *pub, bool *sub, int *wlan, int *st, int *ch)
+wio_display::wio_display(connection_state_t *connectionState)
 {
   // save addresses
-  mqtt_status_ptr = mqtt;
-  mqtt_pub_ptr = pub;
-  mqtt_sub_ptr = sub;
-  wlan_status_ptr = wlan;
-  wlan_strength_ptr = st;
-  wlan_channel_ptr = ch;
+  mqtt_status_ptr = &connectionState->mqtt_status;
+  mqtt_pub_ptr = &connectionState->mqtt_pub_status;
+  mqtt_sub_ptr = &connectionState->mqtt_sub_status;
+  wlan_status_ptr = &connectionState->wlan_status;
+  wlan_strength_ptr = &connectionState->wlan_strength;
+  wlan_channel_ptr = &connectionState->wlan_channel;
 }
 
 /********************************************************************************************
@@ -526,7 +526,6 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
  */
 void wio_display::drawIcons(int mqtt_status, bool mqtt_pub, bool mqtt_sub, int wlan_status, int wlan_strength, int wlan_channel, bool forced)
 {
-  static int old_wlan_status = -99;     // set default value
   static int old_wlan_strength = -99;   // set default value
   static int old_wlan_channel = -99;    // set default value
   static int old_mqtt_status = -99;     // set default value
@@ -636,6 +635,7 @@ void wio_display::drawIcons(int mqtt_status, bool mqtt_pub, bool mqtt_sub, int w
 
   // WLAN Status
   // wlan strength
+
   if((old_wlan_strength != wlan_strength) || forced)   // has something changed or is draw forced
   {
     if (sd_card_status) {

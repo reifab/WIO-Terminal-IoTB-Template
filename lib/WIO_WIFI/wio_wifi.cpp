@@ -10,6 +10,11 @@
  */
 
 /********************************************************************************************
+*** Defines and Constants
+********************************************************************************************/
+#define DEBUG_ON 0
+
+/********************************************************************************************
 *** Includes
 ********************************************************************************************/
 #include "wio_wifi.h"
@@ -23,7 +28,6 @@ static IPAddress ip;
 static char logText[50];
 typedef void (*cbLog)  (const char *s, bool b);
 static cbLog cbWiFiLog;
-
 
 /********************************************************************************************
 *** Functionprototypes
@@ -54,22 +58,30 @@ wio_wifi::wio_wifi(void (&func)(const char *, bool b))
  */
 void wio_wifi::initWifi(void)
 {
-  wifiSetup();      // activate WiFi Events
-
   (*cbWiFiLog)("Start WiFi Init", false);   // write to the log
-  WiFi.disconnect();                        // diconnect any connection
+
+  if(DEBUG_ON){
+    WiFi.onEvent(onWiFiEvent);
+  }
+  
+  WiFi.disconnect(true,false);
+  WiFi.mode(WIFI_STA);
+  WiFi.setAutoConnect(false);
 
   sprintf(logText, "- Connecting to %s", ssid);   // write to the log 
   (*cbWiFiLog)(logText, false);
 
   Serial.println(ssid);                     // print ssid to SerialPort
+  WiFi.begin(ssid, password);
 
-  while (WiFi.begin(ssid, password) != WL_CONNECTED)  // do begin WiFi connection until connected
+  while (WiFi.status() != WL_CONNECTED)  // do begin WiFi connection until connected
   {
-    Serial.println("Connecting to WiFi..");   // print to SerialPort
-    delay(1000);
+    delay(500);
+    Serial.println("try again to connect WiFi..");   // print to SerialPort
+    (*cbWiFiLog)("try again to connect WiFi..", false);   // write to the log 
+    (*cbWiFiLog)(logText, false);
+    WiFi.begin(ssid, password);
   }
- 
   (*cbWiFiLog)("- Connected", false);       // write to the log
 }
 
@@ -80,7 +92,7 @@ void wio_wifi::initWifi(void)
 void wio_wifi::reconnect(void)
 {
   Serial.println("Reconnect WiFi");
-  WiFi.disconnect();                        // diconnect any connection
+  WiFi.disconnect(true,false);
   WiFi.begin(ssid, password);
 }
 
@@ -177,7 +189,7 @@ void wio_wifi::deleteScanResults()
 void onWiFiEvent(WiFiEvent_t event) {
   switch (event) {
     case SYSTEM_EVENT_WIFI_READY: 
-      //(*cbWiFiLog)("*WiFi interface ready", false);
+      (*cbWiFiLog)("- WiFi interface ready", false);
       Serial.println("WiFi interface ready");
       interface_ready = true;
       break;
@@ -276,14 +288,6 @@ void onWiFiEvent(WiFiEvent_t event) {
       break;
     default: break;      
   }
-}
-
-/**
- * @brief Diese Methode aktiviert die WiFi Events
- * 
- */
-void wio_wifi::wifiSetup() {
-  WiFi.onEvent(onWiFiEvent);
 }
 
 /**

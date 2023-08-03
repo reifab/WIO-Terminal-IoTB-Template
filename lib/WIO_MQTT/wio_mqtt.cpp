@@ -51,7 +51,7 @@ void wio_mqtt::initMQTT(void (&func)(int))
 {
   _callback = func;                                    // save Callback function
   (*cbMQTTLog)("Start MQTT Init", false);              // write to the log
-  sprintf(logText, "- Connecting to %s", mqtt_server); // write to the log
+  sprintf(logText, "- Connecting to %s", default_mqtt_broker); // write to the log
   (*cbMQTTLog)(logText, false);
 
   Serial.print("Attempting MQTT connection...");
@@ -66,7 +66,6 @@ void wio_mqtt::initMQTT(void (&func)(int))
 
   wioMqttClient.setId(clientId);
   wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
-  wioMqttClient.connect(mqtt_server, 1883);   // set MQTT broker url and port
   wioMqttClient.onMessage(_callback);         // set callback function
   subscribeList(ptr_topicList, topicListLen); // subscribe the topic list
 }
@@ -222,7 +221,7 @@ bool wio_mqtt::isConnected()
 void wio_mqtt::reconnect()
 {
   // Attempt to connect
-  if (wioMqttClient.connect(mqtt_server, 1883))
+  if (wioMqttClient.connect(default_mqtt_broker, default_mqtt_port))
   {
     (*cbMQTTLog)("- Connected", false); // write to the log
     Serial.println("connected");
@@ -233,9 +232,6 @@ void wio_mqtt::reconnect()
   {
     Serial.print("failed, rc=");
     Serial.print(wioMqttClient.connectError());
-    Serial.println(" try again in 5 seconds");
-    // Wait 5 seconds before retrying
-    delay(5000);
   }
 }
 

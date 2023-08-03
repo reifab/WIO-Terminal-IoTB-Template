@@ -19,7 +19,8 @@
 /********************************************************************************************
 *** Extern Variables
 ********************************************************************************************/
-extern const char *mqtt_server;   ///< defined in secrets.h
+extern const char *default_mqtt_broker;   ///< defined in secrets.h
+extern const uint16_t default_mqtt_port;   ///< defined in secrets.h
 extern const char *mqtt_user;     ///< defined in secrets.h
 extern const char *mqtt_password; ///< defined in secrets.h
 extern const char *mqtt_id;       ///< defined in secrets.h

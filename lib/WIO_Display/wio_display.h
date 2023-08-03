@@ -28,6 +28,16 @@ typedef enum{
   ONLY_VALUE,   ///< Zeichnet nur den Zeilenwert neu --> für @ref wio_display::updateLine
 }draw_setting_e;
 
+struct connection_state_t
+{
+    int mqtt_status;      ///< MQTT Status (connected, disconnected, ...)
+    bool mqtt_pub_status; ///< MQTT Publish Status
+    bool mqtt_sub_status; ///< MQTT Subscribe Status
+    int wlan_status;      ///< WLAN Status (connected, disconnected, ...)
+    int wlan_strength;    ///< Aktuelle WLAN Signalstärke
+    int wlan_channel;     ///< Benutze WLAN Kanal, wird genutzt für die Frequenzbanderkennung
+};
+
 /********************************************************************************************
 *** Extern Variables
 ********************************************************************************************/
@@ -39,7 +49,7 @@ extern char log_text[15][50];
 class wio_display
 {
   public:
-    wio_display(int *mqtt, bool *pub, bool *sub, int *wlan, int *st, int *ch);    ///< Konstructor
+    wio_display(connection_state_t *connectionState);    ///< Konstructor
     void initDisplay();                                                           ///< Display initialisieren
     void drawPage(page_t p);                                                      ///< Seite zeichnen
     void updateContext(page_t p);                                                 ///< Seiten inhalt zeichnen

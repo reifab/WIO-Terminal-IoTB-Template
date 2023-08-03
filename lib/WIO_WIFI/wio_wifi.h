@@ -15,6 +15,13 @@
 #include <rpcWiFi.h>
 
 /********************************************************************************************
+*** Defines
+********************************************************************************************/
+// MQTT und WiFI defines
+#define CONNECTED 1    ///< Verbindungsstatus für MQTT and WiFi
+#define DISCONNECTED 0 ///< Verbindungsstatus für MQTT and WiFi
+
+/********************************************************************************************
 *** Extern Variables
 ********************************************************************************************/
 extern const char* ssid;        ///< defined in secrets.h
@@ -38,10 +45,6 @@ class wio_wifi
     int measureRSSI(int);               ///< Signalstärke auslesen
     int readChannel(int);               ///< WLAN Kanal auslesen
     char *getScannedSSID(int index);    ///< SSID des gefunden Netzwerkes auslesen
-  private:
-    
-    
-    void wifiSetup();
 };
 
 #endif
