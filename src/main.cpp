@@ -23,6 +23,7 @@
 #include "networkConnection.h"
 #include "runLED.h"
 #include "SAMCrashMonitor.h"
+#include "readConfigSDCard.h"
 
 /********************************************************************************************
 *** Global Parameters
@@ -85,6 +86,7 @@ void setup()
   drawPage(pages_array, currentPage);
 
   initRunLed();
+  Serial.println(readIDFromSDCard());
 }
 
 /********************************************************************************************
