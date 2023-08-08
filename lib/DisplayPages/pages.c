@@ -22,8 +22,8 @@ page_t pages_array[] =
 {
 // Page 0
   {
-    "Testseite",  
-    { 
+    "Testseite",
+    {
       //Name            | Typ     | Wert    | Textwert/Einheit  | Einstellung
       { "Textausgabe",    TEXT,     0,        "HELLO",            DEFAULT},           // Line 0
       { "Bargraph",       BAR,      50,       "",                 BAR_SHOW_VALUE},    // Line 1
@@ -35,19 +35,26 @@ page_t pages_array[] =
   },
 // Page 1
   {
-    "TITEL",  
-    { 
-      //Name            | Typ     | Wert    | Textwert/Einheit  | Einstellung
-      { "Zeile 1",        TEXT,     0,        "",                 DEFAULT},           // Line 0
-      { "Zeile 2",        TEXT,     0,        "",                 DEFAULT},           // Line 1
-      { "Zeile 3",        TEXT,     0,        "",                 DEFAULT},           // Line 2
-      { "Zeile 4",        TEXT,     0,        "",                 DEFAULT},           // Line 3
-      { "Zeile 5",        TEXT,     0,        "",                 DEFAULT},           // Line 4
-      { "Zeile 6",        TEXT,     0,        "",                 DEFAULT}            // Line 5
+    "1OG",
+    {
+      //Name                | Typ     | Wert    | Textwert/Einheit  | Einstellung
+      { "Temperatur",        NUMERIC,     0,        "°C",            DECIMAL_PLACES_1},      // Line 0
+      { "Luftfeuchtigkeit",  NUMERIC,     0,        "%",             DECIMAL_PLACES_1},      // Line 1
+      { "Luftdruck",         NUMERIC,     0,        "hPa",           DECIMAL_PLACES_1},      // Line 2
+      { "HeizungStaus",      TEXT,        0,        "off",           DEFAULT},               // Line 3
+      {},                                                                                    // Line 4
+      {"ID",      TEXT,        0,        "",           DEFAULT}                              // Line 5
     }
   },
 // Page 2
-  {
-    "NULL"
-  }
+     "2OG",
+    {
+      //Name            | Typ     | Wert    | Textwert/Einheit  | Einstellung
+      { "Solarleistung",        NUMERIC,     0,        "%",          DECIMAL_PLACES_0}, // Line 0
+      { "Fensterstatus",        TEXT,     0,        "",          DEFAULT},              // Line 1
+      {},                                                                               // Line 2
+      {},                                                                               // Line 3
+      {},                                                                               // Line 4
+      {"ID",      TEXT,        0,        "",           DEFAULT}                         // Line 5
+    }
 };

@@ -24,6 +24,9 @@ static connection_state_t connectionState = {
     .wlan_strength = 0,
     .wlan_channel = 0};
 
+static char *mqtt_broker;
+static uint16_t mqtt_port;
+
 // intervals for periodic tasks
 const long scanInterval = 500;            ///< Interval time for WiFi strength und channel scanning
 const long interfaceIconIntervall = 1000; ///< Interval time for icons refreshing
@@ -96,7 +99,7 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
       else
       {
         connectionState.mqtt_status = DISCONNECTED;
-        wio_MQTT->reconnect(); // reconnect to MQTT broker
+        wio_MQTT->reconnect(mqtt_broker, mqtt_port); // reconnect to MQTT broker
       }
     }
     else
@@ -111,6 +114,13 @@ connection_state_t *getConnectionStatePtr()
   return &connectionState;
 }
 
+void changeMQTTBroker(const char *broker, uint16_t port, wio_mqtt *wio_MQTT)
+{
+  mqtt_broker = strdup(broker);
+  mqtt_port = port;
+  connectionState.mqtt_status = DISCONNECTED;
+  wio_MQTT->reconnect(mqtt_broker, mqtt_port);
+}
 
 int getMQTTStatus()
 {

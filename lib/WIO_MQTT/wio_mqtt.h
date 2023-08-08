@@ -40,7 +40,7 @@ public:
   void subscribeTopic(char *topic);                                       ///< Ein Topic abonnieren
   void addSubscribeList(char *list, unsigned int len);                    ///< Topic-Liste zur Klasse hinzufügen
   bool isConnected(void);                                                 ///< MQTT Verbindung auslesen
-  void reconnect(void);                                                   ///< Wiederverbindung zum MQTT Broker
+  void reconnect(const char *mqtt_broker, uint16_t mqtt_port);                                                   ///< Wiederverbindung zum MQTT Broker
   void clientLoop(void);                                                  ///< MQTT loop für einen ordnungsgemässer Betrieb
   bool getPublishState();                                                 ///< Den Publish Status auslesen
   bool getSubscribeState();                                               ///< Den Subscribe Status auslesen

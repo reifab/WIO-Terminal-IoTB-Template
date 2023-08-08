@@ -1,6 +1,7 @@
 #ifndef READCONFIG_H
 #define READCONFIG_H
 
-const char* readIDFromSDCard();
+void readConfigFromSDCard();
+const char *readIDOfWioTerminal();
 
-#endif //READCONFIG_H
+#endif // READCONFIG_H

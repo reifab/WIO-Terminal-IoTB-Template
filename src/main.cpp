@@ -74,7 +74,7 @@ void setup()
 
   // WiFi Configuration
   wio_Wifi.initWifi();
-  SAMCrashMonitor::iAmAlive();    // init WiFi
+  SAMCrashMonitor::iAmAlive(); // init WiFi
 
   // Initialize user functions like subscrition of mqtt topics
   currentPage = initUserFunctions(&wio_MQTT);
@@ -86,7 +86,14 @@ void setup()
   drawPage(pages_array, currentPage);
 
   initRunLed();
-  Serial.println(readIDFromSDCard());
+
+  readConfigFromSDCard();
+  strcpy(pages_array[1].lines[5].text, readIDOfWioTerminal());
+  strcpy(pages_array[2].lines[5].text, readIDOfWioTerminal());
+  updateLine(1, 5, ONLY_VALUE);
+  updateLine(2, 5, ONLY_VALUE);
+
+  changeMQTTBroker(default_mqtt_broker, default_mqtt_port, &wio_MQTT);
 }
 
 /********************************************************************************************
@@ -105,5 +112,5 @@ void loop()
   networkConnectionHandler(&wio_Wifi, &wio_MQTT);            // rebuilds the network connection if necessary, updates the connection status
   currentPage = buttonHandler(currentPage);                  // you can change the page with the wio- buttons if you want
   displayHandler();                                          // refreshes the connection state on display
-  userFunctionsHandler(currentPage, &wio_MQTT, pages_array); // add your code in this function
+  currentPage = userFunctionsHandler(currentPage, &wio_MQTT, pages_array); // add your code in this function
 }

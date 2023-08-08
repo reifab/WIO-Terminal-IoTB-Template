@@ -218,10 +218,10 @@ bool wio_mqtt::isConnected()
  * @brief Diese Methode stellt die Verbindung zum Broker wieder her.
  *
  */
-void wio_mqtt::reconnect()
+void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 {
   // Attempt to connect
-  if (wioMqttClient.connect(default_mqtt_broker, default_mqtt_port))
+  if (wioMqttClient.connect(mqtt_broker, mqtt_port))
   {
     (*cbMQTTLog)("- Connected", false); // write to the log
     Serial.println("connected");

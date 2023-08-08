@@ -20,7 +20,7 @@
 *** Functionprototypes
 ********************************************************************************************/
 int initUserFunctions(wio_mqtt *wio_MQTT);
-void userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[]); 
+int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[]); 
 void onMqttMessage(int messageSize);
 
 

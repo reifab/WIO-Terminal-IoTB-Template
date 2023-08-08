@@ -1,1 +1,4 @@
-{"id":"Haus1Wio1OG"}
+{
+    "ID":"01",
+    "FallbackMQTTBroker": "172.20.1.71"
+}

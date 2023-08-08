@@ -47,7 +47,7 @@ uint16_t buttonHandler(uint16_t currentPage)
         {
         case 1:
             // START USER CODE: PAGE 1
-            demoFunction(); //delete me, just an example
+            
             // END USER CODE: PAGE 1
             break;
 
