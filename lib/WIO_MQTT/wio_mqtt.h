@@ -17,22 +17,13 @@
 #define TOPIC_LENGTH 50 ///< Maximale Länge von einem Topic
 
 /********************************************************************************************
-*** Extern Variables
-********************************************************************************************/
-extern const char *default_mqtt_broker;   ///< defined in secrets.h
-extern const uint16_t default_mqtt_port;   ///< defined in secrets.h
-extern const char *mqtt_user;     ///< defined in secrets.h
-extern const char *mqtt_password; ///< defined in secrets.h
-extern const char *mqtt_id;       ///< defined in secrets.h
-
-/********************************************************************************************
 *** Interface description
 ********************************************************************************************/
 class wio_mqtt
 {
 public:
   wio_mqtt(void (&)(const char *, bool));                                 ///< Konstruktor
-  void initMQTT(void (&)(int));                                           ///< MQTT initialisieren
+  void initMQTT(void (&)(int), const char *mqtt_user, const char *mqtt_password);///< MQTT initialisieren
   void publishTopic(const char *topic, char *payload, bool retain);       ///< Ein Topic publizieren, Payload ist ein String
   void publishTopic(const char *topic, const char *payload, bool retain); ///< Ein Topic publizieren, Payload ist ein konstanter String
   void publishTopic(const char *topic, int payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein Integer
@@ -48,6 +39,7 @@ public:
   const char *getMessagePayload(void);                                              ///< Ein Payload eines abbonierten Topics auslesen
   void setPublishState(bool state);                                       ///< Den Publish Status setzen
   void setSubscribeState(bool state);                                     ///< Den Subscribe Status setzen
+  void setUserNameAndPassword(const char *username, const char *password);
 private:
   char *ptr_topicList;                           ///< Pointer zu der Topic Liste
   unsigned int topicListLen = 0;                 ///< Länge der Topic Liste

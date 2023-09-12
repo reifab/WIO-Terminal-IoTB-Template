@@ -28,6 +28,8 @@ static IPAddress ip;
 static char logText[50];
 typedef void (*cbLog)  (const char *s, bool b);
 static cbLog cbWiFiLog;
+static char ssid[50];
+static char password[50];
 
 /********************************************************************************************
 *** Functionprototypes
@@ -56,8 +58,14 @@ wio_wifi::wio_wifi(void (&func)(const char *, bool b))
  * @brief Diese Methode setzt die Wifi-Parameter und stellt eine Verbindung zum Access Point her.
  * 
  */
-void wio_wifi::initWifi(void)
+void wio_wifi::initWifi(const char* wifi_ssid, const char* wifi_password)
 {
+  /****************************************** **************************************************
+*** Variables
+********************************************************************************************/
+  strcpy(ssid, wifi_ssid);
+  strcpy(password, wifi_password);
+
   (*cbWiFiLog)("Start WiFi Init", false);   // write to the log
 
   if(DEBUG_ON){

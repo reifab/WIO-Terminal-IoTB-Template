@@ -1,4 +1,8 @@
-{"BrokerToConnect":"192.168.178.32",
- "PortToConnect":"1883",
- "functionality":"solar"
+{
+    "brokerToConnect":"172.20.1.78",
+    "portToConnect":"1883",
+    "mqtt_bootstrap_broker_user":"psn",
+    "mqtt_bootstrap_broker_password":"posten_node_RED",
+    "functionality":"heatingControl",
+    "mqtt_prefix":"Haus3/"
 }

@@ -27,6 +27,6 @@ bool getMQTTSubStatus(void);                                                  //
 int getWLANStatus(void);                                                      ///< gibt den WLAN Verbinungsstatus zurück
 int getWLANStrength(void);                                                    ///< gibt die WLAN Empfangsstärke zurück
 int getWLANChannel(void);                                                     ///< gibt den WLAN Kanal zurück
-void changeMQTTBroker(const char *broker, uint16_t port, wio_mqtt *wio_MQTT); ///< setzt den MQTT Broker
+void changeMQTTBroker(const char *broker, uint16_t port, const char *mqtt_user, const char *mqtt_password, wio_mqtt *wio_MQTT); ///< setzt den MQTT Broker
 
 #endif

@@ -58,14 +58,17 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
     {
         // START USER CODE: Subscribed Topics
         "reserved\0", // Reserviert, darf nicht benutzt werden
-        "meinHaus/1OG/Heizungmein\0"
+        "meinHaus/1OG/Heizung\0"
         // END USER CODE: Subscribed Topics
 };
 
 static bool changeSettings = false; ///< Flag, um den Broker zu wechseln. Wird in der Funktion onMqttMessage() gesetzt.
-char *brokerToConnect;              ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
-char *functionality;                ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
-uint16_t portToConnect;             ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+static char *brokerToConnect;              ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+static char *functionality;                ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
+static uint16_t portToConnect;             ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+static char *mqtt_user;                    ///< MQTT Benutzername.
+static char *mqtt_password;                ///< MQTT Passwort.
+static char *mqtt_prefix;                  ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
 
 // START USER CODE: Global Variables
 float g_temperature;
@@ -86,22 +89,40 @@ static wio_mqtt *wio_MQTT;
 Adafruit_BME680 bme;
 // END USER CODE: Objects
 
+void setMQTTUserAndPassword(wio_mqtt *ptr_wio_MQTT, const char *mqtt_user, const char *mqtt_password){
+  wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password);
+}
+
+
+char * addMQTTPrefix(const char * topic){
+  char * newTopic = (char *)malloc(strlen(topic) + strlen(mqtt_prefix) + 1);
+  strcpy(newTopic, mqtt_prefix);
+  strcat(newTopic, topic);
+  return newTopic;
+}
+
+
 int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
 {
   // START USER CODE: Setup
+  if(mqtt_prefix != NULL){
+    free(mqtt_prefix);
+  }
+  mqtt_prefix = strdup("meinHaus/");
   int currentPage = 1; // set currentPage
+  if (!bme.begin(I2C_ADDRESS_BME680)) {
+      Serial.println("Could not find a valid BME680 sensor, check wiring!");
+  }
 
   // END USER CODE: Setup
 
   // MQTT Configuration
-  readConfigFromSDCard();
   wio_MQTT = ptr_wio_MQTT;
-  String configTopic = "wioTerminals/configTerminal-";
-  configTopic += readIDOfWioTerminal();
+  String configTopic = "setup/wioTerminals/configTerminal-";
+  configTopic += getWioTerminalID();
 
   strcpy(topicList[0], configTopic.c_str());
   wio_MQTT->addSubscribeList(topicList[0], sizeof(topicList)); // subscribe to all topics in topicList
-  wio_MQTT->initMQTT(onMqttMessage);                           // init MQTT with callback function
 
   return currentPage;
 }
@@ -142,10 +163,10 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       g_pressure = bme.pressure / 100; // to hPa
       g_humidity = bme.humidity;
 
-      wio_MQTT->publishTopic("meinHaus/1OG/Temperatur", bme.temperature, false);
-      wio_MQTT->publishTopic("meinHaus/1OG/Luftdruck", (float)bme.pressure, false);
-      wio_MQTT->publishTopic("meinHaus/1OG/Luftfeuchtigkeit", bme.humidity, false);
-      wio_MQTT->publishTopic("meinHaus/1OG/HeizungStatus", g_heater, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Temperatur"), bme.temperature, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftdruck"), (float)bme.pressure, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("Luftfeuchtigkeit"), bme.humidity, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("HeizungStatus"), g_heater, false);
 
       // END USER CODE: user periodic task
     }
@@ -221,17 +242,21 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
   if (changeSettings)
   {
-    changeMQTTBroker(brokerToConnect, portToConnect, wio_MQTT);
-
+    changeMQTTBroker(brokerToConnect, portToConnect,  mqtt_user, mqtt_password, wio_MQTT);
     if (strcmp(functionality, "heatingControl") == 0)
     {
       currentPage = 1;
+      pinMode(HEATER_DIGITAL_OUT, OUTPUT);
+      setHeaterOff();
     }
 
     if (strcmp(functionality, "solar") == 0)
     {
       currentPage = 2;
+      pinMode(ANALOG_IN_SOLAR, INPUT);
+      pinMode(DIGITAL_IN_WINDOW, INPUT);
     }
+
     drawPage(pages_array, currentPage);
     changeSettings = false;
     Serial.println("Broker changed");
@@ -257,7 +282,7 @@ void onMqttMessage(int messageSize)
   wio_MQTT->setSubscribeState(true); // set subscribe state (for display)
   const char *topic = wio_MQTT->getMessageTopic();
   const char *payload = wio_MQTT->getMessagePayload();
-  StaticJsonDocument<200> jsonDocConfig;
+  StaticJsonDocument<300> jsonDocConfig;
 
   Serial.println("Message received:"); // print infos to SerialPort
   Serial.print("Topic: ");
@@ -273,11 +298,29 @@ void onMqttMessage(int messageSize)
   switch (elem)
   {
   case 0:
-    // START USER CODE: first element of the topicList (wioTerminal/config)l
+    // START USER CODE: first element of the topicList (wioTerminal/config)
     deserializeJson(jsonDocConfig, payload);
+    if (brokerToConnect != NULL) {
+      free(brokerToConnect);
+    }
     brokerToConnect = strdup(jsonDocConfig["brokerToConnect"]);
     portToConnect = jsonDocConfig["portToConnect"];
+    if (functionality != NULL) {
+      free(functionality);
+    }
     functionality = strdup(jsonDocConfig["functionality"]);
+    if (mqtt_user != NULL) {
+      free(mqtt_user);
+    }
+    mqtt_user = strdup(jsonDocConfig["mqtt_bootstrap_broker_user"]);
+    if (mqtt_password != NULL) {
+      free(mqtt_password);
+    }
+    mqtt_password = strdup(jsonDocConfig["mqtt_bootstrap_broker_password"]);
+    if (mqtt_prefix != NULL) {
+      free(mqtt_prefix);
+    }
+    mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
     changeSettings = true;
 
     // END USER CODE: first element of the topicList

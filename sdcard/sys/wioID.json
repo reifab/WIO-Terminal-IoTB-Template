@@ -1,4 +1,8 @@
 {
+    "SSID": "IoTB",
+    "PW": "",
     "ID":"01",
-    "FallbackMQTTBroker": "172.20.1.71"
+    "mqtt_bootstrap_broker": "172.20.1.51",
+    "mqtt_bootstrap_broker_user":"",
+    "mqtt_bootstrap_broker_password":""
 }

@@ -21,11 +21,6 @@
 #define CONNECTED 1    ///< Verbindungsstatus für MQTT and WiFi
 #define DISCONNECTED 0 ///< Verbindungsstatus für MQTT and WiFi
 
-/********************************************************************************************
-*** Extern Variables
-********************************************************************************************/
-extern const char* ssid;        ///< defined in secrets.h
-extern const char* password;    ///< defined in secrets.h
 
 /********************************************************************************************
 *** Interface description
@@ -34,7 +29,7 @@ class wio_wifi
 {
   public:
     wio_wifi(void (&)(const char *, bool));   ///< Konstruktor
-    void initWifi(void);                ///< WiFi initialisieren
+    void initWifi(const char* ssid, const char* password);///< WiFi initialisieren
     int WiFiStatus();                   ///< WiFi Verbindungsstatus auslesen
     void reconnect();                   ///< verbindet sich wieder mit dem WLAN
     void getIP(char *);                 ///< aktuelle IP Adresse auslesen

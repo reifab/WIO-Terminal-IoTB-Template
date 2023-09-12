@@ -47,12 +47,10 @@ wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
  *
  * @param func Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics
  */
-void wio_mqtt::initMQTT(void (&func)(int))
+void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mqtt_password)
 {
   _callback = func;                                    // save Callback function
   (*cbMQTTLog)("Start MQTT Init", false);              // write to the log
-  sprintf(logText, "- Connecting to %s", default_mqtt_broker); // write to the log
-  (*cbMQTTLog)(logText, false);
 
   Serial.print("Attempting MQTT connection...");
   // Create a random wioMqttClient ID
@@ -68,6 +66,10 @@ void wio_mqtt::initMQTT(void (&func)(int))
   wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
   wioMqttClient.onMessage(_callback);         // set callback function
   subscribeList(ptr_topicList, topicListLen); // subscribe the topic list
+}
+
+void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_password){
+  wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
 }
 
 /**
@@ -220,17 +222,23 @@ bool wio_mqtt::isConnected()
  */
 void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 {
+  sprintf(logText, "- Connecting to %s", mqtt_broker); // write to the log
+  (*cbMQTTLog)(logText, false);
+  Serial.println(logText);
+
+  Serial.println(wioWiFiClient.connected());
+  
   // Attempt to connect
   if (wioMqttClient.connect(mqtt_broker, mqtt_port))
   {
     (*cbMQTTLog)("- Connected", false); // write to the log
-    Serial.println("connected");
+    Serial.println("Connected");
     subscribeList(ptr_topicList, topicListLen);    // subscribe the topic list
     (*cbMQTTLog)("- Subscribed to Topics", false); // write to the log
   }
   else
   {
-    Serial.print("failed, rc=");
+    Serial.println("failed, rc=");
     Serial.print(wioMqttClient.connectError());
   }
 }

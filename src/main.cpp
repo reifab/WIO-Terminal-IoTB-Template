@@ -15,7 +15,6 @@
 #include <Arduino.h>  // Arduino Library
 #include "wio_wifi.h" // Library for WiFi usage
 #include "wio_mqtt.h" // Library for MQTT usage
-#include "secrets.h"
 #include "pages.h"
 #include "userFunctions.h"
 #include "buttons.h"
@@ -63,21 +62,27 @@ void setup()
   enableLoadingScreen();
 
   // Turn the watchdog on and get actual timeout value based on the provided one.
-  int timeout = SAMCrashMonitor::enableWatchdog(20000);
-  Serial.print(F("Watchdog enabled for: "));
-  Serial.print(timeout);
-  Serial.println(F(" ms"));
+  SAMCrashMonitor::enableWatchdog(25000);
 
   // Button Configuration
   initButtons();
   addLogText("Config Buttons", NEWLINE);
 
+  readConfigFromSDCard();
+  addLogText(getWifiSSID(), NEWLINE);
+  addLogText(getWifiPW(), NEWLINE);
+
   // WiFi Configuration
-  wio_Wifi.initWifi();
+  wio_Wifi.initWifi(getWifiSSID(), getWifiPW());
+  delay(2000);
   SAMCrashMonitor::iAmAlive(); // init WiFi
 
   // Initialize user functions like subscrition of mqtt topics
   currentPage = initUserFunctions(&wio_MQTT);
+
+  // Connects to the MQTT Broker and subscribes the topics
+  setMQTTUserAndPassword(&wio_MQTT,getMQTTUser(),getMQTTPW());
+  changeMQTTBroker(getMQTTBroker(), 1883, getMQTTUser(), getMQTTPW(), &wio_MQTT);
 
   addLogText("Init successfully!", NEWLINE);
   delay(1000); // 1000ms delay to read the init- message
@@ -87,13 +92,10 @@ void setup()
 
   initRunLed();
 
-  readConfigFromSDCard();
-  strcpy(pages_array[1].lines[5].text, readIDOfWioTerminal());
-  strcpy(pages_array[2].lines[5].text, readIDOfWioTerminal());
+  strcpy(pages_array[1].lines[5].text, getWioTerminalID());
+  strcpy(pages_array[2].lines[5].text, getWioTerminalID());
   updateLine(1, 5, ONLY_VALUE);
   updateLine(2, 5, ONLY_VALUE);
-
-  changeMQTTBroker(default_mqtt_broker, default_mqtt_port, &wio_MQTT);
 }
 
 /********************************************************************************************

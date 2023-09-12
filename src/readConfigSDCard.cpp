@@ -3,7 +3,7 @@
 #include "ArduinoJson.h"
 #include "SD/Seeed_SD.h"
 
-StaticJsonDocument<200> jsonDocConfigFile;
+static StaticJsonDocument<400> jsonDocConfigFile;
 
 void readConfigFromSDCard()
 {
@@ -31,7 +31,33 @@ void readConfigFromSDCard()
   configFile.close();
 }
 
-const char *readIDOfWioTerminal()
+const char *getWifiSSID()
+{
+  return jsonDocConfigFile["SSID"];
+}
+
+const char *getWifiPW()
+{
+  return jsonDocConfigFile["PW"];
+}
+
+const char *getWioTerminalID()
 {
   return jsonDocConfigFile["ID"];
 }
+
+const char *getMQTTBroker(){
+  return jsonDocConfigFile["mqtt_bootstrap_broker"];
+}
+
+const char *getMQTTUser(){
+  return jsonDocConfigFile["mqtt_bootstrap_broker_user"];
+} 
+
+const char *getMQTTPW(){
+  return jsonDocConfigFile["mqtt_bootstrap_broker_password"];
+}
+
+
+
+

@@ -30,7 +30,7 @@ static uint16_t mqtt_port;
 // intervals for periodic tasks
 const long scanInterval = 500;            ///< Interval time for WiFi strength und channel scanning
 const long interfaceIconIntervall = 1000; ///< Interval time for icons refreshing
-const long mqttStateIntervall = 5000;     ///< Interval time for MQTT state
+const long mqttStateIntervall = 1000;     ///< Interval time for MQTT state
 
 /**
  * @brief In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines
@@ -114,11 +114,16 @@ connection_state_t *getConnectionStatePtr()
   return &connectionState;
 }
 
-void changeMQTTBroker(const char *broker, uint16_t port, wio_mqtt *wio_MQTT)
+void changeMQTTBroker(const char *broker, uint16_t port, const char *mqtt_user, const char *mqtt_password, wio_mqtt *wio_MQTT)
 {
+  if(mqtt_broker != NULL)
+  {
+    free(mqtt_broker);
+  }
   mqtt_broker = strdup(broker);
   mqtt_port = port;
   connectionState.mqtt_status = DISCONNECTED;
+  wio_MQTT->setUserNameAndPassword(mqtt_user,mqtt_password);
   wio_MQTT->reconnect(mqtt_broker, mqtt_port);
 }
 
