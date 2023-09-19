@@ -8,5 +8,6 @@ const char *getWifiPW();
 const char *getMQTTBroker();
 const char *getMQTTUser();
 const char *getMQTTPW();
+const char *getWioTerminalFuntionality();
 
 #endif // READCONFIG_H

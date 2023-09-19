@@ -49,8 +49,8 @@ wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
  */
 void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mqtt_password)
 {
-  _callback = func;                                    // save Callback function
-  (*cbMQTTLog)("Start MQTT Init", false);              // write to the log
+  _callback = func;                       // save Callback function
+  (*cbMQTTLog)("Start MQTT Init", false); // write to the log
 
   Serial.print("Attempting MQTT connection...");
   // Create a random wioMqttClient ID
@@ -68,7 +68,8 @@ void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mq
   subscribeList(ptr_topicList, topicListLen); // subscribe the topic list
 }
 
-void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_password){
+void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_password)
+{
   wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
 }
 
@@ -82,11 +83,11 @@ void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_pa
 void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
 {
   pubState = true;           // set publish state to TRUE, because somthing will be sended
-  Serial.println("PUBLISH"); // print infos to SerialPort
-  Serial.print("Topic: ");
-  Serial.println(topic);
-  Serial.print("Payload: ");
-  Serial.println(payload);
+  //Serial.println("PUBLISH"); // print infos to SerialPort
+  //Serial.print("Topic: ");
+  //Serial.println(topic);
+  //Serial.print("Payload: ");
+  //Serial.println(payload);
 
   // publish the message:
   wioMqttClient.beginMessage(topic, retain);
@@ -118,12 +119,13 @@ void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
 void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
 {
   pubState = true;           // set publish state to TRUE, because somthing will be sended
+  /*
   Serial.println("PUBLISH"); // print infos to SerialPort
   Serial.print("Topic: ");
   Serial.println(topic);
   Serial.print("Payload: ");
   Serial.println(payload);
-
+  */
   // publish the message:
   wioMqttClient.beginMessage(topic, retain);
   wioMqttClient.print(payload);
@@ -140,11 +142,13 @@ void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
 void wio_mqtt::publishTopic(const char *topic, float payload, bool retain)
 {
   pubState = true;           // set publish state to TRUE, because somthing will be sended
+  /*
   Serial.println("PUBLISH"); // print infos to SerialPort
   Serial.print("Topic: ");
   Serial.println(topic);
   Serial.print("Payload: ");
   Serial.println(payload);
+  */
 
   // publish the message:
   wioMqttClient.beginMessage(topic, retain);
@@ -182,10 +186,12 @@ void wio_mqtt::addSubscribeList(char *list, unsigned int len)
  */
 void wio_mqtt::subscribeList(char *list, unsigned int len)
 {
+  /*
   Serial.println("+++ Subscribe List +++"); // print topics in list to SerialPort
   Serial.print(len);
   Serial.print(" - Liste: ");
   Serial.println(list);
+  */
 
   unsigned int topic_cnt = len / TOPIC_LENGTH; // calc number of topics
   char topic[TOPIC_LENGTH];
@@ -194,10 +200,12 @@ void wio_mqtt::subscribeList(char *list, unsigned int len)
   {
     strcpy(topic, (const char *)list);
     wioMqttClient.subscribe(topic); // subscribe topic
+    /*
     Serial.print("Topic ");         // print topics in list to SerialPort
     Serial.print(i);
     Serial.print(": ");
     Serial.println(topic);
+    */
     for (int ii = 0; ii < TOPIC_LENGTH; ii++) // increment to the next topic
     {
       list++;
@@ -226,8 +234,6 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
   (*cbMQTTLog)(logText, false);
   Serial.println(logText);
 
-  Serial.println(wioWiFiClient.connected());
-  
   // Attempt to connect
   if (wioMqttClient.connect(mqtt_broker, mqtt_port))
   {

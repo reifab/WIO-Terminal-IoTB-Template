@@ -4,5 +4,6 @@
     "ID":"01",
     "mqtt_bootstrap_broker": "172.20.1.51",
     "mqtt_bootstrap_broker_user":"",
-    "mqtt_bootstrap_broker_password":""
+    "mqtt_bootstrap_broker_password":"",
+    "default_functionality":"solar"
 }

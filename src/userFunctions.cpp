@@ -63,12 +63,13 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
 };
 
 static bool changeSettings = false; ///< Flag, um den Broker zu wechseln. Wird in der Funktion onMqttMessage() gesetzt.
-static char *brokerToConnect;              ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
-static char *functionality;                ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
-static uint16_t portToConnect;             ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
-static char *mqtt_user;                    ///< MQTT Benutzername.
-static char *mqtt_password;                ///< MQTT Passwort.
-static char *mqtt_prefix;                  ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
+static bool changeBroker = false;
+static char *brokerToConnect;  ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+static char *functionality;    ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
+static uint16_t portToConnect; ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+static char *mqtt_user;        ///< MQTT Benutzername.
+static char *mqtt_password;    ///< MQTT Passwort.
+static char *mqtt_prefix;      ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
 
 // START USER CODE: Global Variables
 float g_temperature;
@@ -89,29 +90,44 @@ static wio_mqtt *wio_MQTT;
 Adafruit_BME680 bme;
 // END USER CODE: Objects
 
-void setMQTTUserAndPassword(wio_mqtt *ptr_wio_MQTT, const char *mqtt_user, const char *mqtt_password){
+void setMQTTUserAndPassword(wio_mqtt *ptr_wio_MQTT, const char *mqtt_user, const char *mqtt_password)
+{
   wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password);
 }
 
-
-char * addMQTTPrefix(const char * topic){
-  char * newTopic = (char *)malloc(strlen(topic) + strlen(mqtt_prefix) + 1);
+char *addMQTTPrefix(const char *topic)
+{
+  char *newTopic = (char *)malloc(strlen(topic) + strlen(mqtt_prefix) + 1);
   strcpy(newTopic, mqtt_prefix);
   strcat(newTopic, topic);
   return newTopic;
 }
 
-
 int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
 {
   // START USER CODE: Setup
-  if(mqtt_prefix != NULL){
+  if (mqtt_prefix != NULL)
+  {
     free(mqtt_prefix);
   }
   mqtt_prefix = strdup("meinHaus/");
-  int currentPage = 1; // set currentPage
-  if (!bme.begin(I2C_ADDRESS_BME680)) {
+
+  int currentPage;
+  if (strcmp(getWioTerminalFuntionality(), "heatingControl") == 0)
+  {
+    currentPage = 1;
+    if (!bme.begin(I2C_ADDRESS_BME680))
+    {
       Serial.println("Could not find a valid BME680 sensor, check wiring!");
+    }
+  }
+  else if (strcmp(getWioTerminalFuntionality(), "solar") == 0)
+  {
+    currentPage = 2;
+  }
+  else
+  {
+    currentPage = 0;
   }
 
   // END USER CODE: Setup
@@ -129,7 +145,7 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
 
 int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[])
 {
-  const long userDefinedIntervall = 2000; // Interval time for user defined perdiodic task
+  const long userDefinedIntervall = 1000; // Interval time for user defined perdiodic task
   static long previousMillis;             // for user
   long currentMillis = millis();          // save millis
 
@@ -155,9 +171,6 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       previousMillis = currentMillis; // refresh previousMillis
       // START USER CODE: user periodic task
       bme.performReading();
-      Serial.println(bme.temperature);
-      Serial.println(bme.pressure);
-      Serial.println(bme.humidity);
 
       g_temperature = bme.temperature;
       g_pressure = bme.pressure / 100; // to hPa
@@ -165,35 +178,35 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
       wio_MQTT->publishTopic(addMQTTPrefix("1OG/Temperatur"), bme.temperature, false);
       wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftdruck"), (float)bme.pressure, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("Luftfeuchtigkeit"), bme.humidity, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("HeizungStatus"), g_heater, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftfeuchtigkeit"), bme.humidity, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("1OG/HeizungStatus"), g_heater, false);
 
       // END USER CODE: user periodic task
     }
 
-      if (pages_array[currentPage].lines[0].value != g_temperature)
-      {
-          pages_array[currentPage].lines[0].value = g_temperature;
-          updateLine(currentPage, 0, ONLY_VALUE);
-      }
+    if (pages_array[currentPage].lines[0].value != g_temperature)
+    {
+      pages_array[currentPage].lines[0].value = g_temperature;
+      updateLine(currentPage, 0, ONLY_VALUE);
+    }
 
-      if (pages_array[currentPage].lines[1].value != g_humidity)
-      {
-          pages_array[currentPage].lines[1].value = g_humidity;
-          updateLine(currentPage, 1, ONLY_VALUE);
-      }
+    if (pages_array[currentPage].lines[1].value != g_humidity)
+    {
+      pages_array[currentPage].lines[1].value = g_humidity;
+      updateLine(currentPage, 1, ONLY_VALUE);
+    }
 
-      if (pages_array[currentPage].lines[2].value != g_pressure)
-      {
-          pages_array[currentPage].lines[2].value = g_pressure;
-          updateLine(currentPage, 2, ONLY_VALUE);
-      }
+    if (pages_array[currentPage].lines[2].value != g_pressure)
+    {
+      pages_array[currentPage].lines[2].value = g_pressure;
+      updateLine(currentPage, 2, ONLY_VALUE);
+    }
 
-      if (strcmp(pages_array[currentPage].lines[3].text, g_heater) != 0)
-      {
-          strcpy(pages_array[currentPage].lines[3].text, g_heater);
-          updateLine(currentPage, 3, ONLY_VALUE);
-      }
+    if (strcmp(pages_array[currentPage].lines[3].text, g_heater) != 0)
+    {
+      strcpy(pages_array[currentPage].lines[3].text, g_heater);
+      updateLine(currentPage, 3, ONLY_VALUE);
+    }
 
     // END USER CODE: Specific Page 1 Code
     break;
@@ -218,14 +231,13 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
         strcpy(g_window_state, "offen");
       }
 
-      wio_MQTT->publishTopic("meinHaus/Dach/Solarzelle/Leistung", g_solarVoltage, 0);
-      wio_MQTT->publishTopic("meinHaus/2OG/FensterStatus", g_window_state, 0);
-
+      wio_MQTT->publishTopic(addMQTTPrefix("Dach/Solarzelle/Leistung"), g_solarVoltage, false);
+      wio_MQTT->publishTopic(addMQTTPrefix("2OG/FensterStatus"), g_window_state, false);
     }
     if (pages_array[currentPage].lines[firstLine].value != g_solarVoltage)
     {
       pages_array[currentPage].lines[firstLine].value = g_solarVoltage;
-      updateLine(currentPage,firstLine,ONLY_VALUE);
+      updateLine(currentPage, firstLine, ONLY_VALUE);
     }
 
     if (strcmp(pages_array[currentPage].lines[secondLine].text, g_window_state) != 0)
@@ -240,9 +252,15 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
     // END USER CODE: more Page specific Code
   }
 
+  if (changeBroker)
+  {
+    changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
+    changeBroker = false;
+    Serial.println("Broker changed");
+  }
+
   if (changeSettings)
   {
-    changeMQTTBroker(brokerToConnect, portToConnect,  mqtt_user, mqtt_password, wio_MQTT);
     if (strcmp(functionality, "heatingControl") == 0)
     {
       currentPage = 1;
@@ -259,7 +277,7 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
     drawPage(pages_array, currentPage);
     changeSettings = false;
-    Serial.println("Broker changed");
+    Serial.println("Settings changed");
   }
   return currentPage;
 }
@@ -282,7 +300,7 @@ void onMqttMessage(int messageSize)
   wio_MQTT->setSubscribeState(true); // set subscribe state (for display)
   const char *topic = wio_MQTT->getMessageTopic();
   const char *payload = wio_MQTT->getMessagePayload();
-  StaticJsonDocument<300> jsonDocConfig;
+  StaticJsonDocument<500> jsonDocConfig;
 
   Serial.println("Message received:"); // print infos to SerialPort
   Serial.print("Topic: ");
@@ -300,24 +318,33 @@ void onMqttMessage(int messageSize)
   case 0:
     // START USER CODE: first element of the topicList (wioTerminal/config)
     deserializeJson(jsonDocConfig, payload);
-    if (brokerToConnect != NULL) {
+
+    if (strcmp(brokerToConnect, strdup(jsonDocConfig["brokerToConnect"])) != 0)
+    {
+      changeBroker = true;
       free(brokerToConnect);
+      brokerToConnect = strdup(jsonDocConfig["brokerToConnect"]);
+      portToConnect = jsonDocConfig["portToConnect"];
+      if (mqtt_user != NULL)
+      {
+        free(mqtt_user);
+      }
+      mqtt_user = strdup(jsonDocConfig["mqtt_bootstrap_broker_user"]);
+      if (mqtt_password != NULL)
+      {
+        free(mqtt_password);
+      }
+      mqtt_password = strdup(jsonDocConfig["mqtt_bootstrap_broker_password"]);
     }
-    brokerToConnect = strdup(jsonDocConfig["brokerToConnect"]);
-    portToConnect = jsonDocConfig["portToConnect"];
-    if (functionality != NULL) {
+
+    if (functionality != NULL)
+    {
       free(functionality);
     }
     functionality = strdup(jsonDocConfig["functionality"]);
-    if (mqtt_user != NULL) {
-      free(mqtt_user);
-    }
-    mqtt_user = strdup(jsonDocConfig["mqtt_bootstrap_broker_user"]);
-    if (mqtt_password != NULL) {
-      free(mqtt_password);
-    }
-    mqtt_password = strdup(jsonDocConfig["mqtt_bootstrap_broker_password"]);
-    if (mqtt_prefix != NULL) {
+
+    if (mqtt_prefix != NULL)
+    {
       free(mqtt_prefix);
     }
     mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);

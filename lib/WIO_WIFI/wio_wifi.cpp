@@ -74,7 +74,7 @@ void wio_wifi::initWifi(const char* wifi_ssid, const char* wifi_password)
   
   WiFi.disconnect(true,false);
   WiFi.mode(WIFI_STA);
-  WiFi.setAutoConnect(false);
+  WiFi.setAutoConnect(true);
 
   sprintf(logText, "- Connecting to %s", ssid);   // write to the log 
   (*cbWiFiLog)(logText, false);

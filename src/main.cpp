@@ -69,8 +69,6 @@ void setup()
   addLogText("Config Buttons", NEWLINE);
 
   readConfigFromSDCard();
-  addLogText(getWifiSSID(), NEWLINE);
-  addLogText(getWifiPW(), NEWLINE);
 
   // WiFi Configuration
   wio_Wifi.initWifi(getWifiSSID(), getWifiPW());
@@ -85,7 +83,7 @@ void setup()
   changeMQTTBroker(getMQTTBroker(), 1883, getMQTTUser(), getMQTTPW(), &wio_MQTT);
 
   addLogText("Init successfully!", NEWLINE);
-  delay(1000); // 1000ms delay to read the init- message
+  delay(2000); // 2000ms delay to read the init- message
   disableLoadingScreen();
 
   drawPage(pages_array, currentPage);
