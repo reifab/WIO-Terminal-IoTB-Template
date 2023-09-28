@@ -270,7 +270,7 @@ void wio_display::updateInterfaceStatus()
   {
     sd_card_status = 1;
   }
-  drawIcons(mqtt_s, mqtt_pub, mqtt_sub, wlan_s, wlan_st, wlan_ch, false);   // draw Icons
+  drawIcons(mqtt_s, mqtt_pub, mqtt_sub, wlan_s, wlan_st, wlan_ch, true);   // draw Icons
 }
 
 /**

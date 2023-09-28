@@ -62,7 +62,7 @@ void setup()
   enableLoadingScreen();
 
   // Turn the watchdog on and get actual timeout value based on the provided one.
-  SAMCrashMonitor::enableWatchdog(25000);
+  SAMCrashMonitor::enableWatchdog(30000);
 
   // Button Configuration
   initButtons();
@@ -110,7 +110,6 @@ void loop()
   SAMCrashMonitor::iAmAlive();
   runLedHandler();
   networkConnectionHandler(&wio_Wifi, &wio_MQTT);            // rebuilds the network connection if necessary, updates the connection status
-  currentPage = buttonHandler(currentPage);                  // you can change the page with the wio- buttons if you want
   displayHandler();                                          // refreshes the connection state on display
   currentPage = userFunctionsHandler(currentPage, &wio_MQTT, pages_array); // add your code in this function
 }

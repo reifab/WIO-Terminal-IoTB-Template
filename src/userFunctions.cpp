@@ -62,7 +62,6 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
         // END USER CODE: Subscribed Topics
 };
 
-static bool changeSettings = false; ///< Flag, um den Broker zu wechseln. Wird in der Funktion onMqttMessage() gesetzt.
 static bool changeBroker = false;
 static char *brokerToConnect;  ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
 static char *functionality;    ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
@@ -92,7 +91,7 @@ Adafruit_BME680 bme;
 
 void setMQTTUserAndPassword(wio_mqtt *ptr_wio_MQTT, const char *mqtt_user, const char *mqtt_password)
 {
-  wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password);
+  wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password, getWioTerminalID());
 }
 
 char *addMQTTPrefix(const char *topic)
@@ -145,7 +144,7 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
 
 int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[])
 {
-  const long userDefinedIntervall = 1000; // Interval time for user defined perdiodic task
+  const long userDefinedIntervall = 2000; // Interval time for user defined perdiodic task
   static long previousMillis;             // for user
   long currentMillis = millis();          // save millis
 
@@ -180,7 +179,7 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftdruck"), (float)bme.pressure, false);
       wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftfeuchtigkeit"), bme.humidity, false);
       wio_MQTT->publishTopic(addMQTTPrefix("1OG/HeizungStatus"), g_heater, false);
-
+      //Serial.println("User Function Handler: Messages published");
       // END USER CODE: user periodic task
     }
 
@@ -254,13 +253,10 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
   if (changeBroker)
   {
+    //Serial.println("User Function Handler: Change Broker");
     changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
     changeBroker = false;
-    Serial.println("Broker changed");
-  }
 
-  if (changeSettings)
-  {
     if (strcmp(functionality, "heatingControl") == 0)
     {
       currentPage = 1;
@@ -276,9 +272,10 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
     }
 
     drawPage(pages_array, currentPage);
-    changeSettings = false;
-    Serial.println("Settings changed");
+
+    //Serial.println("Broker changed");
   }
+
   return currentPage;
 }
 
@@ -302,11 +299,13 @@ void onMqttMessage(int messageSize)
   const char *payload = wio_MQTT->getMessagePayload();
   StaticJsonDocument<500> jsonDocConfig;
 
+  /*
   Serial.println("Message received:"); // print infos to SerialPort
   Serial.print("Topic: ");
   Serial.println(topic);
   Serial.print("Payload: ");
   Serial.println(payload);
+  */
 
   while (strcmp(topic, topicList[elem])) // search topic in topicList
   {
@@ -317,6 +316,7 @@ void onMqttMessage(int messageSize)
   {
   case 0:
     // START USER CODE: first element of the topicList (wioTerminal/config)
+    //Serial.println("Config received");
     deserializeJson(jsonDocConfig, payload);
 
     if (strcmp(brokerToConnect, strdup(jsonDocConfig["brokerToConnect"])) != 0)
@@ -335,26 +335,23 @@ void onMqttMessage(int messageSize)
         free(mqtt_password);
       }
       mqtt_password = strdup(jsonDocConfig["mqtt_bootstrap_broker_password"]);
-    }
 
-    if (functionality != NULL)
-    {
-      free(functionality);
-    }
-    functionality = strdup(jsonDocConfig["functionality"]);
+      if (functionality != NULL)
+      {
+        free(functionality);
+      }
+      functionality = strdup(jsonDocConfig["functionality"]);
 
-    if (mqtt_prefix != NULL)
-    {
-      free(mqtt_prefix);
+      if (mqtt_prefix != NULL)
+      {
+        free(mqtt_prefix);
+      }
+      mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
     }
-    mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
-    changeSettings = true;
-
     // END USER CODE: first element of the topicList
     break;
   case 1:
     // START USER CODE: second element of the topicList
-    Serial.println(payload); // Beispiel
     if (strcmp(payload, "on") == 0)
     {
       setHeaterOn();

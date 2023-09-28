@@ -23,7 +23,7 @@ class wio_mqtt
 {
 public:
   wio_mqtt(void (&)(const char *, bool));                                 ///< Konstruktor
-  void initMQTT(void (&)(int), const char *mqtt_user, const char *mqtt_password);///< MQTT initialisieren
+  void initMQTT(void (&)(int), const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID);///< MQTT initialisieren
   void publishTopic(const char *topic, char *payload, bool retain);       ///< Ein Topic publizieren, Payload ist ein String
   void publishTopic(const char *topic, const char *payload, bool retain); ///< Ein Topic publizieren, Payload ist ein konstanter String
   void publishTopic(const char *topic, int payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein Integer

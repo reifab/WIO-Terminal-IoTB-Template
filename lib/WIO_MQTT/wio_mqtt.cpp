@@ -47,21 +47,21 @@ wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
  *
  * @param func Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics
  */
-void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mqtt_password)
+void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID)
 {
   _callback = func;                       // save Callback function
   (*cbMQTTLog)("Start MQTT Init", false); // write to the log
 
   Serial.print("Attempting MQTT connection...");
-  // Create a random wioMqttClient ID
-  String clientId = "WioTerminal"; // generate id
-  clientId += String(random(0xffff), HEX);
+  // Create a wioMqttClient ID
+  String clientId = "dollhouseWioTerminal-"; // generate id
+  clientId += String(wioTerminalID);
   Serial.print(" - ");
   Serial.print(clientId);
   Serial.print(" -...");
   sprintf(logText, "- ID: %s", clientId.c_str()); // write to the log
   (*cbMQTTLog)(logText, false);
-
+  wioMqttClient.setCleanSession(true);
   wioMqttClient.setId(clientId);
   wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
   wioMqttClient.onMessage(_callback);         // set callback function
@@ -233,7 +233,6 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
   sprintf(logText, "- Connecting to %s", mqtt_broker); // write to the log
   (*cbMQTTLog)(logText, false);
   Serial.println(logText);
-
   // Attempt to connect
   if (wioMqttClient.connect(mqtt_broker, mqtt_port))
   {

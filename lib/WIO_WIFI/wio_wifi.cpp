@@ -75,13 +75,13 @@ void wio_wifi::initWifi(const char* wifi_ssid, const char* wifi_password)
   WiFi.disconnect(true,false);
   WiFi.mode(WIFI_STA);
   WiFi.setAutoConnect(true);
-
+  
   sprintf(logText, "- Connecting to %s", ssid);   // write to the log 
   (*cbWiFiLog)(logText, false);
 
   Serial.println(ssid);                     // print ssid to SerialPort
   WiFi.begin(ssid, password);
-
+  WiFi.scanNetworks(false, false);
   while (WiFi.status() != WL_CONNECTED)  // do begin WiFi connection until connected
   {
     delay(500);

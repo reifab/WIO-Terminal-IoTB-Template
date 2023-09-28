@@ -4,9 +4,9 @@
  * @brief Anwendung des Displays auf dem Wio- Terminal.
  * @version 0.1
  * @date 2023-05-24
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include "wio_display.h"
@@ -23,7 +23,7 @@
 extern page_t pages_array[]; ///< extern Page Array, is coded in pages.c
 
 // intervals for periodic tasks
-const long interfaceIconIntervall = 500; ///< Interval time for icons refreshing
+const long interfaceIconIntervall = 5000; ///< Interval time for icons refreshing
 
 /********************************************************************************************
 *** Objects
@@ -85,21 +85,6 @@ void displayHandler()
     if ((currentMillis - previousMillis >= interfaceIconIntervall) || previousMillis == 0)
     {
         previousMillis = currentMillis; // refresh previousMillis
-        //DODO: What's that??:
-        /*
-        if (getWLANStatus() == DISCONNECTED)
-        {
-            connectionState->wlan_strength = 99;
-            connectionState->wlan_channel = 0;
-                }
-        else
-        {
-            if (getWLANStrength() == 99)
-            {
-                connectionState->wlan_strength = -99;
-            }
-        }
-        */
         wio_disp.updateInterfaceStatus(); // update Interface status on the display
     }
 }

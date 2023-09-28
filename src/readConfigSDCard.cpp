@@ -26,7 +26,7 @@ void readConfigFromSDCard()
   }
   else
   {
-    Serial.println("JSON file parsed successfully!");
+    //Serial.println("JSON file parsed successfully!");
   }
   configFile.close();
 }

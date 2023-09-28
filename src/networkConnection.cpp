@@ -28,9 +28,8 @@ static char *mqtt_broker;
 static uint16_t mqtt_port;
 
 // intervals for periodic tasks
-const long scanInterval = 500;            ///< Interval time for WiFi strength und channel scanning
-const long interfaceIconIntervall = 1000; ///< Interval time for icons refreshing
-const long mqttStateIntervall = 1000;     ///< Interval time for MQTT state
+const long scanInterval = 10000;          ///< Interval time for WiFi strength und channel scanning
+const long mqttStateIntervall = 5000;     ///< Interval time for MQTT state
 
 /**
  * @brief In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines
@@ -48,15 +47,11 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
   if ((currentMillis - previousMillis[0] >= scanInterval) || previousMillis[0] == 0)
   {
     previousMillis[0] = currentMillis;
+    //Serial.println("Scan interval was called");
     if (wio_Wifi->WiFiStatus() == CONNECTED) // is connected to WLAN?
     {
       connectionState.wlan_status = CONNECTED;
       networksFound = wio_Wifi->getNetworksFound();
-      if (networksFound <= -2) // if scan not triggered?
-      {
-        wio_Wifi->scanNetwork(); // start network scan (asynchronus)
-      }
-
       if (networksFound > 0) // is Scan Done?
       {
         // read No. of current WiFi
@@ -69,7 +64,6 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
             connectionState.wlan_channel = wio_Wifi->readChannel(i);  // read WiFi channel
             break;
           }
-          wio_Wifi->deleteScanResults(); // delete scan results and reset scan progress
         }
       }
     }
@@ -77,6 +71,7 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
     {
       connectionState.wlan_status = DISCONNECTED;
       connectionState.wlan_strength = -99;
+      //Serial.println("WLAN reconnect");
       wio_Wifi->reconnect();
     }
   }
@@ -116,7 +111,7 @@ connection_state_t *getConnectionStatePtr()
 
 void changeMQTTBroker(const char *broker, uint16_t port, const char *mqtt_user, const char *mqtt_password, wio_mqtt *wio_MQTT)
 {
-  if(mqtt_broker != NULL)
+    if(mqtt_broker != NULL)
   {
     free(mqtt_broker);
   }

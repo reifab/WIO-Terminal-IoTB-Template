@@ -47,7 +47,6 @@ uint16_t buttonHandler(uint16_t currentPage)
         {
         case 1:
             // START USER CODE: PAGE 1
-            
             // END USER CODE: PAGE 1
             break;
 
