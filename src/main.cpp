@@ -27,11 +27,10 @@
 /********************************************************************************************
 *** Global Parameters
 ********************************************************************************************/
+#define LOGGER  addLogText
+//#define LOGGER  NullLogText
 
-void NullLogText(const char *str, bool append)
-{
-  // do nothing
-}
+static void NullLogText(const char *str, bool append);
 
 // Display Parameter
 extern page_t pages_array[];            ///< extern Page Array, is coded in pages.c
@@ -41,8 +40,8 @@ char log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];  ///< startup log text, 15
 /********************************************************************************************
 *** Objects
 ********************************************************************************************/
-wio_wifi wio_Wifi = wio_wifi(NullLogText);
-wio_mqtt wio_MQTT = wio_mqtt(NullLogText);
+wio_wifi wio_Wifi = wio_wifi(LOGGER);
+wio_mqtt wio_MQTT = wio_mqtt(LOGGER);
 
 /********************************************************************************************
 *** Setup Function
@@ -120,4 +119,9 @@ void loop()
   networkConnectionHandler(&wio_Wifi, &wio_MQTT);            // rebuilds the network connection if necessary, updates the connection status
   displayHandler();                                          // refreshes the connection state on display
   currentPage = userFunctionsHandler(currentPage, &wio_MQTT, pages_array); // add your code in this function
+}
+
+static void NullLogText(const char *str, bool append)
+{
+  // do nothing
 }
