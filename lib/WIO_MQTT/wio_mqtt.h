@@ -57,7 +57,7 @@ private:
   bool subState = false;                         ///< Subscribe Status
   typedef void (*callbackFunc) (char *topic, byte *payload, unsigned int len);    ///< Functionspointer auf die Callback Funktion
   callbackFunc _callback;
-  char logText[BUFFER_LENGTH];
+  char m_log_text[BUFFER_LENGTH];
   typedef void (*cbLog)(char *s, bool b);
   static cbLog _cbLog;                              ///< Callback Funktionsvariable
   void subscribeList(char *list, unsigned int len); ///< Eine Topic-Liste abonnieren

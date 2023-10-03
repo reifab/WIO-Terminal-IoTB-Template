@@ -53,20 +53,18 @@ void wio_mqtt::initMQTT(message_cb func, const char *mqtt_user, const char *mqtt
 {
   _callback = func;                       // save Callback function
   PrintToLog("Start MQTT Init", false); // write to the log
-  Serial.print("Attempting MQTT connection...");
+  Serial.println("Start MQTT Init");
   
   setCredentials(mqtt_user, mqtt_password);
 
   // Create a wioMqttClient ID
   m_clientId = "dollhouseWioTerminal-"; // generate id
   m_clientId += String(wioTerminalID);
-  Serial.print(" - ");
-  Serial.print(m_clientId);
-  Serial.print(" -...");
 
-  snprintf(logText, BUFFER_LENGTH, "- ID: %s", m_clientId.c_str()); // write to the log
-  logText[BUFFER_LENGTH - 1] = '\0';
-  PrintToLog(logText, false);
+  snprintf(m_log_text, BUFFER_LENGTH, "- ID: %s", m_clientId.c_str()); // write to the log
+  m_log_text[BUFFER_LENGTH - 1] = '\0';
+  PrintToLog(m_log_text, false);
+  Serial.println(m_clientId);
 
   wioMqttClient.setCallback(_callback);
 }
@@ -225,16 +223,22 @@ bool wio_mqtt::isConnected()
  */
 void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 {
-  snprintf_safe(logText, BUFFER_LENGTH, "- Connecting to %s", mqtt_broker);
-  PrintToLog(logText, false);
-  Serial.println(logText);
+  snprintf_safe(m_log_text, BUFFER_LENGTH, "- Connecting to %s", mqtt_broker);
+  PrintToLog(m_log_text, false);
+  Serial.println(m_log_text);
+
+  if (wioMqttClient.connected()) {
+    Serial.println("Disconnecting current link");
+    wioMqttClient.disconnect();
+  }
 
   wioMqttClient.setServer(mqtt_broker, mqtt_port);
   if (wioMqttClient.connect(m_clientId.c_str(), m_user.c_str(), m_pass.c_str())) {
     PrintToLog("- Connected", false); // write to the log
     Serial.println("Connected");
     subscribeList(ptr_topicList, topicListLen);    // subscribe the topic list
-    PrintToLog("- Subscribed to Topics", false); // write to the log
+    PrintToLog("- Subscribed to topics", false); // write to the log
+    Serial.println("Subscribed to topics");
   }
   else
   {
