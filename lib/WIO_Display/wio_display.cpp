@@ -311,7 +311,7 @@ void wio_display::addLogText(const char *log_, bool append)
   {
     if (line_cnt < LINE_STRING_COUNT)
     {
-      strncpy(log_text[line_cnt], log_, LINE_STRING_LENGTH);   // copy hand over text to log
+      strncpy(log_text[line_cnt], log_, LINE_STRING_LENGTH - 1);   // copy hand over text to log
       log_text[line_cnt][LINE_STRING_LENGTH - 1] = '\0';       // set last char to 0
       line_cnt++;
     }
@@ -330,7 +330,7 @@ void wio_display::addLogText(const char *log_, bool append)
 
     for (int i = 0; i < LINE_STRING_COUNT; i++)
     {
-      if ((String)log_text[i] != "")
+      if (log_text[i][0] != '\0')
       {
         tft.drawString((String)log_text[i], 5, 16 * i);   // draw log line for line
       }
