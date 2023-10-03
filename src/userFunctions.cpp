@@ -46,6 +46,8 @@ void onMqttMessage(int messageSize);
 // START USER CODE: Functionprototypes
 void setHeaterOn(void);
 void setHeaterOff(void);
+
+static char *strcattodup(const char *left, const char *right);
 // END USER CODE: Functionprototypes
 
 /********************************************************************************************
@@ -55,7 +57,7 @@ void setHeaterOff(void);
 char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werden sollen. Die Topics werden als String eingegeben. Das Letzte Zeichen sollte ein '\0' sein.
                                  ///< Die einzelnen Strings werden mit einem Komma getrennt (Siehe Beispiel. Coming soon...)
                                  ///< @attention Maximale 50 Zeichen pro Topic!
-    {
+{
         // START USER CODE: Subscribed Topics
         "reserved\0", // Reserviert, darf nicht benutzt werden
         "meinHaus/1OG/Heizung\0"
@@ -84,22 +86,20 @@ char g_window_state[10];
 /********************************************************************************************
 *** Objects
 ********************************************************************************************/
-static wio_mqtt *wio_MQTT;
+static wio_mqtt *wio_MQTT = NULL;
 // START USER CODE: Objects
 Adafruit_BME680 bme;
 // END USER CODE: Objects
 
-void setMQTTUserAndPassword(wio_mqtt *ptr_wio_MQTT, const char *mqtt_user, const char *mqtt_password)
+void setMQTTUserAndPassword(const char *mqtt_user, const char *mqtt_password)
 {
+  Serial.println("MQTT init for wio_MQTT");
   wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password, getWioTerminalID());
 }
 
 char *addMQTTPrefix(const char *topic)
 {
-  char *newTopic = (char *)malloc(strlen(topic) + strlen(mqtt_prefix) + 1);
-  strcpy(newTopic, mqtt_prefix);
-  strcat(newTopic, topic);
-  return newTopic;
+  return strcattodup(mqtt_prefix, topic);
 }
 
 int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
@@ -347,6 +347,10 @@ void onMqttMessage(int messageSize)
         free(mqtt_prefix);
       }
       mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
+
+      strncat(topicList[1], mqtt_prefix, TOPIC_LENGTH - 1); //Muss noch getestet werden...
+      strncat(topicList[1], "1OG/Heizung\0", TOPIC_LENGTH - 1);
+      topicList[1][TOPIC_LENGTH - 1] = '\0';
     }
     // END USER CODE: first element of the topicList
     break;
@@ -390,3 +394,19 @@ void setHeaterOff(void)
   strcpy(g_heater, "off");
 }
 // END USER CODE: user functions
+
+static char *strcattodup(const char *left, const char *right) {
+  size_t left_len = strlen(left);
+  size_t right_len = strlen(right);
+
+  char *result = (char *)malloc(right_len + left_len + 1);
+  char *left_start = result;
+  char *right_start = &(result[left_len]);
+
+  memcpy(left_start, left, left_len);
+  memcpy(right_start, right, right_len);
+
+  result[left_len + right_len] = '\0';
+
+  return result;
+}

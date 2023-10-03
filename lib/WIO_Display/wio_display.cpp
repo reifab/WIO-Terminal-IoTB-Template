@@ -305,14 +305,21 @@ void wio_display::addLogText(const char *log_, bool append)
 
   if(append)
   {
-    strcat(log_text[line_cnt], log_);     // copy hand over text to log
+    strncat(log_text[line_cnt], log_, LINE_STRING_LENGTH - 1); // append hand over text to log
   }
   else
   {
-    if (line_cnt < 15)
+    if (line_cnt < LINE_STRING_COUNT)
     {
-      strcpy(log_text[line_cnt], log_);   // copy hand over text to log
+      strncpy(log_text[line_cnt], log_, LINE_STRING_LENGTH);   // copy hand over text to log
+      log_text[line_cnt][LINE_STRING_LENGTH - 1] = '\0';       // set last char to 0
       line_cnt++;
+    }
+    else
+    {
+      Serial.println();
+      Serial.print("Discarded log message:\t");
+      Serial.println(log_);
     }
   }
 
@@ -321,7 +328,7 @@ void wio_display::addLogText(const char *log_, bool append)
     tft.setFreeFont(FSS9);              // set font
     tft.setTextColor(TFT_DARKGREEN);    // set text color dark green for a hacker look
 
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < LINE_STRING_COUNT; i++)
     {
       if ((String)log_text[i] != "")
       {
@@ -479,18 +486,17 @@ void wio_display::drawPageLine(line_t l, unsigned int line_nr, draw_setting_e se
       // convert value to a time format. The format is dependent of the setting
       switch (l.setting)
       {
-        case TIME_HH_MM:
-          sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
-          break;
         case TIME_HH_MM_SS:
-          sprintf(buf, "%d:%d:%d", hou_, min_, sek_);   // convert time to string
+          sprintf(buf, "%02d:%02d:%02d", hou_, min_, sek_);   // convert time to string
           break;
           //        case TIME_DD_MM_YYYY:
           //          break;
           //        case TIME_HH_MM_DD_MM_YYYY:
           //          break;
+        case TIME_HH_MM:
         default:
-          sprintf(buf, "%d:%d", hou_, min_);            // convert time to string
+          sprintf(buf, "%02d:%02d", hou_, min_);            // convert time to string
+          break;
       }
 
       len = tft.textWidth(buf);           // measure length of the new string

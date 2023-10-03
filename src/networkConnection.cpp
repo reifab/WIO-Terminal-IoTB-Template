@@ -93,6 +93,7 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
       }
       else
       {
+        wio_MQTT->clientLoop();
         connectionState.mqtt_status = DISCONNECTED;
         wio_MQTT->reconnect(mqtt_broker, mqtt_port); // reconnect to MQTT broker
       }
@@ -100,6 +101,10 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
     else
     {
       connectionState.mqtt_status = DISCONNECTED;
+      connectionState.wlan_status = DISCONNECTED;
+      connectionState.wlan_strength = -99;
+      //Serial.println("WLAN reconnect");
+      wio_Wifi->reconnect();
     }
   }
 }
@@ -111,7 +116,7 @@ connection_state_t *getConnectionStatePtr()
 
 void changeMQTTBroker(const char *broker, uint16_t port, const char *mqtt_user, const char *mqtt_password, wio_mqtt *wio_MQTT)
 {
-    if(mqtt_broker != NULL)
+  if(mqtt_broker != NULL)
   {
     free(mqtt_broker);
   }

@@ -28,16 +28,21 @@
 *** Global Parameters
 ********************************************************************************************/
 
+void NullLogText(const char *str, bool append)
+{
+  // do nothing
+}
+
 // Display Parameter
-extern page_t pages_array[];     ///< extern Page Array, is coded in pages.c
-uint16_t currentPage = 0;        ///< current page, needed e.g. for button actions
-char log_text[15][TOPIC_LENGTH]; ///< startup log text, 15 lines with 50 symbols
+extern page_t pages_array[];            ///< extern Page Array, is coded in pages.c
+uint16_t currentPage = 0;               ///< current page, needed e.g. for button actions
+char log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];  ///< startup log text, 15 lines with 50 symbols
 
 /********************************************************************************************
 *** Objects
 ********************************************************************************************/
-wio_wifi wio_Wifi = wio_wifi(addLogText);
-wio_mqtt wio_MQTT = wio_mqtt(addLogText);
+wio_wifi wio_Wifi = wio_wifi(NullLogText);
+wio_mqtt wio_MQTT = wio_mqtt(NullLogText);
 
 /********************************************************************************************
 *** Setup Function
@@ -62,7 +67,7 @@ void setup()
   enableLoadingScreen();
 
   // Turn the watchdog on and get actual timeout value based on the provided one.
-  SAMCrashMonitor::enableWatchdog(30000);
+  SAMCrashMonitor::enableWatchdog(60000);
 
   // Button Configuration
   initButtons();
@@ -72,14 +77,15 @@ void setup()
 
   // WiFi Configuration
   wio_Wifi.initWifi(getWifiSSID(), getWifiPW());
-  delay(2000);
   SAMCrashMonitor::iAmAlive(); // init WiFi
 
   // Initialize user functions like subscrition of mqtt topics
   currentPage = initUserFunctions(&wio_MQTT);
 
   // Connects to the MQTT Broker and subscribes the topics
-  setMQTTUserAndPassword(&wio_MQTT,getMQTTUser(),getMQTTPW());
+  addLogText("MQTT init", NEWLINE);
+  setMQTTUserAndPassword(getMQTTUser(), getMQTTPW());
+  addLogText("MQTT connect", NEWLINE);
   changeMQTTBroker(getMQTTBroker(), 1883, getMQTTUser(), getMQTTPW(), &wio_MQTT);
 
   addLogText("Init successfully!", NEWLINE);
@@ -94,6 +100,8 @@ void setup()
   strcpy(pages_array[2].lines[5].text, getWioTerminalID());
   updateLine(1, 5, ONLY_VALUE);
   updateLine(2, 5, ONLY_VALUE);
+
+  Serial.println("Setup finished");
 }
 
 /********************************************************************************************

@@ -25,14 +25,16 @@
 /********************************************************************************************
 *** Interface description
 ********************************************************************************************/
+typedef void (*wio_wifi_log_cb)  (const char *s, bool append);
+
 class wio_wifi
 {
   public:
-    wio_wifi(void (&)(const char *, bool));   ///< Konstruktor
+    wio_wifi(wio_wifi_log_cb log_cb); ///< Konstruktor
     void initWifi(const char* ssid, const char* password);///< WiFi initialisieren
     int WiFiStatus();                   ///< WiFi Verbindungsstatus auslesen
     void reconnect();                   ///< verbindet sich wieder mit dem WLAN
-    void getIP(char *);                 ///< aktuelle IP Adresse auslesen
+    int getIP(char *, size_t);                 ///< aktuelle IP Adresse auslesen
     const char *getSSID();              ///< SSID aus dem secret.h File
     void scanNetwork(void);             ///< nach Netzwerken suchen
     void deleteScanResults();           ///< Scan Resultate löschen

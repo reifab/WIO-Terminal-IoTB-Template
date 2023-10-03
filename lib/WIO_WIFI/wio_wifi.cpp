@@ -12,28 +12,30 @@
 /********************************************************************************************
 *** Defines and Constants
 ********************************************************************************************/
-#define DEBUG_ON 0
+#define DEBUG_ON 1
+#define BUFFER_LENGTH 50
 
 /********************************************************************************************
 *** Includes
 ********************************************************************************************/
 #include "wio_wifi.h"
 #include <rpcWiFi.h>
+#include <utils.h>
 
 /********************************************************************************************
 *** Variables
 ********************************************************************************************/
 static bool interface_ready = false;
 static IPAddress ip;
-static char logText[50];
-typedef void (*cbLog)  (const char *s, bool b);
-static cbLog cbWiFiLog;
+static char logText[BUFFER_LENGTH];
+static wio_wifi_log_cb logPrintStrategy;
 static char ssid[50];
 static char password[50];
 
 /********************************************************************************************
 *** Functionprototypes
 ********************************************************************************************/
+static void PrintLog(const char *str, bool append);
 void onWiFiEvent(WiFiEvent_t event);
 
 /********************************************************************************************
@@ -45,9 +47,9 @@ void onWiFiEvent(WiFiEvent_t event);
  * 
  * @param func Funktionsadresse der Funktion für das Hinzufügen des Log Text
  */
-wio_wifi::wio_wifi(void (&func)(const char *, bool b))
+wio_wifi::wio_wifi(wio_wifi_log_cb log_cb)
 {
-  cbWiFiLog = func;
+  logPrintStrategy = log_cb;
 }
 
 /********************************************************************************************
@@ -66,31 +68,17 @@ void wio_wifi::initWifi(const char* wifi_ssid, const char* wifi_password)
   strcpy(ssid, wifi_ssid);
   strcpy(password, wifi_password);
 
-  (*cbWiFiLog)("Start WiFi Init", false);   // write to the log
+  PrintLog("Start WiFi Init", false);
 
   if(DEBUG_ON){
     WiFi.onEvent(onWiFiEvent);
   }
-  
+
   WiFi.disconnect(true,false);
   WiFi.mode(WIFI_STA);
   WiFi.setAutoConnect(true);
-  
-  sprintf(logText, "- Connecting to %s", ssid);   // write to the log 
-  (*cbWiFiLog)(logText, false);
 
-  Serial.println(ssid);                     // print ssid to SerialPort
-  WiFi.begin(ssid, password);
-  WiFi.scanNetworks(false, false);
-  while (WiFi.status() != WL_CONNECTED)  // do begin WiFi connection until connected
-  {
-    delay(500);
-    Serial.println("try again to connect WiFi..");   // print to SerialPort
-    (*cbWiFiLog)("try again to connect WiFi..", false);   // write to the log 
-    (*cbWiFiLog)(logText, false);
-    WiFi.begin(ssid, password);
-  }
-  (*cbWiFiLog)("- Connected", false);       // write to the log
+  reconnect();
 }
 
 /**
@@ -99,9 +87,20 @@ void wio_wifi::initWifi(const char* wifi_ssid, const char* wifi_password)
  */
 void wio_wifi::reconnect(void)
 {
-  Serial.println("Reconnect WiFi");
-  WiFi.disconnect(true,false);
+  if (WiFi.status() != WL_DISCONNECTED) {
+    WiFi.disconnect(true,false);
+  }
+
+  snprintf_safe(logText, BUFFER_LENGTH, "Connecting to %s...", ssid);
+  PrintLog(logText, false);
+
   WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)  // do begin WiFi connection until connected
+  {
+    delay(200);
+    PrintLog(".", true);
+  }
+  PrintLog("- Connected", false);
 }
 
 /**
@@ -139,7 +138,7 @@ int wio_wifi::readChannel(int index)
  */
 void wio_wifi::scanNetwork(void)
 {
-  WiFi.scanNetworks(true, false);   // Scan Networks in asynchronus mode and without hidden SSIDs
+//  WiFi.scanNetworks(true, false);   // Scan Networks in asynchronus mode and without hidden SSIDs
 }
 
 /**
@@ -197,102 +196,79 @@ void wio_wifi::deleteScanResults()
 void onWiFiEvent(WiFiEvent_t event) {
   switch (event) {
     case SYSTEM_EVENT_WIFI_READY: 
-      (*cbWiFiLog)("- WiFi interface ready", false);
-      Serial.println("WiFi interface ready");
+      PrintLog("- WiFi interface ready", false);
       interface_ready = true;
       break;
     case SYSTEM_EVENT_STA_START:
-      (*cbWiFiLog)("- WiFi client started", false);
-      Serial.println("WiFi client started");
+      PrintLog("- WiFi client started", false);
       break;
     case SYSTEM_EVENT_STA_STOP:
-      (*cbWiFiLog)("- WiFi clients stopped", false);
-      Serial.println("WiFi clients stopped");
+      PrintLog("- WiFi clients stopped", false);
       break;
     case SYSTEM_EVENT_STA_CONNECTED:
-      (*cbWiFiLog)("- Connected to access point", false);
-      Serial.println("Connected to access point");
+      PrintLog("- WiFi Connected", false);
       break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
-      (*cbWiFiLog)("- Disconnected from WiFi access point", false);
-      Serial.println("Disconnected from WiFi access point");
+      PrintLog("- WiFi Disconnected", false);
       break;
     case SYSTEM_EVENT_STA_AUTHMODE_CHANGE:
-      (*cbWiFiLog)("- Authentication mode of access point has changed", false);
-      Serial.println("Authentication mode of access point has changed");
+      PrintLog("- SYSTEM_EVENT_STA_AUTHMODE_CHANGE", false);
       break;
     case SYSTEM_EVENT_STA_GOT_IP:
       ip = WiFi.localIP();
-      sprintf(logText, "- IP Adress: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
-      (*cbWiFiLog)(logText, false);
+      snprintf(logText, BUFFER_LENGTH, "- IP Adress: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+      PrintLog(logText, false); 
       break;
     case SYSTEM_EVENT_STA_LOST_IP:
-      (*cbWiFiLog)("- STA_LOST_IP", false);
-      Serial.println("Lost IP address and IP address is reset to 0");
+      PrintLog("- STA_LOST_IP", false);
       break;
     case SYSTEM_EVENT_STA_WPS_ER_SUCCESS:
-      (*cbWiFiLog)("- STA_WPS_ER_SUCCESS", false);
-      Serial.println("WiFi Protected Setup (WPS): succeeded in enrollee mode");
+      PrintLog("- STA_WPS_ER_SUCCESS", false);
       break;
     case SYSTEM_EVENT_STA_WPS_ER_FAILED:
-      (*cbWiFiLog)("- STA_WPS_ER_FAILED", false);
-      Serial.println("WiFi Protected Setup (WPS): failed in enrollee mode");
+      PrintLog("- STA_WPS_ER_FAILED", false);
       break;
     case SYSTEM_EVENT_STA_WPS_ER_TIMEOUT:
-      (*cbWiFiLog)("- STA_WPS_ER_TIMEOUT", false);
-      Serial.println("WiFi Protected Setup (WPS): timeout in enrollee mode");
+      PrintLog("- STA_WPS_ER_TIMEOUT", false);
       break;
     case SYSTEM_EVENT_STA_WPS_ER_PIN:
-      (*cbWiFiLog)("- STA_WPS_ER_PIN", false);
-      Serial.println("WiFi Protected Setup (WPS): pin code in enrollee mode");
+      PrintLog("- STA_WPS_ER_PIN", false);
       break;
     case SYSTEM_EVENT_AP_START:
-      (*cbWiFiLog)("- WiFi access point started", false);
-      Serial.println("WiFi access point started");
+      PrintLog("- WiFi access point started", false);
       break;
     case SYSTEM_EVENT_AP_STOP:
-      (*cbWiFiLog)("- WiFi access point stopped", false);
-      Serial.println("WiFi access point stopped");
+      PrintLog("- WiFi access point stopped", false);
       break;
     case SYSTEM_EVENT_AP_STACONNECTED:
-      (*cbWiFiLog)("- Client connected", false);
-      Serial.println("Client connected");
+      PrintLog("- Client connected", false);
       break;
     case SYSTEM_EVENT_AP_STADISCONNECTED:
-      (*cbWiFiLog)("- Client disconnected", false);
-      Serial.println("Client disconnected");
+      PrintLog("- Client disconnected", false);
       break;
     case SYSTEM_EVENT_AP_STAIPASSIGNED:
-      (*cbWiFiLog)("- Assigned IP address to client", false);
-      Serial.println("Assigned IP address to client");
+      PrintLog("- Assigned IP address to client", false);
       break;
     case SYSTEM_EVENT_AP_PROBEREQRECVED:
-      (*cbWiFiLog)("- Received probe request", false);
-      Serial.println("Received probe request");
+      PrintLog("- Received probe request", false);
       break;
     case SYSTEM_EVENT_GOT_IP6:
-      (*cbWiFiLog)("- IPv6 is preferred", false);
-      Serial.println("IPv6 is preferred");
+      PrintLog("- IPv6 is preferred", false);
       break;
     case SYSTEM_EVENT_ETH_START:
-      (*cbWiFiLog)("- ETH started", false);
-      Serial.println("Ethernet started");
+      PrintLog("- ETH started", false);
       break;
     case SYSTEM_EVENT_ETH_STOP:
-      (*cbWiFiLog)("- ETH stopped", false);
-      Serial.println("Ethernet stopped");
+      PrintLog("- ETH stopped", false);
       break;
     case SYSTEM_EVENT_ETH_CONNECTED:
-      (*cbWiFiLog)("- ETH connected", false);
-      Serial.println("Ethernet connected");
+      PrintLog("- ETH connected", false);
       break;
     case SYSTEM_EVENT_ETH_DISCONNECTED:
-      (*cbWiFiLog)("- ETH disconected", false);
-      Serial.println("Ethernet disconnected");
+      PrintLog("- ETH disconected", false);
       break;
     case SYSTEM_EVENT_ETH_GOT_IP:
-      (*cbWiFiLog)("- ETH got IP", false);
-      Serial.println("Obtained IP address");
+      PrintLog("- ETH got IP", false);
       break;
     default: break;      
   }
@@ -302,13 +278,11 @@ void onWiFiEvent(WiFiEvent_t event) {
  * @brief Diese Methode gibt die IP-Adresse des Gerätes zurück.
  * 
  * @param addr Stringadresse, für die Speicherung, also wohin wird die IP-Adresse "geschrieben"
+ * @param len Länge des Puffers auf den mit @p addr gezeigt wird.
  */
-void wio_wifi::getIP(char *addr)
+int wio_wifi::getIP(char *addr, size_t len)
 {
-  char ip_text[16];
-  
-  sprintf(ip_text, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
-  strcpy(addr, ip_text);
+  return snprintf_safe(addr, len, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 }
 
 /**
@@ -328,4 +302,14 @@ int wio_wifi::WiFiStatus()
   {
     return 0;
   }
+}
+
+static void PrintLog(const char *str, bool wantToAppendMore) {
+  if (wantToAppendMore) {
+    Serial.print(str);
+  } else {
+    Serial.println(str);
+  }
+
+  logPrintStrategy(str, wantToAppendMore);
 }

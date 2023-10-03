@@ -15,9 +15,11 @@
 /********************************************************************************************
 *** Defines
 ********************************************************************************************/
-#define LINE_START_X  10    ///< Start position of the first line; x-coordinate
-#define LINE_START_Y  55    ///< Start position of the first line; y-coordinate
-#define LINE_VALUE_X  180   ///< Start position of the first line value; x-coordinate
+#define LINE_START_X        10    ///< Start position of the first line; x-coordinate
+#define LINE_START_Y        55    ///< Start position of the first line; y-coordinate
+#define LINE_VALUE_X        180   ///< Start position of the first line value; x-coordinate
+#define LINE_STRING_LENGTH  50    ///< Maximal length of the line string
+#define LINE_STRING_COUNT   15    ///< Maximal count of the line strings
 
 /********************************************************************************************
 *** Datatypes
@@ -41,7 +43,7 @@ struct connection_state_t
 /********************************************************************************************
 *** Extern Variables
 ********************************************************************************************/
-extern char log_text[15][50];
+extern char log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];
 
 /********************************************************************************************
 *** Interface description

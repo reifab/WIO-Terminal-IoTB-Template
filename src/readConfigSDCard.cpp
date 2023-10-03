@@ -7,6 +7,11 @@ static StaticJsonDocument<500> jsonDocConfigFile;
 
 void readConfigFromSDCard()
 {
+  if (!SD.begin(SDCARD_SS_PIN, SDCARD_SPI, 16000000)) {
+    Serial.println("SD Card Mount Failed");
+    return;
+  }
+  
   File configFile = SD.open("sys/wioID.json", "r"); // Die SD Karte wurde hier bereits initialisiert in der Funktion initDisplay(). Siehe lib\wio_display\wio_display.cpp. ToDo: SD Karte in eigene Funktion auslagern.
   if (!configFile)
   {
