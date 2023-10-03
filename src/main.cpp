@@ -27,10 +27,18 @@
 /********************************************************************************************
 *** Global Parameters
 ********************************************************************************************/
-#define LOGGER  addLogText
-//#define LOGGER  NullLogText
+//#define USE_LOG
 
-static void NullLogText(const char *str, bool append);
+#ifdef USE_LOG
+# define LOGGER  addLogText
+#else
+# define LOGGER  NullLogText
+#endif
+
+
+#ifndef USE_LOG
+  static void NullLogText(const char *str, bool append);
+#endif
 
 // Display Parameter
 extern page_t pages_array[];            ///< extern Page Array, is coded in pages.c
@@ -120,7 +128,9 @@ void loop()
   currentPage = userFunctionsHandler(currentPage, &wio_MQTT, pages_array); // add your code in this function
 }
 
-static void NullLogText(const char *str, bool append)
-{
-  // do nothing
-}
+#ifndef USE_LOG
+  static void NullLogText(const char *str, bool append)
+  {
+    // do nothing
+  }
+#endif
