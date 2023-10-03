@@ -320,13 +320,15 @@ void wio_display::addLogText(const char *log_, bool append)
       m_log_write_pos = 0;
     }
   }
+  paint();
+}
 
+void wio_display::paint(void) {
   if(loading_screen_status)
   {
-    tft.fillScreen(TFT_BLACK);    // draw black background
-
     tft.setFreeFont(FSS9);              // set font
-    tft.setTextColor(TFT_DARKGREEN);    // set text color dark green for a hacker look
+    tft.setTextColor(TFT_DARKGREEN, TFT_BLACK);    // set text color dark green for a hacker look
+    tft.setTextPadding(tft.width());
 
     uint8_t currentLine = m_log_write_pos + 1;
     for (int i = 0; i < LINE_STRING_COUNT; i++)
