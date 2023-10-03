@@ -85,15 +85,15 @@ void networkConnectionHandler(wio_wifi *wio_Wifi, wio_mqtt *wio_MQTT)
         connectionState.mqtt_status = CONNECTED;
         if (connectionState.mqtt_status)
         {
-          wio_MQTT->clientLoop();             // MQTT client loop
+          wio_MQTT->loop();             // MQTT client loop
           previousMillis[1] = currentMillis;  // refresh previousMillis
-          wio_MQTT->setPublishState(false);   // reset publish state in the mqtt library
+          wio_MQTT->resetPublishState();
           wio_MQTT->setSubscribeState(false); // reset subscribe state in the mqtt library
         }
       }
       else
       {
-        wio_MQTT->clientLoop();
+        wio_MQTT->loop();
         connectionState.mqtt_status = DISCONNECTED;
         wio_MQTT->reconnect(mqtt_broker, mqtt_port); // reconnect to MQTT broker
       }
@@ -123,7 +123,7 @@ void changeMQTTBroker(const char *broker, uint16_t port, const char *mqtt_user, 
   mqtt_broker = strdup(broker);
   mqtt_port = port;
   connectionState.mqtt_status = DISCONNECTED;
-  wio_MQTT->setUserNameAndPassword(mqtt_user,mqtt_password);
+  wio_MQTT->setCredentials(mqtt_user,mqtt_password);
   wio_MQTT->reconnect(mqtt_broker, mqtt_port);
 }
 

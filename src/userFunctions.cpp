@@ -13,6 +13,7 @@
 *** Includes
 ********************************************************************************************/
 #include <Arduino.h>
+#include <utils.h>
 #include "userFunctions.h"
 #include "pages.h"
 #include "wio_mqtt.h"
@@ -42,12 +43,14 @@
 /********************************************************************************************
 *** Functionprototypes
 ********************************************************************************************/
-void onMqttMessage(int messageSize);
+static void jsonValueFetch(char **dst, StaticJsonDocument<500> & doc, const char *key);
+static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len);
+static void prepareTopicNames(void);
+static void replaceTopicName(char **name, const char *topic);
+
 // START USER CODE: Functionprototypes
 void setHeaterOn(void);
 void setHeaterOff(void);
-
-static char *strcattodup(const char *left, const char *right);
 // END USER CODE: Functionprototypes
 
 /********************************************************************************************
@@ -68,9 +71,17 @@ static bool changeBroker = false;
 static char *brokerToConnect;  ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
 static char *functionality;    ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
 static uint16_t portToConnect; ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
+
 static char *mqtt_user;        ///< MQTT Benutzername.
 static char *mqtt_password;    ///< MQTT Passwort.
 static char *mqtt_prefix;      ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
+
+static char *topic_floor1_temp_name = NULL;
+static char *topic_floor1_pressure_name = NULL;
+static char *topic_floor1_humidity_name = NULL;
+static char *topic_floor1_heating_state_name = NULL;
+static char *topic_floor2_windowstate_name = NULL;
+static char *topic_roof_pv_power_name = NULL;
 
 // START USER CODE: Global Variables
 float g_temperature;
@@ -93,13 +104,7 @@ Adafruit_BME680 bme;
 
 void setMQTTUserAndPassword(const char *mqtt_user, const char *mqtt_password)
 {
-  Serial.println("MQTT init for wio_MQTT");
   wio_MQTT->initMQTT(onMqttMessage, mqtt_user, mqtt_password, getWioTerminalID());
-}
-
-char *addMQTTPrefix(const char *topic)
-{
-  return strcattodup(mqtt_prefix, topic);
 }
 
 int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
@@ -129,6 +134,8 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
     currentPage = 0;
   }
 
+  prepareTopicNames();
+
   // END USER CODE: Setup
 
   // MQTT Configuration
@@ -140,6 +147,23 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
   wio_MQTT->addSubscribeList(topicList[0], sizeof(topicList)); // subscribe to all topics in topicList
 
   return currentPage;
+}
+
+static void prepareTopicNames(void) {
+  replaceTopicName(&topic_floor1_temp_name, "1OG/Temperatur");
+  replaceTopicName(&topic_floor1_pressure_name, "1OG/Luftdruck");
+  replaceTopicName(&topic_floor1_humidity_name, "1OG/Luftfeuchtigkeit");
+  replaceTopicName(&topic_floor1_heating_state_name, "1OG/HeizungStatus");
+  replaceTopicName(&topic_floor2_windowstate_name, "2OG/FensterStatus");
+  replaceTopicName(&topic_roof_pv_power_name, "Dach/Solarzelle/Leistung");
+}
+
+static void replaceTopicName(char **name, const char *topic) {
+  if (*name != NULL) {
+    free(*name);
+    *name = NULL;
+  }
+  *name = strcattodup(mqtt_prefix, topic);
 }
 
 int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[])
@@ -175,10 +199,10 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       g_pressure = bme.pressure / 100; // to hPa
       g_humidity = bme.humidity;
 
-      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Temperatur"), bme.temperature, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftdruck"), (float)bme.pressure, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("1OG/Luftfeuchtigkeit"), bme.humidity, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("1OG/HeizungStatus"), g_heater, false);
+      wio_MQTT->publishTopic(topic_floor1_temp_name, bme.temperature, false);
+      wio_MQTT->publishTopic(topic_floor1_pressure_name, (float)bme.pressure, false);
+      wio_MQTT->publishTopic(topic_floor1_humidity_name, bme.humidity, false);
+      wio_MQTT->publishTopic(topic_floor1_heating_state_name, g_heater, false);
       //Serial.println("User Function Handler: Messages published");
       // END USER CODE: user periodic task
     }
@@ -230,8 +254,8 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
         strcpy(g_window_state, "offen");
       }
 
-      wio_MQTT->publishTopic(addMQTTPrefix("Dach/Solarzelle/Leistung"), g_solarVoltage, false);
-      wio_MQTT->publishTopic(addMQTTPrefix("2OG/FensterStatus"), g_window_state, false);
+      wio_MQTT->publishTopic(topic_roof_pv_power_name, g_solarVoltage, false);
+      wio_MQTT->publishTopic(topic_floor2_windowstate_name, g_window_state, false);
     }
     if (pages_array[currentPage].lines[firstLine].value != g_solarVoltage)
     {
@@ -291,12 +315,12 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
  *
  * @param messageSize  Länge der Nachricht
  */
-void onMqttMessage(int messageSize)
+static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
 {
+  const char *payload = (const char *)payloadbytes;
+
   int elem = 0;
   wio_MQTT->setSubscribeState(true); // set subscribe state (for display)
-  const char *topic = wio_MQTT->getMessageTopic();
-  const char *payload = wio_MQTT->getMessagePayload();
   StaticJsonDocument<500> jsonDocConfig;
 
   /*
@@ -325,28 +349,13 @@ void onMqttMessage(int messageSize)
       free(brokerToConnect);
       brokerToConnect = strdup(jsonDocConfig["brokerToConnect"]);
       portToConnect = jsonDocConfig["portToConnect"];
-      if (mqtt_user != NULL)
-      {
-        free(mqtt_user);
-      }
-      mqtt_user = strdup(jsonDocConfig["mqtt_bootstrap_broker_user"]);
-      if (mqtt_password != NULL)
-      {
-        free(mqtt_password);
-      }
-      mqtt_password = strdup(jsonDocConfig["mqtt_bootstrap_broker_password"]);
 
-      if (functionality != NULL)
-      {
-        free(functionality);
-      }
-      functionality = strdup(jsonDocConfig["functionality"]);
+      jsonValueFetch(&mqtt_prefix, jsonDocConfig, "mqtt_prefix");
+      jsonValueFetch(&mqtt_user, jsonDocConfig, "mqtt_bootstrap_broker_user");
+      jsonValueFetch(&mqtt_password, jsonDocConfig, "mqtt_bootstrap_broker_password");
+      jsonValueFetch(&functionality, jsonDocConfig, "functionality");
 
-      if (mqtt_prefix != NULL)
-      {
-        free(mqtt_prefix);
-      }
-      mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
+      prepareTopicNames();
 
       strncat(topicList[1], mqtt_prefix, TOPIC_LENGTH - 1); //Muss noch getestet werden...
       strncat(topicList[1], "1OG/Heizung\0", TOPIC_LENGTH - 1);
@@ -382,6 +391,21 @@ void onMqttMessage(int messageSize)
   }
 }
 
+static void jsonValueFetch(char **dst, StaticJsonDocument<500> & doc, const char *key) {
+  if (*dst) {
+    free(*dst);
+    *dst = NULL;
+  }
+
+  const char *value = doc[key]; 
+  if (value) {
+    *dst = strdup(value); 
+  }
+  else {
+    *dst = strdup("");
+  }
+}
+
 // START USER CODE: user functions
 void setHeaterOn(void)
 {
@@ -394,19 +418,3 @@ void setHeaterOff(void)
   strcpy(g_heater, "off");
 }
 // END USER CODE: user functions
-
-static char *strcattodup(const char *left, const char *right) {
-  size_t left_len = strlen(left);
-  size_t right_len = strlen(right);
-
-  char *result = (char *)malloc(right_len + left_len + 1);
-  char *left_start = result;
-  char *right_start = &(result[left_len]);
-
-  memcpy(left_start, left, left_len);
-  memcpy(right_start, right, right_len);
-
-  result[left_len + right_len] = '\0';
-
-  return result;
-}

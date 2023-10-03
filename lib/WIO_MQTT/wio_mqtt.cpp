@@ -12,16 +12,17 @@
 /********************************************************************************************
 *** Includes
 ********************************************************************************************/
-#include <ArduinoMqttClient.h>
+#include <PubSubClient.h>
 #include <rpcWiFi.h>
 #include "wio_mqtt.h"
 #include <utils.h>
+#include <stdarg.h>
 
 /********************************************************************************************
 *** Objects
 ********************************************************************************************/
 WiFiClient wioWiFiClient;
-MqttClient wioMqttClient(wioWiFiClient);
+PubSubClient wioMqttClient(wioWiFiClient);
 typedef void (*cbLog_)(const char *s, bool b);
 static cbLog_ PrintToLog;
 
@@ -48,31 +49,39 @@ wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
  *
  * @param func Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics
  */
-void wio_mqtt::initMQTT(void (&func)(int), const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID)
+void wio_mqtt::initMQTT(message_cb func, const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID)
 {
   _callback = func;                       // save Callback function
   PrintToLog("Start MQTT Init", false); // write to the log
   Serial.print("Attempting MQTT connection...");
   
+  setCredentials(mqtt_user, mqtt_password);
+
   // Create a wioMqttClient ID
-  String clientId = "dollhouseWioTerminal-"; // generate id
-  clientId += String(wioTerminalID);
+  m_clientId = "dollhouseWioTerminal-"; // generate id
+  m_clientId += String(wioTerminalID);
   Serial.print(" - ");
-  Serial.print(clientId);
+  Serial.print(m_clientId);
   Serial.print(" -...");
-  snprintf(logText, BUFFER_LENGTH, "- ID: %s", clientId.c_str()); // write to the log
+
+  snprintf(logText, BUFFER_LENGTH, "- ID: %s", m_clientId.c_str()); // write to the log
   logText[BUFFER_LENGTH - 1] = '\0';
   PrintToLog(logText, false);
-  wioMqttClient.setCleanSession(true);
-  wioMqttClient.setId(clientId);
-  wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
-  wioMqttClient.onMessage(_callback);         // set callback function
-  subscribeList(ptr_topicList, topicListLen); // subscribe the topic list
+
+  wioMqttClient.setCallback(_callback);
 }
 
-void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_password)
-{
-  wioMqttClient.setUsernamePassword(mqtt_user, mqtt_password);
+/**
+ * @brief Sets the credentials to authenticate with
+ * 
+ * @param user  Username to authenticate with
+ * @param pass  Password to authenticate with
+ * 
+ * @note The credentials are applied with the next reconnect.
+*/
+void wio_mqtt::setCredentials(const char *user, const char *pass) {
+  m_user = user;
+  m_pass = pass;
 }
 
 /**
@@ -82,33 +91,22 @@ void wio_mqtt::setUserNameAndPassword(const char *mqtt_user, const char *mqtt_pa
  * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
  * @param retain Wenn true: Speichert die Nachricht auf dem Broker
  */
-void wio_mqtt::publishTopic(const char *topic, char *payload, bool retain)
-{
-  pubState = true;           // set publish state to TRUE, because somthing will be sended
-  //Serial.println("PUBLISH"); // print infos to SerialPort
-  //Serial.print("Topic: ");
-  //Serial.println(topic);
-  //Serial.print("Payload: ");
-  //Serial.println(payload);
-
-  // publish the message:
-  wioMqttClient.beginMessage(topic, retain);
-  wioMqttClient.print(payload);
-  wioMqttClient.endMessage();
-}
-
-/**
- * @brief Diese Methode publiziert eine MQTT Nachricht. Konstanter char-Array als Payload.
- *
- * @param topic Topic (Name) der Nachricht
- * @param payload Payload (Nutzdaten/Inhalt) der Nachricht
- * @param retain Wenn true: Speichert die Nachricht auf dem Broker
- */
 void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
 {
-  char payloadCopy[strlen(payload) + 1];
-  strcpy(payloadCopy, payload);
-  wio_mqtt::publishTopic(topic, payloadCopy, retain);
+  const size_t topic_len = strlen(topic);
+  size_t padding = TOPIC_LENGTH - topic_len;
+
+  Serial.print("PUBLISH "); // print infos to SerialPort
+  Serial.print(topic);
+  while (padding-- > 0) {
+    Serial.print(" ");
+  }
+  Serial.print(" =\t");
+  Serial.println(payload);
+
+  m_publishedSomething = true;
+
+  wioMqttClient.publish(topic, payload, retain);
 }
 
 /**
@@ -120,18 +118,7 @@ void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
  */
 void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
 {
-  pubState = true;           // set publish state to TRUE, because somthing will be sended
-  /*
-  Serial.println("PUBLISH"); // print infos to SerialPort
-  Serial.print("Topic: ");
-  Serial.println(topic);
-  Serial.print("Payload: ");
-  Serial.println(payload);
-  */
-  // publish the message:
-  wioMqttClient.beginMessage(topic, retain);
-  wioMqttClient.print(payload);
-  wioMqttClient.endMessage();
+  publishTopicPrintf(topic, retain, "%d", payload);
 }
 
 /**
@@ -143,19 +130,23 @@ void wio_mqtt::publishTopic(const char *topic, int payload, bool retain)
  */
 void wio_mqtt::publishTopic(const char *topic, float payload, bool retain)
 {
-  pubState = true;           // set publish state to TRUE, because somthing will be sended
-  /*
-  Serial.println("PUBLISH"); // print infos to SerialPort
-  Serial.print("Topic: ");
-  Serial.println(topic);
-  Serial.print("Payload: ");
-  Serial.println(payload);
-  */
+  publishTopicPrintf(topic, retain, "%f", payload);
+}
 
-  // publish the message:
-  wioMqttClient.beginMessage(topic, retain);
-  wioMqttClient.print(payload, 3);
-  wioMqttClient.endMessage();
+void wio_mqtt::publishTopicPrintf(const char *topic, bool retain, const char *format, ...) {
+  char buffer[BUFFER_LENGTH];
+  
+  va_list args;
+  va_start(args, format);
+
+  int ret = vsnprintf(buffer, BUFFER_LENGTH, format, args);
+  if (ret >= BUFFER_LENGTH) {
+    buffer[BUFFER_LENGTH - 1] = '\0';
+  }
+
+  va_end(args);
+
+  publishTopic(topic, buffer, retain);
 }
 
 /**
@@ -238,9 +229,8 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
   PrintToLog(logText, false);
   Serial.println(logText);
 
-  // Attempt to connect
-  if (wioMqttClient.connect(mqtt_broker, mqtt_port))
-  {
+  wioMqttClient.setServer(mqtt_broker, mqtt_port);
+  if (wioMqttClient.connect(m_clientId.c_str(), m_user.c_str(), m_pass.c_str())) {
     PrintToLog("- Connected", false); // write to the log
     Serial.println("Connected");
     subscribeList(ptr_topicList, topicListLen);    // subscribe the topic list
@@ -249,7 +239,7 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
   else
   {
     Serial.println("failed, rc=");
-    Serial.print(wioMqttClient.connectError());
+    Serial.print(wioMqttClient.state());
   }
 }
 
@@ -258,9 +248,9 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
  * Damit die MQTT Funktionen ordentlich funktionieren, muss diese Methode periodisch aufgerufen werden.
  *
  */
-void wio_mqtt::clientLoop()
+void wio_mqtt::loop()
 {
-  wioMqttClient.poll();
+  wioMqttClient.loop();
 }
 
 /**
@@ -271,7 +261,15 @@ void wio_mqtt::clientLoop()
  */
 bool wio_mqtt::getPublishState()
 {
-  return pubState;
+  return m_publishedSomething;
+}
+
+/**
+ * @brief Diese Methode setzt den Publish Status zurück
+ */
+void wio_mqtt::resetPublishState(void)
+{
+  m_publishedSomething = false;
 }
 
 /**
@@ -283,42 +281,6 @@ bool wio_mqtt::getPublishState()
 bool wio_mqtt::getSubscribeState()
 {
   return subState;
-}
-
-/**
- * @brief Diese Methode liesst einen empfangenen Topic zurück
- *
- * @return Zeiger auf ein char- Array, welches das Topic enthält
- */
-const char *wio_mqtt::getMessageTopic(void)
-{
-  String msgTopicStr = wioMqttClient.messageTopic();
-  char *msgTopicCharArray = new char[msgTopicStr.length() + 1];
-  msgTopicStr.toCharArray(msgTopicCharArray, msgTopicStr.length() + 1);
-  return msgTopicCharArray;
-}
-
-/**
- * @brief Diese Methode liesst die empfangenen Nutzdaten zurück
- *
- * @return Zeiger auf ein char- Array, welches den Payload enthält
- */
-const char *wio_mqtt::getMessagePayload(void)
-{
-  String msgPayloadStr = wioMqttClient.readString();
-  char *msgPayloadCharArray = new char[msgPayloadStr.length() + 1];
-  msgPayloadStr.toCharArray(msgPayloadCharArray, msgPayloadStr.length() + 1);
-  return msgPayloadCharArray;
-}
-
-/**
- * @brief Diese Methode setzt den Publish Status
- *
- * @param state Wert für den Publish Status
- */
-void wio_mqtt::setPublishState(bool state)
-{
-  pubState = state;
 }
 
 /**
