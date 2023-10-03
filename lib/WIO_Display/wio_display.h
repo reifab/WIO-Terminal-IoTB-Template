@@ -12,6 +12,8 @@
 #define WIO_DISPLAY_H
 #include "pages.h"
 
+#include <stdint.h>
+
 /********************************************************************************************
 *** Defines
 ********************************************************************************************/
@@ -41,11 +43,6 @@ struct connection_state_t
 };
 
 /********************************************************************************************
-*** Extern Variables
-********************************************************************************************/
-extern char log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];
-
-/********************************************************************************************
 *** Interface description
 ********************************************************************************************/
 class wio_display
@@ -72,5 +69,9 @@ class wio_display
     void symbol_H(int offset);
     void symbol_z(int offset);
     void symbol_dot(int offset);
+
+private:
+  char    m_log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];
+  uint8_t m_log_write_pos;
 };
 #endif

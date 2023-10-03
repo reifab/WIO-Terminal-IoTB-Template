@@ -35,7 +35,6 @@ static void NullLogText(const char *str, bool append);
 // Display Parameter
 extern page_t pages_array[];            ///< extern Page Array, is coded in pages.c
 uint16_t currentPage = 0;               ///< current page, needed e.g. for button actions
-char log_text[LINE_STRING_COUNT][LINE_STRING_LENGTH];  ///< startup log text, 15 lines with 50 symbols
 
 /********************************************************************************************
 *** Objects

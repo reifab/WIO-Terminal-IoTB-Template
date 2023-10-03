@@ -158,7 +158,7 @@ static const uint16_t NO_SD_CARD_IMG[] = {  // No sd card image
  * @param st Adresse der WLAN Stärke Variable
  * @param ch Adresse der WLAN Kannal Variable
  */
-wio_display::wio_display(connection_state_t *connectionState)
+wio_display::wio_display(connection_state_t *connectionState) : m_log_write_pos(0)
 {
   // save addresses
   mqtt_status_ptr = &connectionState->mqtt_status;
@@ -167,6 +167,10 @@ wio_display::wio_display(connection_state_t *connectionState)
   wlan_status_ptr = &connectionState->wlan_status;
   wlan_strength_ptr = &connectionState->wlan_strength;
   wlan_channel_ptr = &connectionState->wlan_channel;
+
+  for (int i = 0;i < LINE_STRING_COUNT;i++) {
+    m_log_text[i][0] = '\0';
+  }
 }
 
 /********************************************************************************************
@@ -301,38 +305,41 @@ void wio_display::loadingScreen(int modus)
  */
 void wio_display::addLogText(const char *log_, bool append)
 {
-  static int line_cnt = 0;
-
   if(append)
   {
-    strncat(log_text[line_cnt], log_, LINE_STRING_LENGTH - 1); // append hand over text to log
+    strncat(m_log_text[m_log_write_pos], log_, LINE_STRING_LENGTH - 1); // append hand over text to log
   }
   else
   {
-    if (line_cnt < LINE_STRING_COUNT)
+    strncpy(m_log_text[m_log_write_pos], log_, LINE_STRING_LENGTH - 1);   // copy hand over text to log
+    m_log_text[m_log_write_pos][LINE_STRING_LENGTH - 1] = '\0';       // set last char to 0
+
+    m_log_write_pos++;
+    if (m_log_write_pos >= LINE_STRING_COUNT)
     {
-      strncpy(log_text[line_cnt], log_, LINE_STRING_LENGTH - 1);   // copy hand over text to log
-      log_text[line_cnt][LINE_STRING_LENGTH - 1] = '\0';       // set last char to 0
-      line_cnt++;
-    }
-    else
-    {
-      Serial.println();
-      Serial.print("Discarded log message:\t");
-      Serial.println(log_);
+      m_log_write_pos = 0;
     }
   }
 
   if(loading_screen_status)
   {
+    tft.fillScreen(TFT_BLACK);    // draw black background
+
     tft.setFreeFont(FSS9);              // set font
     tft.setTextColor(TFT_DARKGREEN);    // set text color dark green for a hacker look
 
+    uint8_t currentLine = m_log_write_pos + 1;
     for (int i = 0; i < LINE_STRING_COUNT; i++)
     {
-      if (log_text[i][0] != '\0')
+      if (currentLine > LINE_STRING_COUNT) {
+        currentLine = 0;
+      }
+
+      const char *line = m_log_text[currentLine++];
+
+      if (line[0] != '\0')
       {
-        tft.drawString((String)log_text[i], 5, 16 * i);   // draw log line for line
+        tft.drawString(line, 5, 16 * i);   // draw log line for line
       }
     }
   }
