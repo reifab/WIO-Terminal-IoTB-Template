@@ -73,7 +73,7 @@ void setup()
   enableLoadingScreen();
 
   // Turn the watchdog on and get actual timeout value based on the provided one.
-  SAMCrashMonitor::enableWatchdog(60000);
+  SAMCrashMonitor::enableWatchdog(30000);
 
   // Button Configuration
   initButtons();
