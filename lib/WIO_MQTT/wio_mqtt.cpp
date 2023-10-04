@@ -1,3 +1,5 @@
+#include "wio_mqtt.h"
+
 /**
  * @file wio_mqtt.cpp
  * @author Beat Sturzenegger / Fabian Reifler
@@ -12,19 +14,8 @@
 /********************************************************************************************
 *** Includes
 ********************************************************************************************/
-#include <PubSubClient.h>
-#include <rpcWiFi.h>
-#include "wio_mqtt.h"
 #include <utils.h>
 #include <stdarg.h>
-
-/********************************************************************************************
-*** Objects
-********************************************************************************************/
-WiFiClient wioWiFiClient;
-PubSubClient wioMqttClient(wioWiFiClient);
-typedef void (*cbLog_)(const char *s, bool b);
-static cbLog_ PrintToLog;
 
 /********************************************************************************************
 *** Constructor
@@ -35,9 +26,8 @@ static cbLog_ PrintToLog;
  *
  * @param func Funktionsadresse der Funktion für das Hinzufügen des Log Text
  */
-wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
+wio_mqtt::wio_mqtt(log_cb logger) : m_logger(logger), m_messageHandler(NULL), m_client(), m_mqtt(m_client)
 {
-  PrintToLog = func;
   randomSeed(analogRead(0));
 }
 
@@ -47,13 +37,12 @@ wio_mqtt::wio_mqtt(void (&func)(const char *, bool b))
 /**
  * @brief Diese Methode setzt die MQTT-Parameter und stellt eine Verbindung zum MQTT Broker her.
  *
- * @param func Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics
+ * @param messageHandler Funktionsadresse der Callback Funktion für die Auswertung der abbonierten Topics
  */
-void wio_mqtt::initMQTT(message_cb func, const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID)
+void wio_mqtt::initMQTT(message_cb messageHandler, const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID)
 {
-  _callback = func;                       // save Callback function
-  PrintToLog("Start MQTT Init", false); // write to the log
-  Serial.println("Start MQTT Init");
+  LogAdd("Start MQTT Init", false); // write to the log
+  m_messageHandler = messageHandler;
   
   setCredentials(mqtt_user, mqtt_password);
 
@@ -63,10 +52,8 @@ void wio_mqtt::initMQTT(message_cb func, const char *mqtt_user, const char *mqtt
 
   snprintf(m_log_text, BUFFER_LENGTH, "- ID: %s", m_clientId.c_str()); // write to the log
   m_log_text[BUFFER_LENGTH - 1] = '\0';
-  PrintToLog(m_log_text, false);
-  Serial.println(m_clientId);
 
-  wioMqttClient.setCallback(_callback);
+  LogAdd(m_log_text, false);
 }
 
 /**
@@ -104,7 +91,7 @@ void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
 
   m_publishedSomething = true;
 
-  wioMqttClient.publish(topic, payload, retain);
+  m_mqtt.publish(topic, payload, retain);
 }
 
 /**
@@ -154,7 +141,7 @@ void wio_mqtt::publishTopicPrintf(const char *topic, bool retain, const char *fo
  */
 void wio_mqtt::subscribeTopic(char *topic)
 {
-  wioMqttClient.subscribe(topic); // subscribe the topic
+  m_mqtt.subscribe(topic); // subscribe the topic
 }
 
 /**
@@ -177,13 +164,6 @@ void wio_mqtt::addSubscribeList(char *list, unsigned int len)
  */
 void wio_mqtt::subscribeList(char *list, unsigned int len)
 {
-  /*
-  Serial.println("+++ Subscribe List +++"); // print topics in list to SerialPort
-  Serial.print(len);
-  Serial.print(" - Liste: ");
-  Serial.println(list);
-  */
-
   unsigned int topic_cnt = len / TOPIC_LENGTH; // calc number of topics
   char topic[TOPIC_LENGTH];
 
@@ -197,7 +177,7 @@ void wio_mqtt::subscribeList(char *list, unsigned int len)
     Serial.print(topic);
     Serial.print(" ... ");
 
-    wioMqttClient.subscribe(topic); // subscribe topic
+    m_mqtt.subscribe(topic); // subscribe topic
 
     Serial.println("done");
 
@@ -214,7 +194,7 @@ void wio_mqtt::subscribeList(char *list, unsigned int len)
  */
 bool wio_mqtt::isConnected()
 {
-  return wioMqttClient.connected(); // read connection state
+  return m_mqtt.connected();
 }
 
 /**
@@ -223,27 +203,31 @@ bool wio_mqtt::isConnected()
  */
 void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 {
-  snprintf_safe(m_log_text, BUFFER_LENGTH, "- Connecting to %s", mqtt_broker);
-  PrintToLog(m_log_text, false);
-  Serial.println(m_log_text);
+  m_broker = mqtt_broker;
+  m_port = mqtt_port;
 
-  if (wioMqttClient.connected()) {
+  snprintf_safe(m_log_text, BUFFER_LENGTH, "- Connecting to %s", mqtt_broker);
+  LogAdd(m_log_text, false);
+
+  if (isConnected()) {
     Serial.println("Disconnecting current link");
-    wioMqttClient.disconnect();
+    m_mqtt.disconnect();
   }
 
-  wioMqttClient.setServer(mqtt_broker, mqtt_port);
-  if (wioMqttClient.connect(m_clientId.c_str(), m_user.c_str(), m_pass.c_str())) {
-    PrintToLog("- Connected", false); // write to the log
-    Serial.println("Connected");
+  Serial.printf("Reconnect - Set broker to %s:%u\n", m_broker.c_str(), m_port);
+  m_mqtt.setServer(m_broker.c_str(), m_port);
+  m_mqtt.setCallback(m_messageHandler);
+
+  Serial.println("Reconnect - Connect");
+  if (m_mqtt.connect(m_clientId.c_str(), m_user.c_str(), m_pass.c_str())) {
+    LogAdd("- Connected", false); // write to the log
     subscribeList(ptr_topicList, topicListLen);    // subscribe the topic list
-    PrintToLog("- Subscribed to topics", false); // write to the log
-    Serial.println("Subscribed to topics");
+    LogAdd("- Subscribed to topics", false); // write to the log
   }
   else
   {
     Serial.println("failed, rc=");
-    Serial.print(wioMqttClient.state());
+    Serial.print(m_mqtt.state());
   }
 }
 
@@ -254,7 +238,7 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
  */
 void wio_mqtt::loop()
 {
-  wioMqttClient.loop();
+  m_mqtt.loop();
 }
 
 /**
@@ -295,4 +279,15 @@ bool wio_mqtt::getSubscribeState()
 void wio_mqtt::setSubscribeState(bool state)
 {
   subState = state;
+}
+
+void wio_mqtt::LogAdd(const char *str, bool append) {
+  if (m_logger) {
+    m_logger(str, append);
+  }
+  
+  Serial.print(str);
+  if (!append) {
+    Serial.println();
+  }
 }

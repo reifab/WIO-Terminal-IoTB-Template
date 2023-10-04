@@ -17,6 +17,10 @@
 #define TOPIC_LENGTH 50 ///< Maximale Länge von einem Topic
 #define BUFFER_LENGTH 50 ///< Maximale Länge eines Puffers
 
+#include <PubSubClient.h>
+#include <WiFi.h>
+#include <logs.h>
+
 /********************************************************************************************
 *** Interface description
 ********************************************************************************************/
@@ -26,7 +30,7 @@ public:
   typedef void (*message_cb)(char *topic, byte *payload, unsigned int len);
 
 public:
-  wio_mqtt(void (&)(const char *, bool));                                 ///< Konstruktor
+  wio_mqtt(log_cb logger = NULL);                                 ///< Konstruktor
   void initMQTT(message_cb callback, const char *mqtt_user, const char *mqtt_password, const char *wioTerminalID);///< MQTT initialisieren
   void publishTopic(const char *topic, const char *payload, bool retain); ///< Ein Topic publizieren, Payload ist ein konstanter String
   void publishTopic(const char *topic, int payload, bool retain);         ///< Ein Topic publizieren, Payload ist ein Integer
@@ -44,22 +48,26 @@ public:
   void setSubscribeState(bool state);                                     ///< Den Subscribe Status setzen
 
 protected:
+  void LogAdd(const char *str, bool append);
 
 private:
-  String m_clientId;
-  String m_user;
-  String m_pass;
+  log_cb    m_logger;
+  String    m_broker;
+  uint16_t  m_port;
+  String    m_clientId;
+  String    m_user;
+  String    m_pass;
 
   bool m_publishedSomething;
+
+  message_cb    m_messageHandler;
+  WiFiClient    m_client;
+  PubSubClient  m_mqtt;
 
   char *ptr_topicList;                           ///< Pointer zu der Topic Liste
   unsigned int topicListLen = 0;                 ///< Länge der Topic Liste
   bool subState = false;                         ///< Subscribe Status
-  typedef void (*callbackFunc) (char *topic, byte *payload, unsigned int len);    ///< Functionspointer auf die Callback Funktion
-  callbackFunc _callback;
   char m_log_text[BUFFER_LENGTH];
-  typedef void (*cbLog)(char *s, bool b);
-  static cbLog _cbLog;                              ///< Callback Funktionsvariable
   void subscribeList(char *list, unsigned int len); ///< Eine Topic-Liste abonnieren
 };
 
