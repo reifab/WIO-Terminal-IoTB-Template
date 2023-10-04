@@ -14,6 +14,9 @@
 ********************************************************************************************/
 #include <Arduino.h>
 #include <utils.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "userFunctions.h"
 #include "pages.h"
 #include "wio_mqtt.h"
@@ -67,7 +70,7 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
         // END USER CODE: Subscribed Topics
 };
 
-static bool changeBroker = false;
+static bool changeSetup = false;
 static char *brokerToConnect;  ///< Broker, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
 static char *functionality;    ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
 static uint16_t portToConnect; ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
@@ -275,11 +278,11 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
     // END USER CODE: more Page specific Code
   }
 
-  if (changeBroker)
+  if (changeSetup)
   {
-    //Serial.println("User Function Handler: Change Broker");
+    Serial.println("Processing broker reconnect");
     changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
-    changeBroker = false;
+    changeSetup = false;
 
     if (strcmp(functionality, "heatingControl") == 0)
     {
@@ -297,7 +300,7 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
     drawPage(pages_array, currentPage);
 
-    //Serial.println("Broker changed");
+    Serial.println("Processing broker reconnect ended");
   }
 
   return currentPage;
@@ -315,21 +318,19 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
  *
  * @param messageSize  Länge der Nachricht
  */
+static StaticJsonDocument<500> jsonDocConfig;
 static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
 {
-  const char *payload = (const char *)payloadbytes;
+  char *payload = (char *)malloc(len + 1);
+  
+  memcpy(payload, payloadbytes, len);
+  payload[len] = '\0';
 
   int elem = 0;
   wio_MQTT->setSubscribeState(true); // set subscribe state (for display)
-  StaticJsonDocument<500> jsonDocConfig;
 
-  /*
-  Serial.println("Message received:"); // print infos to SerialPort
-  Serial.print("Topic: ");
-  Serial.println(topic);
-  Serial.print("Payload: ");
+  Serial.printf("Message received: %s\t", topic);
   Serial.println(payload);
-  */
 
   while (strcmp(topic, topicList[elem])) // search topic in topicList
   {
@@ -345,7 +346,6 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
 
     if (strcmp(brokerToConnect, strdup(jsonDocConfig["brokerToConnect"])) != 0)
     {
-      changeBroker = true;
       free(brokerToConnect);
       brokerToConnect = strdup(jsonDocConfig["brokerToConnect"]);
       portToConnect = jsonDocConfig["portToConnect"];
@@ -360,6 +360,9 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
       strncat(topicList[1], mqtt_prefix, TOPIC_LENGTH - 1); //Muss noch getestet werden...
       strncat(topicList[1], "1OG/Heizung\0", TOPIC_LENGTH - 1);
       topicList[1][TOPIC_LENGTH - 1] = '\0';
+
+      Serial.println("\tRequest broker reconnect");
+      changeSetup = true;
     }
     // END USER CODE: first element of the topicList
     break;
@@ -389,6 +392,10 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
 
     // END USER CODE: more elements of the topicList
   }
+
+  free(payload);
+  payload = NULL;
+  Serial.println("Message processed");
 }
 
 static void jsonValueFetch(char **dst, StaticJsonDocument<500> & doc, const char *key) {
