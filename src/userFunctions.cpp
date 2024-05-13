@@ -58,7 +58,7 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
     {
         // START USER CODE: Subscribed Topics
         "reserved\0", // Reserviert, darf nicht benutzt werden
-        "meinHaus/1OG/Heizung\0"
+        "reserved\0", // Reserviert, darf nicht benutzt werden
         // END USER CODE: Subscribed Topics
 };
 
@@ -136,7 +136,8 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
   String configTopic = "setup/wioTerminals/configTerminal-";
   configTopic += getWioTerminalID();
 
-  strcpy(topicList[0], configTopic.c_str());
+  strncpy(topicList[0], configTopic.c_str(),TOPIC_LENGTH);
+  strncpy(topicList[1], addMQTTPrefix("1OG/Heizung\0"), TOPIC_LENGTH);
   wio_MQTT->addSubscribeList(topicList[0], sizeof(topicList)); // subscribe to all topics in topicList
 
   return currentPage;
@@ -347,6 +348,7 @@ void onMqttMessage(int messageSize)
         free(mqtt_prefix);
       }
       mqtt_prefix = strdup(jsonDocConfig["mqtt_prefix"]);
+      strncpy(topicList[1], addMQTTPrefix("1OG/Heizung\0"), TOPIC_LENGTH);
     }
     // END USER CODE: first element of the topicList
     break;
