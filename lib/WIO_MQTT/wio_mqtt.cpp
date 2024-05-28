@@ -211,10 +211,9 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 
   if (isConnected()) {
     Serial.println("Disconnecting current link");
-    // m_client.flush(); behebt Absturzproblem (Ich vermute, dass die Reihenfolge der Aufrufe in der Funktion PubSubClient::disconnect() nicht stimmt. In der Bibliothek kann ich dies aber nicht ändern.
-    // Das Problem ist ein Zusammenspiel mit WiFiClient::flush(). Wenn die Funktion recv = 0 liefert, wird res = 0. Dieser Fall wird nicht behandelt und führt zu einer Enlosschleife.
-    // Ich vermute, dass die Funktion recv = 0 liefert, wenn der Server die Verbindung schliesst und dies Aufgrund des vorgängigen MQTTDISCONNECT Befehls.
-    m_client.flush();
+    // m_mqtt.loop(); behebt Absturzproblem :disconnect() nicht stimmt. Dies ist ein Workaround, um ein Bug im WiFiClient zu umgehen.
+    // Kern des Problems ist WiFiClient::flush(). Die Funktion recv wird vermutlich fälschlicherweise benutzt. Eigenltich müsste der rx- Buffer geleert werden.
+    m_mqtt.loop();
     m_mqtt.disconnect();
   }
 
