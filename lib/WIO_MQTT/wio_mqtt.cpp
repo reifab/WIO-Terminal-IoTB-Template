@@ -79,15 +79,20 @@ void wio_mqtt::setCredentials(const char *user, const char *pass) {
 void wio_mqtt::publishTopic(const char *topic, const char *payload, bool retain)
 {
   const size_t topic_len = strlen(topic);
-  size_t padding = TOPIC_LENGTH - topic_len;
 
-  Serial.print("PUBLISH "); // print infos to SerialPort
-  Serial.print(topic);
-  while (padding-- > 0) {
-    Serial.print(" ");
+#if MQTT_PUBLISH_ON_SERIAL
+  {
+    size_t padding = TOPIC_LENGTH - topic_len;
+
+    Serial.print("PUBLISH "); // print infos to SerialPort
+    Serial.print(topic);
+    while (padding-- > 0) {
+      Serial.print(" ");
+    }
+    Serial.print(" =\t");
+    Serial.println(payload);
   }
-  Serial.print(" =\t");
-  Serial.println(payload);
+#endif 
 
   m_publishedSomething = true;
 

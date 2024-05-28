@@ -334,8 +334,10 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
   int elem = 0;
   wio_MQTT->setSubscribeState(true); // set subscribe state (for display)
 
+#if BROKER_SETUP_ON_SERIAL
   Serial.printf("Message received: %s\t", topic);
   Serial.println(payload);
+#endif
 
   while (strcmp(topic, topicList[elem])) // search topic in topicList
   {
