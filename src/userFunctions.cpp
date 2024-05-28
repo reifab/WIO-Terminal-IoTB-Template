@@ -65,8 +65,8 @@ char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werde
                                  ///< @attention Maximale 50 Zeichen pro Topic!
 {
         // START USER CODE: Subscribed Topics
-        "reserved\0", // Reserviert, darf nicht benutzt werden
-        "meinHaus/1OG/Heizung\0"
+        "reserved\0", // Reserviert für ein Konfigurationstopic
+        "reserved\0"  // Reserviert für XXX/1OG/Heizung, wobei XXX ein Prefix (meinHaus oder HausX) ist
         // END USER CODE: Subscribed Topics
 };
 
@@ -83,6 +83,7 @@ static char *topic_floor1_temp_name = NULL;
 static char *topic_floor1_pressure_name = NULL;
 static char *topic_floor1_humidity_name = NULL;
 static char *topic_floor1_heating_state_name = NULL;
+static char *topic_floor1_heating_control_name = NULL;
 static char *topic_floor2_windowstate_name = NULL;
 static char *topic_roof_pv_power_name = NULL;
 
@@ -146,7 +147,7 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
   String configTopic = "setup/wioTerminals/configTerminal-";
   configTopic += getWioTerminalID();
 
-  strcpy(topicList[0], configTopic.c_str());
+  strncpy(topicList[0], configTopic.c_str(), TOPIC_LENGTH);
   wio_MQTT->addSubscribeList(topicList[0], sizeof(topicList)); // subscribe to all topics in topicList
 
   return currentPage;
@@ -159,6 +160,7 @@ static void prepareTopicNames(void) {
   replaceTopicName(&topic_floor1_heating_state_name, "1OG/HeizungStatus");
   replaceTopicName(&topic_floor2_windowstate_name, "2OG/FensterStatus");
   replaceTopicName(&topic_roof_pv_power_name, "Dach/Solarzelle/Leistung");
+  replaceTopicName(&topic_floor1_heating_control_name, "1OG/Heizung\0");
 }
 
 static void replaceTopicName(char **name, const char *topic) {
@@ -280,15 +282,12 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
 
   if (changeSetup)
   {
-    Serial.println("Processing broker reconnect");
-    changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
-    changeSetup = false;
-
     if (strcmp(functionality, "heatingControl") == 0)
     {
       currentPage = 1;
       pinMode(HEATER_DIGITAL_OUT, OUTPUT);
       setHeaterOff();
+      strncpy(topicList[1], topic_floor1_heating_control_name, TOPIC_LENGTH); //Neues Topic wird danach abboniert zur Heizungssteuerung
     }
 
     if (strcmp(functionality, "solar") == 0)
@@ -297,6 +296,12 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       pinMode(ANALOG_IN_SOLAR, INPUT);
       pinMode(DIGITAL_IN_WINDOW, INPUT);
     }
+
+    Serial.println("Processing broker reconnect");
+    changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
+    changeSetup = false;
+
+
 
     drawPage(pages_array, currentPage);
 
@@ -356,10 +361,6 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
       jsonValueFetch(&functionality, jsonDocConfig, "functionality");
 
       prepareTopicNames();
-
-      strncat(topicList[1], mqtt_prefix, TOPIC_LENGTH - 1); //Muss noch getestet werden...
-      strncat(topicList[1], "1OG/Heizung\0", TOPIC_LENGTH - 1);
-      topicList[1][TOPIC_LENGTH - 1] = '\0';
 
       Serial.println("\tRequest broker reconnect");
       changeSetup = true;

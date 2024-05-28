@@ -23,7 +23,7 @@
 extern page_t pages_array[]; ///< extern Page Array, is coded in pages.c
 
 // intervals for periodic tasks
-const long interfaceIconIntervall = 5000; ///< Interval time for icons refreshing
+const long interfaceIconIntervall = 2000; ///< Interval time for icons refreshing
 
 /********************************************************************************************
 *** Objects

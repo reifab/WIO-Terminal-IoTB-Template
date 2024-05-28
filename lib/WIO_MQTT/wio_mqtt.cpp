@@ -198,7 +198,7 @@ bool wio_mqtt::isConnected()
 }
 
 /**
- * @brief Diese Methode stellt die Verbindung zum Broker wieder her.
+ * @brief Diese Methode stellt die Verbindung zum Broker wieder her und abboniert die Subscribe-Liste.
  *
  */
 void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
@@ -211,6 +211,10 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 
   if (isConnected()) {
     Serial.println("Disconnecting current link");
+    // m_client.flush(); behebt Absturzproblem (Ich vermute, dass die Reihenfolge der Aufrufe in der Funktion PubSubClient::disconnect() nicht stimmt. In der Bibliothek kann ich dies aber nicht ändern.
+    // Das Problem ist ein Zusammenspiel mit WiFiClient::flush(). Wenn die Funktion recv = 0 liefert, wird res = 0. Dieser Fall wird nicht behandelt und führt zu einer Enlosschleife.
+    // Ich vermute, dass die Funktion recv = 0 liefert, wenn der Server die Verbindung schliesst und dies Aufgrund des vorgängigen MQTTDISCONNECT Befehls.
+    m_client.flush();
     m_mqtt.disconnect();
   }
 
