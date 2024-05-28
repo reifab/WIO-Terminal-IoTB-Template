@@ -29,7 +29,7 @@ static uint16_t mqtt_port;
 
 // intervals for periodic tasks
 const long scanInterval = 10000;          ///< Interval time for WiFi strength und channel scanning
-const long mqttStateIntervall = 5000;     ///< Interval time for MQTT state
+const long mqttStateIntervall = 500;     ///< Interval time for MQTT state
 
 /**
  * @brief In dieser Funktion werden Aufgaben und Funktionen, nach Ablauf eines

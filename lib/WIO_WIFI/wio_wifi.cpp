@@ -100,6 +100,7 @@ void wio_wifi::reconnect(void)
     delay(200);
     PrintLog(".", true);
   }
+  WiFi.scanNetworks();
   PrintLog("- Connected", false);
 }
 
@@ -138,7 +139,7 @@ int wio_wifi::readChannel(int index)
  */
 void wio_wifi::scanNetwork(void)
 {
-//  WiFi.scanNetworks(true, false);   // Scan Networks in asynchronus mode and without hidden SSIDs
+  WiFi.scanNetworks();   // Scan Networks in asynchronus mode and without hidden SSIDs
 }
 
 /**

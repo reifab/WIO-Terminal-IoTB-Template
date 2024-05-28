@@ -173,7 +173,7 @@ static void replaceTopicName(char **name, const char *topic) {
 
 int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[])
 {
-  const long userDefinedIntervall = 2000; // Interval time for user defined perdiodic task
+  const long userDefinedIntervall = 1000; // Interval time for user defined perdiodic task
   static long previousMillis;             // for user
   long currentMillis = millis();          // save millis
 
