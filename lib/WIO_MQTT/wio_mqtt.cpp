@@ -216,9 +216,6 @@ void wio_mqtt::reconnect(const char *mqtt_broker, uint16_t mqtt_port)
 
   if (isConnected()) {
     Serial.println("Disconnecting current link");
-    // m_mqtt.loop(); behebt Absturzproblem :disconnect() nicht stimmt. Dies ist ein Workaround, um ein Bug im WiFiClient zu umgehen.
-    // Kern des Problems ist WiFiClient::flush(). Die Funktion recv wird vermutlich fälschlicherweise benutzt. Eigenltich müsste der rx- Buffer geleert werden.
-    m_mqtt.loop();
     m_mqtt.disconnect();
   }
 
