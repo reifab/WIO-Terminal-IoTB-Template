@@ -28,7 +28,7 @@
 #include "readConfigSDCard.h"
 
 // START USER CODE: Includes
-
+#include "Servo.h"
 // END USER CODE: Includes
 
 /********************************************************************************************
@@ -40,13 +40,14 @@
 #define HEATER_DIGITAL_OUT D0
 
 #define ANALOG_IN_SOLAR A0
+
 #define DIGITAL_IN_WINDOW D2
 // END USER CODE: Defines
 
 /********************************************************************************************
 *** Functionprototypes
 ********************************************************************************************/
-static void jsonValueFetch(char **dst, StaticJsonDocument<500> & doc, const char *key);
+static void jsonValueFetch(char **dst, StaticJsonDocument<500> &doc, const char *key);
 static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len);
 static void prepareTopicNames(void);
 static void replaceTopicName(char **name, const char *topic);
@@ -63,10 +64,11 @@ void setHeaterOff(void);
 char topicList[][TOPIC_LENGTH] = ///< Liste der MQTT Topics, die abboniert werden sollen. Die Topics werden als String eingegeben. Das Letzte Zeichen sollte ein '\0' sein.
                                  ///< Die einzelnen Strings werden mit einem Komma getrennt (Siehe Beispiel. Coming soon...)
                                  ///< @attention Maximale 50 Zeichen pro Topic!
-{
+    {
         // START USER CODE: Subscribed Topics
         "reserved\0", // Reserviert für ein Konfigurationstopic
-        "reserved\0"  // Reserviert für XXX/1OG/Heizung, wobei XXX ein Prefix (meinHaus oder HausX) ist
+        "reserved\0", // Reserviert für XXX/1OG/Heizung, wobei XXX ein Prefix (meinHaus oder HausX) ist
+        "Haus1/2OG/WinkelServo\0"
         // END USER CODE: Subscribed Topics
 };
 
@@ -75,9 +77,9 @@ static char *brokerToConnect;  ///< Broker, zu dem gewechselt werden soll. Wird 
 static char *functionality;    ///< Funktionalität, die der Wio Terminal übernehmen soll. Wird in der Funktion onMqttMessage() gesetzt.
 static uint16_t portToConnect; ///< Port, zu dem gewechselt werden soll. Wird in der Funktion onMqttMessage() gesetzt.
 
-static char *mqtt_user;        ///< MQTT Benutzername.
-static char *mqtt_password;    ///< MQTT Passwort.
-static char *mqtt_prefix;      ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
+static char *mqtt_user;     ///< MQTT Benutzername.
+static char *mqtt_password; ///< MQTT Passwort.
+static char *mqtt_prefix;   ///< MQTT Prefix, der vor alle Topics gesetzt wird. Wird in der Funktion onMqttMessage() gesetzt.
 
 static char *topic_floor1_temp_name = NULL;
 static char *topic_floor1_pressure_name = NULL;
@@ -104,6 +106,7 @@ char g_window_state[10];
 static wio_mqtt *wio_MQTT = NULL;
 // START USER CODE: Objects
 Adafruit_BME680 bme;
+Servo myservo;
 // END USER CODE: Objects
 
 void setMQTTUserAndPassword(const char *mqtt_user, const char *mqtt_password)
@@ -133,6 +136,11 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
   {
     currentPage = 2;
   }
+  else if (strcmp(getWioTerminalFuntionality(), "fenster") == 0)
+  {
+    myservo.attach(D0);
+    currentPage = 3;
+  }
   else
   {
     currentPage = 0;
@@ -153,7 +161,8 @@ int initUserFunctions(wio_mqtt *ptr_wio_MQTT)
   return currentPage;
 }
 
-static void prepareTopicNames(void) {
+static void prepareTopicNames(void)
+{
   replaceTopicName(&topic_floor1_temp_name, "1OG/Temperatur");
   replaceTopicName(&topic_floor1_pressure_name, "1OG/Luftdruck");
   replaceTopicName(&topic_floor1_humidity_name, "1OG/Luftfeuchtigkeit");
@@ -163,8 +172,10 @@ static void prepareTopicNames(void) {
   replaceTopicName(&topic_floor1_heating_control_name, "1OG/Heizung\0");
 }
 
-static void replaceTopicName(char **name, const char *topic) {
-  if (*name != NULL) {
+static void replaceTopicName(char **name, const char *topic)
+{
+  if (*name != NULL)
+  {
     free(*name);
     *name = NULL;
   }
@@ -208,8 +219,8 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       wio_MQTT->publishTopic(topic_floor1_pressure_name, (float)bme.pressure, false);
       wio_MQTT->publishTopic(topic_floor1_humidity_name, bme.humidity, false);
       wio_MQTT->publishTopic(topic_floor1_heating_state_name, g_heater, false);
-      //Serial.println("User Function Handler: Messages published");
-      // END USER CODE: user periodic task
+      // Serial.println("User Function Handler: Messages published");
+      //  END USER CODE: user periodic task
     }
 
     if (pages_array[currentPage].lines[0].value != g_temperature)
@@ -287,7 +298,7 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       currentPage = 1;
       pinMode(HEATER_DIGITAL_OUT, OUTPUT);
       setHeaterOff();
-      strncpy(topicList[1], topic_floor1_heating_control_name, TOPIC_LENGTH); //Neues Topic wird danach abboniert zur Heizungssteuerung
+      strncpy(topicList[1], topic_floor1_heating_control_name, TOPIC_LENGTH); // Neues Topic wird danach abboniert zur Heizungssteuerung
     }
 
     if (strcmp(functionality, "solar") == 0)
@@ -297,11 +308,15 @@ int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array
       pinMode(DIGITAL_IN_WINDOW, INPUT);
     }
 
+    if (strcmp(functionality, "fenster") == 0)
+    {
+      currentPage = 3;
+      myservo.attach(D0);
+    }
+
     Serial.println("Processing broker reconnect");
     changeMQTTBroker(brokerToConnect, portToConnect, mqtt_user, mqtt_password, wio_MQTT);
     changeSetup = false;
-
-
 
     drawPage(pages_array, currentPage);
 
@@ -327,7 +342,7 @@ static StaticJsonDocument<500> jsonDocConfig;
 static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
 {
   char *payload = (char *)malloc(len + 1);
-  
+
   memcpy(payload, payloadbytes, len);
   payload[len] = '\0';
 
@@ -348,7 +363,7 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
   {
   case 0:
     // START USER CODE: first element of the topicList (wioTerminal/config)
-    //Serial.println("Config received");
+    // Serial.println("Config received");
     deserializeJson(jsonDocConfig, payload);
 
     if (strcmp(brokerToConnect, strdup(jsonDocConfig["brokerToConnect"])) != 0)
@@ -394,6 +409,11 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
     // START USER CODE: more elements of the topicList
 
     // END USER CODE: more elements of the topicList
+  case 2:
+    // START USER CODE: third element of the topicList
+      myservo.write(atoi(payload));
+    // END USER CODE: third element of the topicList
+    break;
   }
 
   free(payload);
@@ -401,17 +421,21 @@ static void onMqttMessage(char *topic, byte *payloadbytes, unsigned int len)
   Serial.println("Message processed");
 }
 
-static void jsonValueFetch(char **dst, StaticJsonDocument<500> & doc, const char *key) {
-  if (*dst) {
+static void jsonValueFetch(char **dst, StaticJsonDocument<500> &doc, const char *key)
+{
+  if (*dst)
+  {
     free(*dst);
     *dst = NULL;
   }
 
-  const char *value = doc[key]; 
-  if (value) {
-    *dst = strdup(value); 
+  const char *value = doc[key];
+  if (value)
+  {
+    *dst = strdup(value);
   }
-  else {
+  else
+  {
     *dst = strdup("");
   }
 }
@@ -427,4 +451,5 @@ void setHeaterOff(void)
   digitalWrite(HEATER_DIGITAL_OUT, LOW);
   strcpy(g_heater, "off");
 }
+
 // END USER CODE: user functions

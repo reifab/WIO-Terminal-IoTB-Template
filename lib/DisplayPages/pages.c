@@ -56,5 +56,16 @@ page_t pages_array[] =
       {},                                                                               // Line 3
       {},                                                                               // Line 4
       {"ID",      TEXT,        0,        "",           DEFAULT}                         // Line 5
+    },
+// Page 3
+     "Fenster",
+    {
+      //Name            | Typ     | Wert    | Textwert/Einheit  | Einstellung
+      { "Fensterstatus",        TEXT,     0,        "",          DEFAULT},              // Line 0
+      {},                                                                               // Line 1
+      {},                                                                               // Line 2
+      {},                                                                               // Line 3
+      {},                                                                               // Line 4
+      {"ID",      TEXT,        0,        "",           DEFAULT}                         // Line 5
     }
 };

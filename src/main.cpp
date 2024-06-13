@@ -107,6 +107,7 @@ void setup()
   updateLine(1, 5, ONLY_VALUE);
   updateLine(2, 5, ONLY_VALUE);
 
+
   Serial.println("Setup finished");
 }
 
