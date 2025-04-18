@@ -1,26 +1,32 @@
+#pragma once
+
 /**
- * @file secrets.h
- * @author Beat Sturzenegger / Fabian Reifler
- * @brief Zugangsdaten für die WiFi Verbindung und den MQTT Broker
- * @version 1.1
- * @date 08.03.2023
+ * @file
+ * @brief   (Default) secrets for accessing WiFi and MQTT Broker
  *
- * @copyright Copyright (c) 2023
+ * @author  Ueli Niederer
+ * @date    04.10.2023
  *
+ * @copyright Copyright (c) 2023 GBS St.Gallen
  */
 
-#ifndef SECRETS_H
-#define SECRETS_H
+#include <stdint.h>
 
 // WiFi data
-//const char *ssid = "";     ///< WLAN SSID
-//const char *password = ""; ///< WLAN Password
+typedef struct sSecretsWifi {
+    const char *ssid;
+    const char *passkey;
+}tSecretsWifi;
+
+extern tSecretsWifi secrets_wifi;
 
 // MQTT data
-//const char *default_mqtt_broker = "192.168.178.48"; ///< MQTT Broker URL
-//const uint16_t mqtt_bootstrap_broker_port = 1883;         ///< port for the Broker
-//const char *mqtt_bootstrap_broker_user = "";                     ///< user for the Broker
-//const char *mqtt_bootstrap_broker_password = "";        ///< password for the Broker
-//const char *mqtt_bootstrap_broker_id = "";                       ///< not used yet
+typedef struct sSecretsMqtt {
+    const char *broker;
+    uint16_t    port;
+    const char *clientId;
+    const char *user;
+    const char *password;
+}tSecretsMqtt;
 
-#endif
+extern tSecretsMqtt secrets_mqtt;

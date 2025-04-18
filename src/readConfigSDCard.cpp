@@ -1,7 +1,11 @@
 #include <SPI.h>
 #include <Seeed_FS.h> // SD card library
+#include <secrets.h>
+
 #include "ArduinoJson.h"
 #include "SD/Seeed_SD.h"
+
+static const char *ValueGetOrDefault(const char *key, const char *default_value);
 
 static StaticJsonDocument<500> jsonDocConfigFile;
 
@@ -38,36 +42,37 @@ void readConfigFromSDCard()
 
 const char *getWifiSSID()
 {
-  return jsonDocConfigFile["SSID"];
+  return ValueGetOrDefault("SSID", secrets_wifi.ssid);
 }
 
 const char *getWifiPW()
 {
-  return jsonDocConfigFile["PW"];
+  return ValueGetOrDefault("PW", secrets_wifi.passkey);
 }
 
 const char *getWioTerminalID()
 {
-  return jsonDocConfigFile["ID"];
+  return ValueGetOrDefault("ID", "0");
 }
 
 const char *getWioTerminalFuntionality()
 {
-  return jsonDocConfigFile["default_functionality"];
+  return ValueGetOrDefault("default_functionality", "");
 }
 
 const char *getMQTTBroker(){
-  return jsonDocConfigFile["mqtt_bootstrap_broker"];
+  return ValueGetOrDefault("mqtt_bootstrap_broker", secrets_mqtt.broker);
 }
 
 const char *getMQTTUser(){
-  return jsonDocConfigFile["mqtt_bootstrap_broker_user"];
+  return ValueGetOrDefault("mqtt_bootstrap_broker_user", secrets_mqtt.user);
 } 
 
 const char *getMQTTPW(){
-  return jsonDocConfigFile["mqtt_bootstrap_broker_password"];
+  return ValueGetOrDefault("mqtt_bootstrap_broker_password", secrets_mqtt.password);
 }
 
-
-
-
+static const char *ValueGetOrDefault(const char *key, const char *default_value) {
+  const char *result = jsonDocConfigFile[key];
+  return result ? result : default_value;
+}

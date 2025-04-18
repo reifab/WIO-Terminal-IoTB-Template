@@ -4,3 +4,4 @@
 .vscode/launch.json
 .vscode/ipch
 output.map
+src/secrets.local/*
