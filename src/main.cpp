@@ -104,8 +104,11 @@ void setup()
 
   strcpy(pages_array[1].lines[5].text, getWioTerminalID());
   strcpy(pages_array[2].lines[5].text, getWioTerminalID());
+  strcpy(pages_array[3].lines[5].text, getWioTerminalID());
   updateLine(1, 5, ONLY_VALUE);
   updateLine(2, 5, ONLY_VALUE);
+  updateLine(3, 5, ONLY_VALUE);
+
 
   Serial.println("Setup finished");
 }

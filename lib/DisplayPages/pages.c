@@ -35,7 +35,7 @@ page_t pages_array[] =
   },
 // Page 1
   {
-    "1OG",
+    "1OG Sauna",
     {
       //Name                | Typ     | Wert    | Textwert/Einheit  | Einstellung
       { "Temperatur",        NUMERIC,     0,        "°C",            DECIMAL_PLACES_1},      // Line 0
@@ -56,5 +56,16 @@ page_t pages_array[] =
       {},                                                                               // Line 3
       {},                                                                               // Line 4
       {"ID",      TEXT,        0,        "",           DEFAULT}                         // Line 5
+    },
+// Page 3
+     "1OG Licht",
+    {
+      //Name            | Typ     | Wert    | Textwert/Einheit  | Einstellung
+      { "Stehlampe",        TEXT,     0,        "",          DECIMAL_PLACES_0},         // Line 0
+      { "LEDs Red",         NUMERIC,  0,        "",          DECIMAL_PLACES_0},         // Line 1
+      { "LEDs Green",       NUMERIC,  0,        "",          DECIMAL_PLACES_0},         // Line 2                                                                     // Line 2
+      { "LEDs Blue",        NUMERIC,  0,        "",          DECIMAL_PLACES_0},         // Line 3
+      {},                                                                               // Line 4
+      {"ID",      TEXT,        0,        "",                 DEFAULT}                   // Line 5
     }
 };

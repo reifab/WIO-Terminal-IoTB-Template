@@ -22,14 +22,19 @@
 void setMQTTUserAndPassword(const char *mqtt_user, const char *mqtt_password);
 int initUserFunctions(wio_mqtt *wio_MQTT);
 int userFunctionsHandler(int currentPage, wio_mqtt *wio_MQTT, page_t pages_array[]); 
-void onMqttMessage(int messageSize);
 
 
 // START USER CODE: Custom function prototypes
 
-void demoFunction(void); //delete me, just an example
-
 // END USER CODE: Custom function prototypes
+
+struct PinCfg {
+  int heater = -1;         // OUTPUT, optional
+  int light = -1;          // OUTPUT, optional
+  int light_rgb = -1;      // OUTPUT, optional
+  int solar_analog = -1;   // ANALOG, optional
+  int window_in = -1;      // INPUT, optional
+};
 
 
 #endif
